@@ -87,6 +87,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     size_t bytesPerRow = CGImageGetBytesPerRow(frame);
 
     assert(bytesPerPixel * width == bytesPerRow);
+    // FIXME: We hit this assert when the user changes spaces!
     assert(kCGImageAlphaNoneSkipFirst == CGImageGetAlphaInfo(frame));
 
     unsigned blackPixelCount = 0;
