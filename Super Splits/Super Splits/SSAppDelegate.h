@@ -7,9 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SSMainController.h"
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
-
+{
+    SSMainController *_mainController;
+}
 @property (assign) IBOutlet NSWindow *window;
 
 @end

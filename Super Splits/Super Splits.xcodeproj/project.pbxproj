@@ -17,6 +17,7 @@
 		A83C4047148F0B8D00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
 		A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C404D148F0B8D00308FD4 /* InfoPlist.strings */; };
 		A83C4052148F0B8D00308FD4 /* Super_SplitsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */; };
+		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		A83C404E148F0B8D00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A83C4050148F0B8D00308FD4 /* Super_SplitsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Super_SplitsTests.h; sourceTree = "<group>"; };
 		A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Super_SplitsTests.m; sourceTree = "<group>"; };
+		A83C405F148F30FA00308FD4 /* SSMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMainController.h; sourceTree = "<group>"; };
+		A83C4060148F311200308FD4 /* SSMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMainController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
 				A83C402E148F0B8C00308FD4 /* Supporting Files */,
+				A83C405F148F30FA00308FD4 /* SSMainController.h */,
+				A83C4060148F311200308FD4 /* SSMainController.m */,
 			);
 			path = "Super Splits";
 			sourceTree = "<group>";
@@ -263,6 +268,7 @@
 			files = (
 				A83C4034148F0B8C00308FD4 /* main.m in Sources */,
 				A83C403B148F0B8C00308FD4 /* SSAppDelegate.m in Sources */,
+				A83C4061148F311200308FD4 /* SSMainController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

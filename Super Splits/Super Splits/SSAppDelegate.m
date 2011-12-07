@@ -15,6 +15,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    _mainController = [[SSMainController alloc] init];
 }
 
 @end
