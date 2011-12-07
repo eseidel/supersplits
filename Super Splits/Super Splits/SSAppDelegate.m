@@ -10,12 +10,12 @@
 
 @implementation SSAppDelegate
 
-@synthesize window = _window;
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    _mainController = [[SSMainController alloc] init];
+    _windowController = [[SSWindowController alloc] initWithWindowNibName:@"MainWindow"];
+    // Force the controller to load (and show) the window:
+    [_windowController window];
 }
 
 @end

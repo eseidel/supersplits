@@ -13,17 +13,26 @@
 -(id)init
 {
     if (self = [super init]) {
-        _windowID = [self findSNESWindowId];
-        _timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 30.0f)
-                                                  target:self
-                                                selector:@selector(timerFired)
-                                                userInfo:self
-                                                 repeats:true];
-        _overallStart = [NSDate date];
-        _roomStart = [NSDate date];
+        _windowID = kCGNullWindowID;
+        _timer = nil;
+        _overallStart = nil;
+        _roomStart = nil;
         _transitionStart = nil;
+        _roomSplits = [NSMutableArray array];
     }
     return self;
+}
+
+-(void)startRun
+{
+    _windowID = [self findSNESWindowId];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 30.0f)
+                                              target:self
+                                            selector:@selector(timerFired)
+                                            userInfo:self
+                                             repeats:true];
+    _overallStart = [NSDate date];
+    [self startRoom];
 }
 
 NSString *kAppNameKey = @"applicationName";	// Application Name & PID
@@ -99,6 +108,49 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
+-(void)startRoom
+{
+    if (_transitionStart) {
+        NSTimeInterval roomSplit = [_transitionStart timeIntervalSinceDate:_roomStart];
+        [_roomSplits addObject:[NSNumber numberWithDouble:roomSplit]];
+        NSLog(@"Room split: %.2fs", roomSplit);
+    }
+    _roomStart = [NSDate date];
+    _transitionStart = nil;
+}
+
+-(BOOL)inTransition
+{
+    return (BOOL)_transitionStart;
+}
+
+-(void)startTransition
+{
+    assert(![self inTransition]);
+    _transitionStart = [NSDate date];
+}
+
+-(void)endTransition
+{
+    assert([self inTransition]);
+    [self startRoom];
+}
+
+-(NSNumber *)lastRoomSplit
+{
+    return [_roomSplits lastObject];
+}
+
+-(NSNumber *)roomTime
+{
+    return [NSNumber numberWithDouble:-[_roomStart timeIntervalSinceNow]];
+}
+
+-(NSNumber *)totalTime
+{
+    return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
+}
+
 -(void)timerFired
 {
     if (!_windowID)
@@ -109,15 +161,11 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     // Look for if the image is a transition screen.
     // If it's a transition screen, print room time and reset the room timer.
     if ([self isTransitionScreen:windowImage]) {
-        if (!_transitionStart)
-            _transitionStart = [NSDate date];
+        if (![self inTransition])
+            [self startTransition];
     } else {
-        if (_transitionStart) {
-            NSTimeInterval roomSplit = [_transitionStart timeIntervalSinceDate:_roomStart];
-            NSLog(@"Room split: %.2fs", roomSplit);
-            _roomStart = [NSDate date];
-            _transitionStart = nil;
-        }
+        if ([self inTransition])
+            [self endTransition];
     }
 
     CGImageRelease(windowImage);
