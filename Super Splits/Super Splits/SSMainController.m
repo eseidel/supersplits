@@ -19,6 +19,9 @@
                                                 selector:@selector(timerFired)
                                                 userInfo:self
                                                  repeats:true];
+        _overallStart = [NSDate date];
+        _roomStart = [NSDate date];
+        _transitionStart = nil;
     }
     return self;
 }
@@ -92,7 +95,8 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 //    NSLog(@"Black pixels: %u, total: %lu", blackPixelCount, totalPixelCount);
     CFRelease(pixelData);
 
-    return blackPixelCount > (size_t)((float)totalPixelCount * .8);
+    const float percentBlackTransitionThreshold = 0.8f;
+    return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
 -(void)timerFired
@@ -105,7 +109,15 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     // Look for if the image is a transition screen.
     // If it's a transition screen, print room time and reset the room timer.
     if ([self isTransitionScreen:windowImage]) {
-        NSLog(@"Transition!");
+        if (!_transitionStart)
+            _transitionStart = [NSDate date];
+    } else {
+        if (_transitionStart) {
+            NSTimeInterval roomSplit = [_transitionStart timeIntervalSinceDate:_roomStart];
+            NSLog(@"Room split: %.2fs", roomSplit);
+            _roomStart = [NSDate date];
+            _transitionStart = nil;
+        }
     }
 
     CGImageRelease(windowImage);

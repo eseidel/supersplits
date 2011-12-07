@@ -12,6 +12,10 @@
 {
     CGWindowID _windowID;
 	NSTimer *_timer;
+
+    NSDate *_overallStart;
+    NSDate *_roomStart;
+    NSDate *_transitionStart;
 }
 
 -(CGWindowID)findSNESWindowId;

@@ -442,6 +442,7 @@
 				A83C4057148F0B8D00308FD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A83C4058148F0B8D00308FD4 /* Build configuration list for PBXNativeTarget "Super SplitsTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +451,7 @@
 				A83C405A148F0B8D00308FD4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
