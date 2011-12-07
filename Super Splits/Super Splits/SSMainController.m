@@ -143,7 +143,12 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 
 -(NSNumber *)roomTime
 {
-    return [NSNumber numberWithDouble:-[_roomStart timeIntervalSinceNow]];
+    NSTimeInterval roomTime;
+    if ([self inTransition])
+        roomTime = [_transitionStart timeIntervalSinceDate:_roomStart];
+    else
+        roomTime = -[_roomStart timeIntervalSinceNow];
+    return [NSNumber numberWithDouble:roomTime];
 }
 
 -(NSNumber *)totalTime
