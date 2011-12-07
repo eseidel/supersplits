@@ -23,14 +23,9 @@
                                             userInfo:self
                                              repeats:true];
 
-    // This is a way of detecting if we're paused.
-    if (!_overallStart) {
-        _overallStart = [NSDate date];
-        _roomStart = nil;
-        _transitionStart = nil;
-        _roomSplits = [NSMutableArray array];
-    }
-    [self startRoom];
+    // This is a way of detecting if we were paused.
+    if (!_overallStart)
+        [self resetRun];
 }
 
 -(void)stopRun
@@ -44,10 +39,16 @@
 
 -(void)resetRun
 {
-    _overallStart = nil;
-    _roomStart = nil;
-    _transitionStart = nil;
-    _roomSplits = nil;
+    if (_running) {
+        _overallStart = [NSDate date];
+        _roomSplits = [NSMutableArray array];
+        [self startRoom];
+    } else {
+        _overallStart = nil;
+        _roomStart = nil;
+        _transitionStart = nil;
+        _roomSplits = nil;
+    }
 }
 
 -(NSURL *)runsDirectoryURL
