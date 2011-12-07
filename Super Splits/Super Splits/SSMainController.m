@@ -111,9 +111,9 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 -(void)startRoom
 {
     if (_transitionStart) {
-        NSTimeInterval roomSplit = [_transitionStart timeIntervalSinceDate:_roomStart];
-        [_roomSplits addObject:[NSNumber numberWithDouble:roomSplit]];
-        NSLog(@"Room split: %.2fs", roomSplit);
+        NSNumber *roomSplit = [self roomTime];
+        [_roomSplits addObject:roomSplit];
+        NSLog(@"Room split: %.2fs", [roomSplit doubleValue]);
     }
     _roomStart = [NSDate date];
     _transitionStart = nil;
