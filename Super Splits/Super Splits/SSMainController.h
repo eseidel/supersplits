@@ -16,7 +16,19 @@
     NSDate *_overallStart;
     NSDate *_roomStart;
     NSDate *_transitionStart;
+
+    NSMutableArray *_roomSplits;
 }
+
+-(void)startRun;
+-(void)startRoom;
+-(BOOL)inTransition;
+-(void)startTransition;
+-(void)endTransition;
+
+-(NSNumber *)lastRoomSplit;
+-(NSNumber *)roomTime;
+-(NSNumber *)totalTime;
 
 -(CGWindowID)findSNESWindowId;
 -(BOOL)isTransitionScreen:(CGImageRef)image;
