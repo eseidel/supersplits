@@ -10,29 +10,70 @@
 
 @implementation SSMainController
 
--(id)init
-{
-    if (self = [super init]) {
-        _windowID = kCGNullWindowID;
-        _timer = nil;
-        _overallStart = nil;
-        _roomStart = nil;
-        _transitionStart = nil;
-        _roomSplits = [NSMutableArray array];
-    }
-    return self;
-}
+@synthesize running=_running;
 
 -(void)startRun
 {
+    assert(!_running);
     _windowID = [self findSNESWindowId];
+    _running = YES;
     _timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 30.0f)
                                               target:self
                                             selector:@selector(timerFired)
                                             userInfo:self
                                              repeats:true];
-    _overallStart = [NSDate date];
+
+    // This is a way of detecting if we're paused.
+    if (!_overallStart) {
+        _overallStart = [NSDate date];
+        _roomStart = nil;
+        _transitionStart = nil;
+        _roomSplits = [NSMutableArray array];
+    }
     [self startRoom];
+}
+
+-(void)stopRun
+{
+    assert(_running);
+    [_timer invalidate];
+    _timer = nil;
+    _running = NO;
+    _windowID = kCGNullWindowID; // This isn't strictly necessary.
+}
+
+-(void)resetRun
+{
+    _overallStart = nil;
+    _roomStart = nil;
+    _transitionStart = nil;
+    _roomSplits = nil;
+}
+
+-(NSURL *)runsDirectoryURL
+{
+    NSString *runsPath = @"~/Library/Application Support/Super Splits/";
+    runsPath = [runsPath stringByExpandingTildeInPath];
+    NSURL *runsURL = [NSURL fileURLWithPath:runsPath];
+    [[NSFileManager defaultManager] createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return runsURL;
+}
+
+-(NSURL *)urlForCurrentRun
+{
+    NSURL *runsDirectory = [self runsDirectoryURL];
+    NSString *filename = [NSString stringWithFormat:@"Splits %s.csv", [_overallStart description]];
+    return [runsDirectory URLByAppendingPathComponent:filename];
+}
+
+-(void)saveSplits
+{
+    NSURL* runFile = [self urlForCurrentRun];
+    NSMutableString *splitsString = [[NSMutableString alloc] init];
+    for (NSNumber *splitTime in _roomSplits) {
+        [splitsString appendFormat:@"%.2f", [splitTime doubleValue]];
+    }
+    [splitsString writeToURL:runFile atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 NSString *kAppNameKey = @"applicationName";	// Application Name & PID

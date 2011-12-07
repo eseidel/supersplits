@@ -20,6 +20,10 @@
     IBOutlet NSTextField *lastRoomSplitView;
 }
 
--(NSString *)timeIntervalAsString:(NSTimeInterval)interval;
+@property(retain) SSMainController *mainController;
+
+-(void)startUpdating;
+-(void)stopUpdating;
+-(void)updateTimerViews;
 
 @end

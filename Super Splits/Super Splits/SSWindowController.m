@@ -12,44 +12,36 @@
 
 @implementation SSWindowController
 
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self) {
-        _mainController = [[SSMainController alloc] init];
-    }
-
-    return self;
-}
+@synthesize mainController=_mainController;
 
 - (void)windowDidLoad
 {
     [super windowDidLoad];
     
-    [self.window setLevel: NSStatusWindowLevel];
+    [self.window setLevel:NSStatusWindowLevel];
 
     [totalTimeView setFormatter:[[SSTimeIntervalFormatter alloc] init]];
     [roomTimeView setFormatter:[[SSTimeIntervalFormatter alloc] init]];
     [lastRoomSplitView setFormatter:[[SSTimeIntervalFormatter alloc] init]];
 
-    // FIXME: Eventually we want this to be from a button click, no?
-    [_mainController startRun];
-
-    _updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 10.0f)
-                                              target:self
-                                            selector:@selector(timerFired)
-                                            userInfo:self
-                                             repeats:true];
+    [self updateTimerViews];
 }
 
--(NSString *)timeIntervalAsString:(NSTimeInterval)interval
+-(void)startUpdating
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:interval];
-    return [dateFormatter stringFromDate:date];
+    _updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 10.0f)
+                                                    target:self
+                                                  selector:@selector(updateTimerViews)
+                                                  userInfo:self
+                                                   repeats:true];
 }
 
--(void)timerFired
+-(void)stopUpdating
+{
+    [_updateTimer invalidate];
+}
+
+-(void)updateTimerViews
 {
     [totalTimeView setObjectValue:[_mainController totalTime]];
     [roomTimeView setObjectValue:[_mainController roomTime]];

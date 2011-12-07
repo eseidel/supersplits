@@ -13,6 +13,8 @@
     CGWindowID _windowID;
 	NSTimer *_timer;
 
+    BOOL _running;  // FIXME: This is just an alias for (BOOL)_timer
+
     NSDate *_overallStart;
     NSDate *_roomStart;
     NSDate *_transitionStart;
@@ -20,7 +22,12 @@
     NSMutableArray *_roomSplits;
 }
 
+@property BOOL running;
+
+-(void)resetRun;
 -(void)startRun;
+-(void)stopRun;
+
 -(void)startRoom;
 -(BOOL)inTransition;
 -(void)startTransition;

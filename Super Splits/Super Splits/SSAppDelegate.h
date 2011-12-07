@@ -12,6 +12,12 @@
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
 {
     SSWindowController *_windowController;
+    SSMainController *_mainController;
+
+    IBOutlet NSMenuItem *_startStopMenu;
 }
+
+- (IBAction)resetRun:(id)sender;
+- (IBAction)togglePause:(id)sender;
 
 @end
