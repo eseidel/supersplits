@@ -10,7 +10,9 @@
 
 @interface SSTimeIntervalFormatter : NSFormatter
 {
-    NSDateFormatter *_dateFormatter;
+    NSDateFormatter *_hourFormatter;
+    NSDateFormatter *_minuteFormatter;
+    NSDateFormatter *_secondFormatter;
 }
 
 - (NSString *)stringForObjectValue:(id)anObject;
