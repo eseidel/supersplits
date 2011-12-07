@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
+		A83C4032148F0B8C00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C4030148F0B8C00308FD4 /* InfoPlist.strings */; };
+		A83C4034148F0B8C00308FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4033148F0B8C00308FD4 /* main.m */; };
+		A83C4038148F0B8C00308FD4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A83C4036148F0B8C00308FD4 /* Credits.rtf */; };
+		A83C403B148F0B8C00308FD4 /* SSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */; };
+		A83C403E148F0B8D00308FD4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A83C403C148F0B8D00308FD4 /* MainMenu.xib */; };
+		A83C4046148F0B8D00308FD4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */; };
+		A83C4047148F0B8D00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
+		A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C404D148F0B8D00308FD4 /* InfoPlist.strings */; };
+		A83C4052148F0B8D00308FD4 /* Super_SplitsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A83C4048148F0B8D00308FD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A83C401A148F0B8C00308FD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A83C4022148F0B8C00308FD4;
+			remoteInfo = "Super Splits";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A83C4023148F0B8C00308FD4 /* Super Splits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Splits.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A83C4027148F0B8C00308FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A83C402A148F0B8C00308FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A83C402B148F0B8C00308FD4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A83C402C148F0B8C00308FD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A83C402F148F0B8C00308FD4 /* Super Splits-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Super Splits-Info.plist"; sourceTree = "<group>"; };
+		A83C4031148F0B8C00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A83C4033148F0B8C00308FD4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A83C4035148F0B8C00308FD4 /* Super Splits-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Super Splits-Prefix.pch"; sourceTree = "<group>"; };
+		A83C4037148F0B8C00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAppDelegate.h; sourceTree = "<group>"; };
+		A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAppDelegate.m; sourceTree = "<group>"; };
+		A83C403D148F0B8D00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Super SplitsTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A83C404C148F0B8D00308FD4 /* Super SplitsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Super SplitsTests-Info.plist"; sourceTree = "<group>"; };
+		A83C404E148F0B8D00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A83C4050148F0B8D00308FD4 /* Super_SplitsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Super_SplitsTests.h; sourceTree = "<group>"; };
+		A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Super_SplitsTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A83C4020148F0B8C00308FD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A83C4040148F0B8D00308FD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83C4046148F0B8D00308FD4 /* SenTestingKit.framework in Frameworks */,
+				A83C4047148F0B8D00308FD4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A83C4018148F0B8C00308FD4 = {
+			isa = PBXGroup;
+			children = (
+				A83C402D148F0B8C00308FD4 /* Super Splits */,
+				A83C404A148F0B8D00308FD4 /* Super SplitsTests */,
+				A83C4026148F0B8C00308FD4 /* Frameworks */,
+				A83C4024148F0B8C00308FD4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A83C4024148F0B8C00308FD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A83C4023148F0B8C00308FD4 /* Super Splits.app */,
+				A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A83C4026148F0B8C00308FD4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A83C4027148F0B8C00308FD4 /* Cocoa.framework */,
+				A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */,
+				A83C4029148F0B8C00308FD4 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A83C4029148F0B8C00308FD4 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A83C402A148F0B8C00308FD4 /* AppKit.framework */,
+				A83C402B148F0B8C00308FD4 /* CoreData.framework */,
+				A83C402C148F0B8C00308FD4 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A83C402D148F0B8C00308FD4 /* Super Splits */ = {
+			isa = PBXGroup;
+			children = (
+				A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */,
+				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
+				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
+				A83C402E148F0B8C00308FD4 /* Supporting Files */,
+			);
+			path = "Super Splits";
+			sourceTree = "<group>";
+		};
+		A83C402E148F0B8C00308FD4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A83C402F148F0B8C00308FD4 /* Super Splits-Info.plist */,
+				A83C4030148F0B8C00308FD4 /* InfoPlist.strings */,
+				A83C4033148F0B8C00308FD4 /* main.m */,
+				A83C4035148F0B8C00308FD4 /* Super Splits-Prefix.pch */,
+				A83C4036148F0B8C00308FD4 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A83C404A148F0B8D00308FD4 /* Super SplitsTests */ = {
+			isa = PBXGroup;
+			children = (
+				A83C4050148F0B8D00308FD4 /* Super_SplitsTests.h */,
+				A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */,
+				A83C404B148F0B8D00308FD4 /* Supporting Files */,
+			);
+			path = "Super SplitsTests";
+			sourceTree = "<group>";
+		};
+		A83C404B148F0B8D00308FD4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A83C404C148F0B8D00308FD4 /* Super SplitsTests-Info.plist */,
+				A83C404D148F0B8D00308FD4 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A83C4022148F0B8C00308FD4 /* Super Splits */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A83C4055148F0B8D00308FD4 /* Build configuration list for PBXNativeTarget "Super Splits" */;
+			buildPhases = (
+				A83C401F148F0B8C00308FD4 /* Sources */,
+				A83C4020148F0B8C00308FD4 /* Frameworks */,
+				A83C4021148F0B8C00308FD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Super Splits";
+			productName = "Super Splits";
+			productReference = A83C4023148F0B8C00308FD4 /* Super Splits.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A83C4043148F0B8D00308FD4 /* Super SplitsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A83C4058148F0B8D00308FD4 /* Build configuration list for PBXNativeTarget "Super SplitsTests" */;
+			buildPhases = (
+				A83C403F148F0B8D00308FD4 /* Sources */,
+				A83C4040148F0B8D00308FD4 /* Frameworks */,
+				A83C4041148F0B8D00308FD4 /* Resources */,
+				A83C4042148F0B8D00308FD4 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A83C4049148F0B8D00308FD4 /* PBXTargetDependency */,
+			);
+			name = "Super SplitsTests";
+			productName = "Super SplitsTests";
+			productReference = A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A83C401A148F0B8C00308FD4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Google;
+			};
+			buildConfigurationList = A83C401D148F0B8C00308FD4 /* Build configuration list for PBXProject "Super Splits" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A83C4018148F0B8C00308FD4;
+			productRefGroup = A83C4024148F0B8C00308FD4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A83C4022148F0B8C00308FD4 /* Super Splits */,
+				A83C4043148F0B8D00308FD4 /* Super SplitsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A83C4021148F0B8C00308FD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83C4032148F0B8C00308FD4 /* InfoPlist.strings in Resources */,
+				A83C4038148F0B8C00308FD4 /* Credits.rtf in Resources */,
+				A83C403E148F0B8D00308FD4 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A83C4041148F0B8D00308FD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A83C4042148F0B8D00308FD4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A83C401F148F0B8C00308FD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83C4034148F0B8C00308FD4 /* main.m in Sources */,
+				A83C403B148F0B8C00308FD4 /* SSAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A83C403F148F0B8D00308FD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A83C4052148F0B8D00308FD4 /* Super_SplitsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A83C4049148F0B8D00308FD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A83C4022148F0B8C00308FD4 /* Super Splits */;
+			targetProxy = A83C4048148F0B8D00308FD4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A83C4030148F0B8C00308FD4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A83C4031148F0B8C00308FD4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A83C4036148F0B8C00308FD4 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A83C4037148F0B8C00308FD4 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A83C403C148F0B8D00308FD4 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A83C403D148F0B8D00308FD4 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A83C404D148F0B8D00308FD4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A83C404E148F0B8D00308FD4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A83C4053148F0B8D00308FD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A83C4054148F0B8D00308FD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A83C4056148F0B8D00308FD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Super Splits/Super Splits-Prefix.pch";
+				INFOPLIST_FILE = "Super Splits/Super Splits-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A83C4057148F0B8D00308FD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Super Splits/Super Splits-Prefix.pch";
+				INFOPLIST_FILE = "Super Splits/Super Splits-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A83C4059148F0B8D00308FD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Super Splits.app/Contents/MacOS/Super Splits";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Super Splits/Super Splits-Prefix.pch";
+				INFOPLIST_FILE = "Super SplitsTests/Super SplitsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		A83C405A148F0B8D00308FD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Super Splits.app/Contents/MacOS/Super Splits";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Super Splits/Super Splits-Prefix.pch";
+				INFOPLIST_FILE = "Super SplitsTests/Super SplitsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A83C401D148F0B8C00308FD4 /* Build configuration list for PBXProject "Super Splits" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A83C4053148F0B8D00308FD4 /* Debug */,
+				A83C4054148F0B8D00308FD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A83C4055148F0B8D00308FD4 /* Build configuration list for PBXNativeTarget "Super Splits" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A83C4056148F0B8D00308FD4 /* Debug */,
+				A83C4057148F0B8D00308FD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A83C4058148F0B8D00308FD4 /* Build configuration list for PBXNativeTarget "Super SplitsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A83C4059148F0B8D00308FD4 /* Debug */,
+				A83C405A148F0B8D00308FD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A83C401A148F0B8C00308FD4 /* Project object */;
+}
