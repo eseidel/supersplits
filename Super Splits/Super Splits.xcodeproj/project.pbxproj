@@ -50,7 +50,7 @@
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
 		A82F31E81490813D00DDEBF2 /* SSRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSRun.h; path = ../SSRun.h; sourceTree = "<group>"; };
 		A82F31E91490813D00DDEBF2 /* SSRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSRun.m; path = ../SSRun.m; sourceTree = "<group>"; };
-		A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SSWindowImageSource.h; sourceTree = "<group>"; };
+		A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSWindowImageSource.h; sourceTree = "<group>"; };
 		A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSWindowImageSource.m; sourceTree = "<group>"; };
 		A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImageProcessor.h; sourceTree = "<group>"; };
 		A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImageProcessor.m; sourceTree = "<group>"; };
@@ -126,11 +126,11 @@
 			isa = PBXGroup;
 			children = (
 				A82F31FD1490953500DDEBF2 /* DebugWindow.xib */,
+				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
 				A82F31D9148F694E00DDEBF2 /* MainWindow.xib */,
 				A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */,
 				A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */,
-				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -138,16 +138,16 @@
 		A82F31FC149094DB00DDEBF2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
-				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
 				A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */,
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
+				A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */,
+				A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */,
 				A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */,
 				A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */,
 				A83C405F148F30FA00308FD4 /* SSMainController.h */,
 				A83C4060148F311200308FD4 /* SSMainController.m */,
-				A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */,
-				A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */,
+				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
+				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -208,12 +208,11 @@
 		A83C402D148F0B8C00308FD4 /* Super Splits */ = {
 			isa = PBXGroup;
 			children = (
-				A887054A14901946002482E8 /* icon.icns */,
-				A82F32501490C7A700DDEBF2 /* Window Controllers */,
-				A82F31FB149094CC00DDEBF2 /* View */,
 				A82F31FC149094DB00DDEBF2 /* Controller */,
 				A82F31FA149094A700DDEBF2 /* Model */,
 				A83C402E148F0B8C00308FD4 /* Supporting Files */,
+				A82F31FB149094CC00DDEBF2 /* View */,
+				A82F32501490C7A700DDEBF2 /* Window Controllers */,
 			);
 			path = "Super Splits";
 			sourceTree = "<group>";
@@ -221,6 +220,7 @@
 		A83C402E148F0B8C00308FD4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A887054A14901946002482E8 /* icon.icns */,
 				A83C402F148F0B8C00308FD4 /* Super Splits-Info.plist */,
 				A83C4030148F0B8C00308FD4 /* InfoPlist.strings */,
 				A83C4033148F0B8C00308FD4 /* main.m */,
