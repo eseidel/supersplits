@@ -10,21 +10,19 @@
 
 @implementation SSImageProcessor
 
--(CGPoint)findMapCenter:(CGImageRef)frame
+-(CGRect)findMiniMap:(CGImageRef)frame
 {
     // FIXME: This is a big hack and only works for the default emulator size.
     if (CGImageGetWidth(frame) != 512 || CGImageGetHeight(frame) != 500)
-        return CGPointZero;
-    
-    const CGFloat titleBarHeight = 22.0;
-    const CGFloat contentTopPadding = 14.0; // SNES98x pads 14px on the top.
-    // 14px of padding at the bottom on SNES98x.
-    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450.
+        return CGRectZero;
+
+    const CGFloat contentBottomPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
+    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450 (title bar is 22px).
     // The map is at 417, 35 (on a 512 x 478 window) and is 82 x 48.
-    CGPoint mapOrigin = { 417, 21 };
-    CGSize mapSize = { 82, 48 };
-    CGPoint mapCenter = { mapOrigin.x + mapSize.width / 2, mapOrigin.y + mapSize.height / 2 };
-    return CGPointMake(mapCenter.x, mapCenter.y + titleBarHeight + contentTopPadding);
+    CGPoint mapOrigin = { 416, 387 };
+    CGSize mapSize = { 84, 52 };
+    CGRect mapRect = { mapOrigin, mapSize };
+    return CGRectOffset(mapRect, 0.0, contentBottomPadding);
 }
 
 -(CGRect)findEnergyText:(CGImageRef)frame
@@ -33,26 +31,25 @@
     if (CGImageGetWidth(frame) != 512 || CGImageGetHeight(frame) != 500)
         return CGRectZero;
     
-    const CGFloat contentBottmPadding = 14.0; // SNES98x pads 14px on the top.
-    // 14px of padding at the bottom on SNES98x.
-    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450.
+    const CGFloat contentBottomPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
+    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450 (title bar is 22px).
     CGPoint textOrigin = { 15, 387 };
     CGSize textSize = { 115, 18 };
     CGRect textRect = { textOrigin, textSize };
-    return CGRectOffset(textRect, 0.0, contentBottmPadding);
+    return CGRectOffset(textRect, 0.0, contentBottomPadding);
 }
 
 -(BOOL)isTransitionScreen:(CGImageRef)frame
 {
     CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
     const uint8 *pixels = CFDataGetBytePtr(pixelData);
-    
+
     size_t height = CGImageGetHeight(frame);
     size_t width = CGImageGetWidth(frame);
     size_t bitsPerPixel = CGImageGetBitsPerPixel(frame);
     size_t bytesPerPixel = bitsPerPixel / 8;
     size_t bytesPerRow = CGImageGetBytesPerRow(frame);
-    
+
     // FIXME: It appears this assertion fails if you resize the window?
     assert(bytesPerPixel * width == bytesPerRow);
 
@@ -135,12 +132,14 @@
     NSImage *image = [[NSImage alloc] init];
     [image addRepresentation:bitmapRep];
 
-    CGRect energyTextRect = [self findEnergyText:frame];
+    [image lockFocus];
+    [[[NSColor whiteColor] colorWithAlphaComponent:.5] setFill];
+    [NSBezierPath fillRect:[self findEnergyText:frame]];
+    [image unlockFocus];
 
     [image lockFocus];
-    NSColor *color = [[NSColor whiteColor] colorWithAlphaComponent:.5];
-    [color setFill];
-    [NSBezierPath fillRect:energyTextRect];
+    [[[NSColor greenColor] colorWithAlphaComponent:.5] setFill];
+    [NSBezierPath fillRect:[self findMiniMap:frame]];
     [image unlockFocus];
 
     return image;

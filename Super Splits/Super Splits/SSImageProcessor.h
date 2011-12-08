@@ -12,7 +12,7 @@
 
 -(NSImage *)createDebugImage:(CGImageRef)frame;
 
--(CGPoint)findMapCenter:(CGImageRef)frame;
+-(CGRect)findMiniMap:(CGImageRef)frame;
 -(CGRect)findEnergyText:(CGImageRef)frame;
 -(BOOL)isTransitionScreen:(CGImageRef)image;
 
