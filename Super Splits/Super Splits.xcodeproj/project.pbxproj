@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
-		A82F31E0148F8C3700DDEBF2 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A82F31DF148F8C3700DDEBF2 /* icon.icns */; };
 		A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
 		A83C4032148F0B8C00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C4030148F0B8C00308FD4 /* InfoPlist.strings */; };
 		A83C4034148F0B8C00308FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4033148F0B8C00308FD4 /* main.m */; };
@@ -22,6 +21,7 @@
 		A83C4052148F0B8D00308FD4 /* Super_SplitsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */; };
 		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
 		A83C4079148F688400308FD4 /* SSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4078148F688300308FD4 /* SSWindowController.m */; };
+		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +38,6 @@
 		A82F31D9148F694E00DDEBF2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
-		A82F31DF148F8C3700DDEBF2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A83C4023148F0B8C00308FD4 /* Super Splits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Splits.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83C4027148F0B8C00308FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A83C402A148F0B8C00308FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -62,6 +61,7 @@
 		A83C4060148F311200308FD4 /* SSMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMainController.m; sourceTree = "<group>"; };
 		A83C4077148F688300308FD4 /* SSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSWindowController.h; sourceTree = "<group>"; };
 		A83C4078148F688300308FD4 /* SSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSWindowController.m; sourceTree = "<group>"; };
+		A887054A14901946002482E8 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +88,6 @@
 		A83C4018148F0B8C00308FD4 = {
 			isa = PBXGroup;
 			children = (
-				A82F31DF148F8C3700DDEBF2 /* icon.icns */,
 				A83C402D148F0B8C00308FD4 /* Super Splits */,
 				A83C404A148F0B8D00308FD4 /* Super SplitsTests */,
 				A83C4026148F0B8C00308FD4 /* Frameworks */,
@@ -128,6 +127,7 @@
 		A83C402D148F0B8C00308FD4 /* Super Splits */ = {
 			isa = PBXGroup;
 			children = (
+				A887054A14901946002482E8 /* icon.icns */,
 				A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */,
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
@@ -249,7 +249,7 @@
 				A83C4038148F0B8C00308FD4 /* Credits.rtf in Resources */,
 				A83C403E148F0B8D00308FD4 /* MainMenu.xib in Resources */,
 				A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */,
-				A82F31E0148F8C3700DDEBF2 /* icon.icns in Resources */,
+				A887054B14901946002482E8 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
