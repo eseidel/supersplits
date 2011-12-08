@@ -9,15 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "SSRun.h"
 #import "SSImageProcessor.h"
+#import "SNESImageSource.h"
 
 @interface SSMainController : NSObject
 {
-    CGWindowID _windowID;
-	NSTimer *_timer;
-
     BOOL _running;  // FIXME: This is just an alias for (BOOL)_timer
 
     SSRun *_run;
+    SNESImageSource *_imageSource;
     SSImageProcessor *_imageProcessor;
 }
 
@@ -27,8 +26,6 @@
 -(void)resetRun;
 -(void)startRun;
 -(void)stopRun;
-
--(CGWindowID)findSNESWindowId;
 
 @end
 

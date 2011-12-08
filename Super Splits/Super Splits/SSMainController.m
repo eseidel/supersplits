@@ -16,6 +16,8 @@
 {
     if (self = [super init]) {
         _imageProcessor = [[SSImageProcessor alloc] init];
+        _imageSource = [[SNESImageSource alloc] init];
+        _imageSource.delegate = self;
     }
     return self;
 }
@@ -23,14 +25,8 @@
 -(void)startRun
 {
     assert(!_running);
-    _windowID = [self findSNESWindowId];
     _running = YES;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 30.0f)
-                                              target:self
-                                            selector:@selector(timerFired)
-                                            userInfo:self
-                                             repeats:true];
-
+    [_imageSource startPollingWithInterval:(1.0 / 30.0)];
     // If we're just paused, we already have a run, and we just resume it.
     if (!_run) {
         _run = [[SSRun alloc] init];
@@ -41,10 +37,8 @@
 -(void)stopRun
 {
     assert(_running);
-    [_timer invalidate];
-    _timer = nil;
+    [_imageSource stopPolling];
     _running = NO;
-    _windowID = kCGNullWindowID; // This isn't strictly necessary.
 }
 
 -(void)resetRun
@@ -68,46 +62,6 @@
     return [runsDirectory URLByAppendingPathComponent:filename];
 }
 
-NSString *kAppNameKey = @"applicationName";	// Application Name & PID
-NSString *kWindowIDKey = @"windowID"; // Window ID
-
-void SNESWindowSearchFunction(const void *inputDictionary, void *context);
-void SNESWindowSearchFunction(const void *inputDictionary, void *context)
-{
-	NSDictionary *entry = (__bridge NSDictionary*)inputDictionary;
-	CGWindowID *snesWindowId = (CGWindowID*)context;
-    CGWindowID windowId = [[entry objectForKey:(id)kCGWindowNumber] unsignedIntValue];
-
-    // Grab the application name, but since it's optional we need to check before we can use it.
-    NSString *applicationName = [entry objectForKey:(id)kCGWindowOwnerName];
-    if (![applicationName isEqualToString:@"Snes9x"]) {
-        //NSLog(@"Ignoring: %d, wrong app.", windowId);
-        return;
-    }
-
-    CGRect bounds;
-    CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)[entry objectForKey:(id)kCGWindowBounds], &bounds);
-    if (bounds.size.width < 200 || bounds.size.height < 200) {
-        //NSLog(@"Ignoring: %d, too small.", windowId);
-        return;
-    }
-
-    *snesWindowId = windowId;
-    NSLog(@"Found window with size: %f x %f, %d", bounds.size.width, bounds.size.height, windowId);
-}
-
--(CGWindowID)findSNESWindowId
-{
-	// Ask the window server for the list of windows.
-	CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListOptionAll, kCGNullWindowID);
-
-	CGWindowID snesWindowId = kCGNullWindowID;
-	CFArrayApplyFunction(windowList, CFRangeMake(0, CFArrayGetCount(windowList)), &SNESWindowSearchFunction, &snesWindowId);
-	CFRelease(windowList);
-
-    return snesWindowId;
-}
-
 // Used for debugging.
 void saveCGImageToPath(CGImageRef image, NSString* path);
 void saveCGImageToPath(CGImageRef image, NSString* path)
@@ -119,16 +73,11 @@ void saveCGImageToPath(CGImageRef image, NSString* path)
     CFRelease(destination);
 }
 
--(void)timerFired
+-(void)nextFrame:(CGImageRef)frame
 {
-    if (!_windowID)
-        return;
-
-    CGImageRef windowImage = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, _windowID, kCGWindowImageBoundsIgnoreFraming | kCGWindowImageShouldBeOpaque);
-
     // Look for if the image is a transition screen.
     // If it's a transition screen, print room time and reset the room timer.
-    if ([_imageProcessor isTransitionScreen:windowImage]) {
+    if ([_imageProcessor isTransitionScreen:frame]) {
         if (![_run inTransition])
             [_run startTransition];
     } else {
@@ -136,7 +85,6 @@ void saveCGImageToPath(CGImageRef image, NSString* path)
             [_run endTransition];
     }
 
-    CGImageRelease(windowImage);
 }
 
 @end

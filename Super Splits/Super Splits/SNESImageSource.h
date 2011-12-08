@@ -3,11 +3,28 @@
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
-//  Copyright (c) 2011 Google. All rights reserved.
+//  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
+@interface NSObject (SNESImageSourceDelegate)
+-(void)nextFrame:(CGImageRef)frame;
+@end
+
+
 @interface SNESImageSource : NSObject
+{
+    CGWindowID _windowID;
+	NSTimer *_timer;
+    NSObject *_delegate;
+}
+
+@property (retain) NSObject *delegate;
+
+-(BOOL)startPollingWithInterval:(NSTimeInterval)interval;
+-(void)stopPolling;
+
+-(CGWindowID)findSNESWindowId;
 
 @end
