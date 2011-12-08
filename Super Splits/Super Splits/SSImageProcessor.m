@@ -3,7 +3,7 @@
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
-//  Copyright (c) 2011 Google. All rights reserved.
+//  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
 #import "SSImageProcessor.h"
@@ -73,7 +73,7 @@
         CFRelease(pixelData);
         return NO;
     }
-    
+
     // FIXME: This works, except when fighting ridley the first time the map is an empty grid.
     //    CGPoint mapCenter = [self findMapCenter:frame];
     //    if (!CGPointEqualToPoint(mapCenter, CGPointZero)) {
