@@ -18,6 +18,7 @@
         _imageProcessor = [[SSImageProcessor alloc] init];
         _imageSource = [[SNESImageSource alloc] init];
         _imageSource.delegate = self;
+        [self resetRun];
     }
     return self;
 }
