@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Carbon/Carbon.h>
 #import "SSWindowController.h"
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
@@ -15,6 +16,12 @@
     SSMainController *_mainController;
 
     IBOutlet NSMenuItem *_startStopMenu;
+	
+	EventHandlerUPP _hotKeyEventHandler;
+	
+	EventHotKeyRef _startStopHotKeyRef;
+	EventHotKeyRef _startStopAlternateHotKeyRef;
+	EventHotKeyRef _resetHotKeyRef;
 }
 
 - (IBAction)resetRun:(id)sender;

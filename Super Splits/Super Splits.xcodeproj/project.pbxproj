@@ -25,6 +25,7 @@
 		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
 		A83C4079148F688400308FD4 /* SSWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4078148F688300308FD4 /* SSWindowController.m */; };
 		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
+		B929E80E14908626009EB322 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B929E80D14908626009EB322 /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		A83C4077148F688300308FD4 /* SSWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSWindowController.h; sourceTree = "<group>"; };
 		A83C4078148F688300308FD4 /* SSWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSWindowController.m; sourceTree = "<group>"; };
 		A887054A14901946002482E8 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		B929E80D14908626009EB322 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */,
+				B929E80E14908626009EB322 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				A83C4027148F0B8C00308FD4 /* Cocoa.framework */,
+				B929E80D14908626009EB322 /* Carbon.framework */,
 				A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */,
 				A83C4029148F0B8C00308FD4 /* Other Frameworks */,
 			);
