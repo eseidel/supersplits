@@ -40,7 +40,7 @@
 
 -(void)resetRun
 {
-    _run = [[SSRun alloc] init];
+    _run = [[SSRunController alloc] init];
 }
 
 -(void)nextFrame:(CGImageRef)frame

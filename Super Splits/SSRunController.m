@@ -6,9 +6,9 @@
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
-#import "SSRun.h"
+#import "SSRunController.h"
 
-@implementation SSRun
+@implementation SSRunController
 
 @synthesize startTime=_overallStart;
 

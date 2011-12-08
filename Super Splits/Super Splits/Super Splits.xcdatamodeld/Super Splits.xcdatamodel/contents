@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="878" systemVersion="11C74" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Run" syncable="YES">
-        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="wallTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="splits" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Split" inverseName="run" inverseEntity="Split" syncable="YES"/>
+    <entity name="SSEvent" representedClassName="SSEvent" syncable="YES">
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="run" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SSRun" inverseName="events" inverseEntity="SSRun" syncable="YES"/>
     </entity>
-    <entity name="Split" syncable="YES">
+    <entity name="SSRun" representedClassName="Run" syncable="YES">
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="wallTime" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="run" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Run" inverseName="splits" inverseEntity="Run" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SSEvent" inverseName="run" inverseEntity="SSEvent" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Run" positionX="160" positionY="81" width="128" height="90"/>
-        <element name="Split" positionX="-117" positionY="57" width="128" height="90"/>
+        <element name="SSEvent" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="SSRun" positionX="160" positionY="81" width="128" height="75"/>
     </elements>
 </model>

@@ -128,6 +128,7 @@ size_t countMatchingPixelsInRect(CGImageRef frame, CFDataRef pixelData, CGRect r
     }
 
     BOOL mostlyBlack = [self frameIsMostlyBlack:frame withPixelData:pixelData];
+    // FIXME: We should compute which direction this transition is.
     CFRelease(pixelData);
     return mostlyBlack;
 }

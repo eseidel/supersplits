@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SSRun : NSObject
+@interface SSRunController : NSObject
 {
     NSDate *_overallStart;
     NSDate *_roomStart;
     NSDate *_transitionStart;
-    
+
     NSMutableArray *_roomSplits;
 }
 

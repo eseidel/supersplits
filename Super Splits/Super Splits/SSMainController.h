@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SSRun.h"
+#import "SSRunController.h"
 #import "SSImageProcessor.h"
 #import "SSWindowImageSource.h"
 
 @interface SSMainController : NSObject
 {
-    SSRun *_run;
+    SSRunController *_run;
     SSWindowImageSource *_imageSource;
     SSImageProcessor *_imageProcessor;
 
@@ -21,7 +21,7 @@
 }
 
 @property (readonly) BOOL running;
-@property (readonly) SSRun *currentRun;
+@property (readonly) SSRunController *currentRun;
 @property (retain) NSImageView *debugImageView;
 
 -(void)resetRun;
