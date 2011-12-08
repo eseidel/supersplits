@@ -10,10 +10,12 @@
 
 @interface SSImageProcessor : NSObject
 
--(NSImage *)createDebugImage:(CGImageRef)frame;
-
 -(CGRect)findMiniMap:(CGImageRef)frame;
 -(CGRect)findEnergyText:(CGImageRef)frame;
--(BOOL)isTransitionScreen:(CGImageRef)image;
+
+-(BOOL)isSupportedImage:(CGImageRef)frame;
+-(BOOL)isTransitionScreen:(CGImageRef)frame;
+
+-(NSImage *)createDebugImage:(CGImageRef)frame;
 
 @end

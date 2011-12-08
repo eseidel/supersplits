@@ -45,6 +45,10 @@
 
 -(void)nextFrame:(CGImageRef)frame
 {
+    // FIXME: We may want to log when we get an unsupported image.
+    if (![_imageProcessor isSupportedImage:frame])
+        return;
+
     if ([_imageProcessor isTransitionScreen:frame]) {
         if (![_run inTransition])
             [_run startTransition];

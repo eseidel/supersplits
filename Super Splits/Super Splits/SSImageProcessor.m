@@ -73,15 +73,8 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
     return matchingPixelCount;
 }
 
--(BOOL)isTransitionScreen:(CGImageRef)frame
+-(BOOL)isSupportedImage:(CGImageRef)frame
 {
-    CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
-    const uint8 *pixels = CFDataGetBytePtr(pixelData);
-
-    // FIXME: We would like to assert(CGImageGetAlphaInfo(frame) == kCGImageAlphaNoneSkipFirst)
-    // but we hit that assert if the user changes spaces.  So for now we just log once
-    // and ignore the window while its off screen.  I'd like to find a better way to test
-    // if the window is offscreen before calling this function so we can assert!
     CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
     if (info != kCGImageAlphaNoneSkipFirst) {
         static BOOL haveLogged = NO;
@@ -89,10 +82,15 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
             NSLog(@"Wrong alpha info?  Target window is likely off-screen? (got: %d, expected: %d)", info, kCGImageAlphaNoneSkipFirst);
             haveLogged = YES;
         }
-        // We don't know anything about the window if it's offscreen?
-        CFRelease(pixelData);
         return NO;
     }
+    return YES;
+}
+
+-(BOOL)isTransitionScreen:(CGImageRef)frame
+{
+    CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
+    const uint8 *pixels = CFDataGetBytePtr(pixelData);
 
     CGRect energyTextRect = [self findEnergyText:frame];
     if (!CGRectEqualToRect(energyTextRect, CGRectZero)) {
