@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
+#import "SSRun.h"
 #import "SSWindowController.h"
 #import "SSTimeIntervalFormatter.h"
 
@@ -39,13 +40,15 @@
 -(void)stopUpdating
 {
     [_updateTimer invalidate];
+    [self updateTimerViews]; // Do one last update.
 }
 
 -(void)updateTimerViews
 {
-    [totalTimeView setObjectValue:[_mainController totalTime]];
-    [roomTimeView setObjectValue:[_mainController roomTime]];
-    [lastRoomSplitView setObjectValue:[_mainController lastRoomSplit]];
+    SSRun *run = [_mainController currentRun];
+    [totalTimeView setObjectValue:[run totalTime]];
+    [roomTimeView setObjectValue:[run roomTime]];
+    [lastRoomSplitView setObjectValue:[run lastRoomSplit]];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SSRun.h"
 
 @interface SSMainController : NSObject
 {
@@ -15,29 +16,18 @@
 
     BOOL _running;  // FIXME: This is just an alias for (BOOL)_timer
 
-    NSDate *_overallStart;
-    NSDate *_roomStart;
-    NSDate *_transitionStart;
-
-    NSMutableArray *_roomSplits;
+    SSRun *_run;
 }
 
 @property BOOL running;
+@property (readonly) SSRun *currentRun;
 
 -(void)resetRun;
 -(void)startRun;
 -(void)stopRun;
 
--(void)startRoom;
--(BOOL)inTransition;
--(void)startTransition;
--(void)endTransition;
-
--(NSNumber *)lastRoomSplit;
--(NSNumber *)roomTime;
--(NSNumber *)totalTime;
-
 -(CGWindowID)findSNESWindowId;
+
 -(CGPoint)findMapCenter:(CGImageRef)frame;
 -(CGRect)findEnergyText:(CGImageRef)frame;
 -(BOOL)isTransitionScreen:(CGImageRef)image;

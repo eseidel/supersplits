@@ -10,7 +10,7 @@
 
 @implementation SSMainController
 
-@synthesize running=_running;
+@synthesize running=_running, currentRun=_run;
 
 -(void)startRun
 {
@@ -23,9 +23,11 @@
                                             userInfo:self
                                              repeats:true];
 
-    // This is a way of detecting if we were paused.
-    if (!_overallStart)
-        [self resetRun];
+    // If we're just paused, we already have a run, and we just resume it.
+    if (!_run) {
+        _run = [[SSRun alloc] init];
+        [_run startRoom];
+    }
 }
 
 -(void)stopRun
@@ -39,16 +41,7 @@
 
 -(void)resetRun
 {
-    if (_running) {
-        _overallStart = [NSDate date];
-        _roomSplits = [NSMutableArray array];
-        [self startRoom];
-    } else {
-        _overallStart = nil;
-        _roomStart = nil;
-        _transitionStart = nil;
-        _roomSplits = nil;
-    }
+    _run = [[SSRun alloc] init];
 }
 
 -(NSURL *)runsDirectoryURL
@@ -60,21 +53,11 @@
     return runsURL;
 }
 
--(NSURL *)urlForCurrentRun
+-(NSURL *)urlForRun
 {
     NSURL *runsDirectory = [self runsDirectoryURL];
-    NSString *filename = [NSString stringWithFormat:@"Splits %s.csv", [_overallStart description]];
+    NSString *filename = [NSString stringWithFormat:@"Splits %s.csv", [[_run  startTime] description]];
     return [runsDirectory URLByAppendingPathComponent:filename];
-}
-
--(void)saveSplits
-{
-    NSURL* runFile = [self urlForCurrentRun];
-    NSMutableString *splitsString = [[NSMutableString alloc] init];
-    for (NSNumber *splitTime in _roomSplits) {
-        [splitsString appendFormat:@"%.2f", [splitTime doubleValue]];
-    }
-    [splitsString writeToURL:runFile atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 NSString *kAppNameKey = @"applicationName";	// Application Name & PID
@@ -178,7 +161,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
         }
         // We don't know anything about the window if it's offscreen?
         CFRelease(pixelData);
-        return [self inTransition];
+        return [_run inTransition];
     }
 
     // FIXME: This works, except when fighting ridley the first time the map is an empty grid.
@@ -229,59 +212,6 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
--(void)startRoom
-{
-    if (_transitionStart) {
-        NSNumber *roomSplit = [self roomTime];
-        double roomSplitDouble = [roomSplit doubleValue];
-        if (roomSplitDouble < 1.5) { // FIXME: Is this too short for the shortest real room?
-            NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomSplitDouble);
-        } else {
-            [_roomSplits addObject:roomSplit];
-            NSLog(@"Room split: %.2fs", roomSplitDouble);
-        }
-    }
-    _roomStart = [NSDate date];
-    _transitionStart = nil;
-}
-
--(BOOL)inTransition
-{
-    return (BOOL)_transitionStart;
-}
-
--(void)startTransition
-{
-    assert(![self inTransition]);
-    _transitionStart = [NSDate date];
-}
-
--(void)endTransition
-{
-    assert([self inTransition]);
-    [self startRoom];
-}
-
--(NSNumber *)lastRoomSplit
-{
-    return [_roomSplits lastObject];
-}
-
--(NSNumber *)roomTime
-{
-    NSTimeInterval roomTime;
-    if ([self inTransition])
-        roomTime = [_transitionStart timeIntervalSinceDate:_roomStart];
-    else
-        roomTime = -[_roomStart timeIntervalSinceNow];
-    return [NSNumber numberWithDouble:roomTime];
-}
-
--(NSNumber *)totalTime
-{
-    return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
-}
-
 // Used for debugging.
 void saveCGImageToPath(CGImageRef image, NSString* path);
 void saveCGImageToPath(CGImageRef image, NSString* path)
@@ -303,11 +233,11 @@ void saveCGImageToPath(CGImageRef image, NSString* path)
     // Look for if the image is a transition screen.
     // If it's a transition screen, print room time and reset the room timer.
     if ([self isTransitionScreen:windowImage]) {
-        if (![self inTransition])
-            [self startTransition];
+        if (![_run inTransition])
+            [_run startTransition];
     } else {
-        if ([self inTransition])
-            [self endTransition];
+        if ([_run inTransition])
+            [_run endTransition];
     }
 
     CGImageRelease(windowImage);

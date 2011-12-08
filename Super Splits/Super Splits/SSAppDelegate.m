@@ -23,7 +23,7 @@
 - (IBAction)resetRun:(id)sender
 {
     [_mainController resetRun];
-    [_windowController updateTimerViews];
+    [_windowController stopUpdating];
 }
 
 - (IBAction)togglePause:(id)sender
