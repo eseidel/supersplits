@@ -8,11 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
-#import "SSWindowController.h"
+#import "SSTimerWindowController.h"
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
 {
-    SSWindowController *_windowController;
+    SSTimerWindowController *_windowController;
     SSMainController *_mainController;
 
     IBOutlet NSMenuItem *_startStopMenu;

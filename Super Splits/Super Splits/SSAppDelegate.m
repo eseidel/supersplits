@@ -31,7 +31,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    _windowController = [[SSWindowController alloc] initWithWindowNibName:@"MainWindow"];
+    _windowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"MainWindow"];
     _mainController = [[SSMainController alloc] init];
     _windowController.mainController = _mainController;
 	

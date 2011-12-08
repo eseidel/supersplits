@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SSMainController.h"
 
-@interface SSWindowController : NSWindowController
+@interface SSTimerWindowController : NSWindowController
 {
     SSMainController *_mainController;
 

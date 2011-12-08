@@ -7,11 +7,11 @@
 //
 
 #import "SSRun.h"
-#import "SSWindowController.h"
+#import "SSTimerWindowController.h"
 #import "SSTimeIntervalFormatter.h"
 
 
-@implementation SSWindowController
+@implementation SSTimerWindowController
 
 @synthesize mainController=_mainController;
 

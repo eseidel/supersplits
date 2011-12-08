@@ -29,7 +29,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">SSWindowController</string>
+				<string key="NSClassName">SSTimerWindowController</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -47,7 +47,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="658788145">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -128,7 +128,6 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{351, 3}, {33, 17}}</string>
 							<reference key="NSSuperview" ref="658788145"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:3944</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="764098857">
@@ -194,7 +193,6 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{461, 54}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="350321285"/>
 					<string key="NSReuseIdentifierKey">_NS:197</string>
 				</object>
