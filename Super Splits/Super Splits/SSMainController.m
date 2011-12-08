@@ -129,8 +129,22 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     size_t bytesPerRow = CGImageGetBytesPerRow(frame);
 
     assert(bytesPerPixel * width == bytesPerRow);
-    // FIXME: We hit this assert when the user changes spaces!
-    assert(kCGImageAlphaNoneSkipFirst == CGImageGetAlphaInfo(frame));
+
+    CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
+
+    // FIXME: We would like to assert(CGImageGetAlphaInfo(frame) == kCGImageAlphaNoneSkipFirst)
+    // but we hit that assert if the user changes spaces.  So for now we just log once
+    // and ignore the window while its off screen.  I'd like to find a better way to test
+    // if the window is offscreen before calling this function so we can assert!
+    if (info != kCGImageAlphaNoneSkipFirst) {
+        static BOOL haveLogged = NO;
+        if (!haveLogged) {
+            NSLog(@"Wrong alpha info?  Target window is likely off-screen? (got: %d, expected: %d)", info, kCGImageAlphaNoneSkipFirst);
+            haveLogged = YES;
+        }
+        // We don't know anything about the window if it's offscreen?
+        return [self inTransition];
+    }
 
     unsigned blackPixelCount = 0;
     for (size_t y = 0; y < height; y++) {
