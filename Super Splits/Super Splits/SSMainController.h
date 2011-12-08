@@ -39,6 +39,7 @@
 
 -(CGWindowID)findSNESWindowId;
 -(CGPoint)findMapCenter:(CGImageRef)frame;
+-(CGRect)findEnergyText:(CGImageRef)frame;
 -(BOOL)isTransitionScreen:(CGImageRef)image;
 
 @end

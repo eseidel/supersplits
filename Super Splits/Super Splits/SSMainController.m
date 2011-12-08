@@ -134,6 +134,22 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     return CGPointMake(mapCenter.x, mapCenter.y + titleBarHeight + contentTopPadding);
 }
 
+-(CGRect)findEnergyText:(CGImageRef)frame
+{
+    // FIXME: This is a big hack and only works for the default emulator size.
+    if (CGImageGetWidth(frame) != 512 || CGImageGetHeight(frame) != 500)
+        return CGRectZero;
+
+    const CGFloat titleBarHeight = 22.0;
+    const CGFloat contentTopPadding = 14.0; // SNES98x pads 14px on the top.
+    // 14px of padding at the bottom on SNES98x.
+    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450.
+    CGPoint textOrigin = { 0, 40 };
+    CGSize textSize = { 130, 20 };
+    CGRect textRect = { textOrigin, textSize };
+    return CGRectOffset(textRect, 0.0, titleBarHeight + contentTopPadding);
+}
+
 -(BOOL)isTransitionScreen:(CGImageRef)frame
 {
     CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
@@ -161,6 +177,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
             haveLogged = YES;
         }
         // We don't know anything about the window if it's offscreen?
+        CFRelease(pixelData);
         return [self inTransition];
     }
 
@@ -174,12 +191,31 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 //        }
 //    }
 
+//    CGRect energyTextRect = [self findEnergyText:frame];
+//    if (!CGRectEqualToRect(energyTextRect, CGRectZero)) {
+//        unsigned whitePixelCount = 0;
+//        for (size_t y = energyTextRect.origin.y; y < energyTextRect.size.height; y++) {
+//            for (size_t x = energyTextRect.origin.x; x < energyTextRect.size.width; x++) {
+//                const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
+//                // It appears that despite this being "skip first" it's the last we should skip?
+//                if (pixel[0] > 230 && pixel[1] > 230 && pixel[2] > 230)
+//                    whitePixelCount++;
+//            }
+//        }
+//        size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
+//
+//        const float percentWhiteEnergyThreshold = 0.5f;
+//        if (whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold)) {
+//            CFRelease(pixelData);
+//            NSLog(@"No energy!");
+//            return YES;
+//        }
+//    }
+
     unsigned blackPixelCount = 0;
     for (size_t y = 0; y < height; y++) {
         for (size_t x = 0; x < width; x++) {
             const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
-//            if (y == 100)
-//                NSLog(@"%d,%d: %d %d %d %d", x, y, pixel[0], pixel[1], pixel[2], pixel[3]);
             // It appears that despite this being "skip first" it's the last we should skip?
             if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5)
                 blackPixelCount++;
