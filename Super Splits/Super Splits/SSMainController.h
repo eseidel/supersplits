@@ -18,10 +18,13 @@
     SSRun *_run;
     SNESImageSource *_imageSource;
     SSImageProcessor *_imageProcessor;
+
+    NSImageView *_debugImageView;
 }
 
 @property BOOL running;
 @property (readonly) SSRun *currentRun;
+@property (retain) NSImageView *debugImageView;
 
 -(void)resetRun;
 -(void)startRun;

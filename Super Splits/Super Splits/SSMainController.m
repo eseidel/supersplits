@@ -10,7 +10,7 @@
 
 @implementation SSMainController
 
-@synthesize running=_running, currentRun=_run;
+@synthesize running=_running, currentRun=_run, debugImageView=_debugImageView;
 
 -(id)init
 {
@@ -79,6 +79,9 @@ void saveCGImageToPath(CGImageRef image, NSString* path)
     } else {
         if ([_run inTransition])
             [_run endTransition];
+    }
+    if (_debugImageView) {
+        [_debugImageView setImage:[_imageProcessor createDebugImage:frame]];
     }
 }
 

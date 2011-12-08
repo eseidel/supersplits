@@ -10,6 +10,8 @@
 
 @interface SSImageProcessor : NSObject
 
+-(NSImage *)createDebugImage:(CGImageRef)frame;
+
 -(CGPoint)findMapCenter:(CGImageRef)frame;
 -(CGRect)findEnergyText:(CGImageRef)frame;
 -(BOOL)isTransitionScreen:(CGImageRef)image;

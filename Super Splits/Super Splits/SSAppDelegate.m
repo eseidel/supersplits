@@ -14,9 +14,9 @@
 static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void * userData) {
 	EventHotKeyID hotKeyID;
 	GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hotKeyID) ,NULL, &hotKeyID);
-	
+
 	SSAppDelegate * appDelegate = (__bridge SSAppDelegate*)userData;
-	
+
 	if (hotKeyID.signature == START_STOP_HOT_KEY_ID) {
 		[appDelegate togglePause:nil];
 	}
@@ -31,9 +31,9 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    _windowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"MainWindow"];
+    _timerWindowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"MainWindow"];
     _mainController = [[SSMainController alloc] init];
-    _windowController.mainController = _mainController;
+    _timerWindowController.mainController = _mainController;
 	
 	_hotKeyEventHandler = NewEventHandlerUPP(HotKeyHandler);
 	
@@ -63,24 +63,34 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 	}
 
     // Force the controller to load (and show) the window:
-    [_windowController window];
+    [_timerWindowController window];
 }
 
 - (IBAction)resetRun:(id)sender
 {
     [_mainController resetRun];
-    [_windowController stopUpdating];
+    [_timerWindowController stopUpdating];
 }
 
 - (IBAction)togglePause:(id)sender
 {
     if (!_mainController.running) {
         [_mainController startRun];
-        [_windowController startUpdating];
+        [_timerWindowController startUpdating];
     } else {
         [_mainController stopRun];
-        [_windowController stopUpdating];
+        [_timerWindowController stopUpdating];
     }
+}
+
+- (IBAction)showDebugWindow:(id)sender
+{
+    if (!_debugWindowController) {
+        _debugWindowController = [[SSDebugWindowController alloc] initWithWindowNibName:@"DebugWindow"];
+        [_debugWindowController window]; // Load the window.
+        [_mainController setDebugImageView:[_debugWindowController debugImageView]];
+    }
+    [[_debugWindowController window] makeKeyAndOrderFront:self];
 }
 
 @end

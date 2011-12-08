@@ -122,4 +122,12 @@
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
+-(NSImage *)createDebugImage:(CGImageRef)frame
+{
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:frame];
+    NSImage *image = [[NSImage alloc] init];
+    [image addRepresentation:bitmapRep];
+    return image;
+}
+
 @end
