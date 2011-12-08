@@ -117,11 +117,28 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     return snesWindowId;
 }
 
+-(CGPoint)findMapCenter:(CGImageRef)frame
+{
+    // FIXME: This is a big hack and only works for the default emulator size.
+    if (CGImageGetWidth(frame) != 512 || CGImageGetHeight(frame) != 500)
+        return CGPointZero;
+
+    const CGFloat titleBarHeight = 22.0;
+    const CGFloat contentTopPadding = 14.0; // SNES98x pads 14px on the top.
+    // 14px of padding at the bottom on SNES98x.
+    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450.
+    // The map is at 417, 35 (on a 512 x 478 window) and is 82 x 48.
+    CGPoint mapOrigin = { 417, 21 };
+    CGSize mapSize = { 82, 48 };
+    CGPoint mapCenter = { mapOrigin.x + mapSize.width / 2, mapOrigin.y + mapSize.height / 2 };
+    return CGPointMake(mapCenter.x, mapCenter.y + titleBarHeight + contentTopPadding);
+}
+
 -(BOOL)isTransitionScreen:(CGImageRef)frame
 {
     CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
     const uint8 *pixels = CFDataGetBytePtr(pixelData);
-
+    
     size_t height = CGImageGetHeight(frame);
     size_t width = CGImageGetWidth(frame);
     size_t bitsPerPixel = CGImageGetBitsPerPixel(frame);
@@ -146,6 +163,16 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
         // We don't know anything about the window if it's offscreen?
         return [self inTransition];
     }
+
+    // FIXME: This works, except when fighting ridley the first time the map is an empty grid.
+//    CGPoint mapCenter = [self findMapCenter:frame];
+//    if (!CGPointEqualToPoint(mapCenter, CGPointZero)) {
+//        const uint8 *pixel = pixels + (int)mapCenter.y * bytesPerRow + (int)mapCenter.x * bytesPerPixel;
+//        // If the center of the map is black, this must be a cut-scene!
+//        if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5) {
+//            return YES;
+//        }
+//    }
 
     unsigned blackPixelCount = 0;
     for (size_t y = 0; y < height; y++) {

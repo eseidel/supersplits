@@ -38,6 +38,7 @@
 -(NSNumber *)totalTime;
 
 -(CGWindowID)findSNESWindowId;
+-(CGPoint)findMapCenter:(CGImageRef)frame;
 -(BOOL)isTransitionScreen:(CGImageRef)image;
 
 @end
