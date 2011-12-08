@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SSRun.h"
+#import "SSImageProcessor.h"
 
 @interface SSMainController : NSObject
 {
@@ -17,6 +18,7 @@
     BOOL _running;  // FIXME: This is just an alias for (BOOL)_timer
 
     SSRun *_run;
+    SSImageProcessor *_imageProcessor;
 }
 
 @property BOOL running;
@@ -27,10 +29,6 @@
 -(void)stopRun;
 
 -(CGWindowID)findSNESWindowId;
-
--(CGPoint)findMapCenter:(CGImageRef)frame;
--(CGRect)findEnergyText:(CGImageRef)frame;
--(BOOL)isTransitionScreen:(CGImageRef)image;
 
 @end
 
