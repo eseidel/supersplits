@@ -22,15 +22,6 @@
     return self;
 }
 
--(void)writeToURL:(NSURL *)url
-{
-    NSMutableString *splitsString = [[NSMutableString alloc] init];
-    for (NSNumber *splitTime in _roomSplits) {
-        [splitsString appendFormat:@"%.2f", [splitTime doubleValue]];
-    }
-    [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:nil];
-}
-
 -(void)startRoom
 {
     if (_transitionStart) {

@@ -19,8 +19,6 @@
 
 @property (readonly) NSDate *startTime;
 
--(void)writeToURL:(NSURL *)url;
-
 -(void)startRoom;
 -(BOOL)inTransition;
 -(void)startTransition;
