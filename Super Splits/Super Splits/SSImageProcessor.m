@@ -39,9 +39,11 @@
     return CGRectOffset(textRect, 0.0, contentBottomPadding);
 }
 
-size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect rect, const uint8 lowPixel[4], const uint8 highPixel[4]);
-size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect rect, const uint8 lowPixel[4], const uint8 highPixel[4])
+size_t countMatchingPixelsInRect(CGImageRef frame, CFDataRef pixelData, CGRect rect, const uint8 lowPixel[4], const uint8 highPixel[4]);
+size_t countMatchingPixelsInRect(CGImageRef frame, CFDataRef pixelData, CGRect rect, const uint8 lowPixel[4], const uint8 highPixel[4])
 {
+    const uint8 *pixels = CFDataGetBytePtr(pixelData);
+
     size_t height = CGImageGetHeight(frame);
     size_t bitsPerPixel = CGImageGetBitsPerPixel(frame);
     size_t bytesPerPixel = bitsPerPixel / 8;
@@ -89,14 +91,13 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
 
 -(BOOL)frameIsMissingEnergyText:(CGImageRef)frame withPixelData:(CFDataRef)pixelData
 {
-    const uint8 *pixels = CFDataGetBytePtr(pixelData);
     CGRect energyTextRect = [self findEnergyText:frame];
     if (CGRectEqualToRect(energyTextRect, CGRectZero))
         return NO;  // We don't know, so assume not.
 
     const uint8 lowPixel[4] = {200, 200, 200, 0};
     const uint8 highPixel[4] =  {255, 255, 255, 255};
-    size_t whitePixelCount = countMatchingPixelsInRect(frame, pixels, energyTextRect, lowPixel, highPixel);
+    size_t whitePixelCount = countMatchingPixelsInRect(frame, pixelData, energyTextRect, lowPixel, highPixel);
     
     // The Energy text is white, but few of the pixels are actually fully white.
     // If more than 15% of our pixels white, assume it's the energy text.
@@ -107,11 +108,10 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
 
 -(BOOL)frameIsMostlyBlack:(CGImageRef)frame withPixelData:(CFDataRef)pixelData
 {
-    const uint8 *pixels = CFDataGetBytePtr(pixelData);
     const uint8 lowPixel[4] = {0, 0, 0, 0};
     const uint8 highPixel[4] =  {5, 5, 5, 255};
     CGRect fullRect = CGRectMake(0, 0, CGImageGetWidth(frame), CGImageGetHeight(frame));
-    size_t blackPixelCount = countMatchingPixelsInRect(frame, pixels, fullRect, lowPixel, highPixel);
+    size_t blackPixelCount = countMatchingPixelsInRect(frame, pixelData, fullRect, lowPixel, highPixel);
     
     const float percentBlackTransitionThreshold = 0.8f;
     size_t totalPixelCount = fullRect.size.height * fullRect.size.width;
