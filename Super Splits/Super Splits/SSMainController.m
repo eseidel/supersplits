@@ -169,8 +169,13 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 {
     if (_transitionStart) {
         NSNumber *roomSplit = [self roomTime];
-        [_roomSplits addObject:roomSplit];
-        NSLog(@"Room split: %.2fs", [roomSplit doubleValue]);
+        double roomSplitDouble = [roomSplit doubleValue];
+        if (roomSplitDouble < 1.5) { // FIXME: Is this too short for the shortest real room?
+            NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomSplitDouble);
+        } else {
+            [_roomSplits addObject:roomSplit];
+            NSLog(@"Room split: %.2fs", roomSplitDouble);
+        }
     }
     _roomStart = [NSDate date];
     _transitionStart = nil;
