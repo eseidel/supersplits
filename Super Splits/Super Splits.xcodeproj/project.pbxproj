@@ -142,20 +142,27 @@
 				A82F31ED1490820900DDEBF2 /* SNESImageSource.m */,
 				A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */,
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
-				A82F31F71490948C00DDEBF2 /* SSDebugWindowController.h */,
-				A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */,
-				A82F324A1490BF8800DDEBF2 /* SSHistoryWindowController.h */,
-				A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */,
 				A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */,
 				A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */,
 				A83C405F148F30FA00308FD4 /* SSMainController.h */,
 				A83C4060148F311200308FD4 /* SSMainController.m */,
-				A83C4077148F688300308FD4 /* SSTimerWindowController.h */,
-				A83C4078148F688300308FD4 /* SSTimerWindowController.m */,
 				A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */,
 				A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		A82F32501490C7A700DDEBF2 /* Window Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A82F31F71490948C00DDEBF2 /* SSDebugWindowController.h */,
+				A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */,
+				A82F324A1490BF8800DDEBF2 /* SSHistoryWindowController.h */,
+				A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */,
+				A83C4077148F688300308FD4 /* SSTimerWindowController.h */,
+				A83C4078148F688300308FD4 /* SSTimerWindowController.m */,
+			);
+			name = "Window Controllers";
 			sourceTree = "<group>";
 		};
 		A83C4018148F0B8C00308FD4 = {
@@ -202,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				A887054A14901946002482E8 /* icon.icns */,
+				A82F32501490C7A700DDEBF2 /* Window Controllers */,
 				A82F31FB149094CC00DDEBF2 /* View */,
 				A82F31FC149094DB00DDEBF2 /* Controller */,
 				A82F31FA149094A700DDEBF2 /* Model */,
