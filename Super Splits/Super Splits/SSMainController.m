@@ -28,9 +28,6 @@
     assert(!_running);
     _running = YES;
     [_imageSource startPollingWithInterval:(1.0 / 30.0)];
-    // If we're just paused, we already have a run, and we just resume it.
-    if (!_run)
-        _run = [[SSRun alloc] init];
 }
 
 -(void)stopRun
