@@ -96,8 +96,10 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (IBAction)showHistoryWindow:(id)sender
 {
-    if (!_historyWindowController)
+    if (!_historyWindowController) {
         _historyWindowController = [[SSHistoryWindowController alloc] initWithWindowNibName:@"HistoryWindow"];
+        _historyWindowController.coreDataController = _coreDataController;
+    }
     [[_historyWindowController window] makeKeyAndOrderFront:self];
 }
 
