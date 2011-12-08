@@ -48,6 +48,9 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
     assert(bytesPerPixel == 4); // This function assumes 4-byte pixels.
     size_t bytesPerRow = CGImageGetBytesPerRow(frame);
 
+    // FIXME: It appears this assertion fails if you resize the window?
+    assert(bytesPerPixel * CGImageGetWidth(frame) == bytesPerRow);
+
     size_t matchingPixelCount = 0;
 
     // Careful to flip from CG coordinates to offsets into the pixel buffer.
@@ -75,21 +78,11 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
     CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
     const uint8 *pixels = CFDataGetBytePtr(pixelData);
 
-    size_t height = CGImageGetHeight(frame);
-    size_t width = CGImageGetWidth(frame);
-    size_t bitsPerPixel = CGImageGetBitsPerPixel(frame);
-    size_t bytesPerPixel = bitsPerPixel / 8;
-    size_t bytesPerRow = CGImageGetBytesPerRow(frame);
-
-    // FIXME: It appears this assertion fails if you resize the window?
-    assert(bytesPerPixel * width == bytesPerRow);
-
-    CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
-
     // FIXME: We would like to assert(CGImageGetAlphaInfo(frame) == kCGImageAlphaNoneSkipFirst)
     // but we hit that assert if the user changes spaces.  So for now we just log once
     // and ignore the window while its off screen.  I'd like to find a better way to test
     // if the window is offscreen before calling this function so we can assert!
+    CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
     if (info != kCGImageAlphaNoneSkipFirst) {
         static BOOL haveLogged = NO;
         if (!haveLogged) {
@@ -119,12 +112,12 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
 
     const uint8 lowPixel[4] = {0, 0, 0, 0};
     const uint8 highPixel[4] =  {5, 5, 5, 255};
-    CGRect fullRect = CGRectMake(0, 0, width, height);
+    CGRect fullRect = CGRectMake(0, 0, CGImageGetWidth(frame), CGImageGetHeight(frame));
     size_t blackPixelCount = countMatchingPixelsInRect(frame, pixels, fullRect, lowPixel, highPixel);
     CFRelease(pixelData);
 
     const float percentBlackTransitionThreshold = 0.8f;
-    size_t totalPixelCount = height * width;
+    size_t totalPixelCount = fullRect.size.height * fullRect.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
