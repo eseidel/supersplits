@@ -39,6 +39,37 @@
     return CGRectOffset(textRect, 0.0, contentBottomPadding);
 }
 
+size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect rect, const uint8 lowPixel[4], const uint8 highPixel[4]);
+size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect rect, const uint8 lowPixel[4], const uint8 highPixel[4])
+{
+    size_t height = CGImageGetHeight(frame);
+    size_t bitsPerPixel = CGImageGetBitsPerPixel(frame);
+    size_t bytesPerPixel = bitsPerPixel / 8;
+    assert(bytesPerPixel == 4); // This function assumes 4-byte pixels.
+    size_t bytesPerRow = CGImageGetBytesPerRow(frame);
+
+    size_t matchingPixelCount = 0;
+
+    // Careful to flip from CG coordinates to offsets into the pixel buffer.
+    size_t minX = rect.origin.x;
+    size_t minY = height - CGRectGetMaxY(rect);
+    size_t maxX = CGRectGetMaxX(rect);
+    size_t maxY = height - rect.origin.y;
+
+    for (size_t y = minY; y < maxY; y++) {
+        for (size_t x = minX; x < maxX; x++) {
+            const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
+            // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
+            if (pixel[0] >= lowPixel[0] && pixel[0] <= highPixel[0]
+                && pixel[1] >= lowPixel[1] && pixel[1] <= highPixel[1]
+                && pixel[2] >= lowPixel[2] && pixel[2] <= highPixel[2]
+                && pixel[3] >= lowPixel[3] && pixel[3] <= highPixel[3])
+                matchingPixelCount++;
+        }
+    }
+    return matchingPixelCount;
+}
+
 -(BOOL)isTransitionScreen:(CGImageRef)frame
 {
     CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
@@ -70,59 +101,30 @@
         return NO;
     }
 
-// FIXME: This works, except when fighting ridley the first time the map is an empty grid.
-//    CGPoint mapCenter = [self findMapCenter:frame];
-//    if (!CGPointEqualToPoint(mapCenter, CGPointZero)) {
-//        const uint8 *pixel = pixels + (int)mapCenter.y * bytesPerRow + (int)mapCenter.x * bytesPerPixel;
-//        // If the center of the map is black, this must be a cut-scene!
-//        if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5) {
-//            return YES;
-//        }
-//    }
-
     CGRect energyTextRect = [self findEnergyText:frame];
     if (!CGRectEqualToRect(energyTextRect, CGRectZero)) {
-        unsigned whitePixelCount = 0;
-
-        // Careful to flip from CG coordinates to offsets into the pixel buffer.
-        size_t minX = energyTextRect.origin.x;
-        size_t minY = height - CGRectGetMaxY(energyTextRect);
-        size_t maxX = CGRectGetMaxX(energyTextRect);
-        size_t maxY = height - energyTextRect.origin.y;
-
-        for (size_t y = minY; y < maxY; y++) {
-            for (size_t x = minX; x < maxX; x++) {
-                const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
-                // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
-                if (pixel[0] > 200 && pixel[1] > 200 && pixel[2] > 200)
-                    whitePixelCount++;
-            }
-        }
-        size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
+        const uint8 lowPixel[4] = {200, 200, 200, 0};
+        const uint8 highPixel[4] =  {255, 255, 255, 255};
+        size_t whitePixelCount = countMatchingPixelsInRect(frame, pixels, energyTextRect, lowPixel, highPixel);
 
         // The Energy text is white, but few of the pixels are actually fully white.
         // If more than 15% of our pixels white, assume it's the energy text.
         const float percentWhiteEnergyThreshold = 0.15f;
+        size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
         if (whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold)) {
             CFRelease(pixelData);
             return YES;
         }
     }
 
-    size_t totalPixelCount = height * width;
-    unsigned blackPixelCount = 0;
-    for (size_t y = 0; y < height; y++) {
-        for (size_t x = 0; x < width; x++) {
-            const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
-            // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
-            if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5)
-                blackPixelCount++;
-        }
-    }
-    //    NSLog(@"Black pixels: %u, total: %lu", blackPixelCount, totalPixelCount);
+    const uint8 lowPixel[4] = {0, 0, 0, 0};
+    const uint8 highPixel[4] =  {5, 5, 5, 255};
+    CGRect fullRect = CGRectMake(0, 0, width, height);
+    size_t blackPixelCount = countMatchingPixelsInRect(frame, pixels, fullRect, lowPixel, highPixel);
     CFRelease(pixelData);
-    
+
     const float percentBlackTransitionThreshold = 0.8f;
+    size_t totalPixelCount = height * width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
