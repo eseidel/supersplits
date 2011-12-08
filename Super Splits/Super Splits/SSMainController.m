@@ -128,6 +128,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     size_t bytesPerPixel = bitsPerPixel / 8;
     size_t bytesPerRow = CGImageGetBytesPerRow(frame);
 
+    // FIXME: It appears this assertion fails if you resize the window?
     assert(bytesPerPixel * width == bytesPerRow);
 
     CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
@@ -216,6 +217,17 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 -(NSNumber *)totalTime
 {
     return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
+}
+
+// Used for debugging.
+void saveCGImageToPath(CGImageRef image, NSString* path);
+void saveCGImageToPath(CGImageRef image, NSString* path)
+{
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
+    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+    CGImageDestinationAddImage(destination, image, nil);
+    CGImageDestinationFinalize(destination);
+    CFRelease(destination);
 }
 
 -(void)timerFired
