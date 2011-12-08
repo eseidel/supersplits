@@ -14,6 +14,10 @@
 		A82F31F1149089E900DDEBF2 /* SSImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */; };
 		A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */; };
 		A82F31FE1490953500DDEBF2 /* DebugWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31FD1490953500DDEBF2 /* DebugWindow.xib */; };
+		A82F32471490B87500DDEBF2 /* Super Splits.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */; };
+		A82F32491490BBC300DDEBF2 /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */; };
+		A82F324C1490BF8900DDEBF2 /* SSHistoryWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */; };
+		A82F324F1490C01000DDEBF2 /* SSCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */; };
 		A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
 		A83C4032148F0B8C00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C4030148F0B8C00308FD4 /* InfoPlist.strings */; };
 		A83C4034148F0B8C00308FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4033148F0B8C00308FD4 /* main.m */; };
@@ -53,6 +57,12 @@
 		A82F31F71490948C00DDEBF2 /* SSDebugWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDebugWindowController.h; sourceTree = "<group>"; };
 		A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDebugWindowController.m; sourceTree = "<group>"; };
 		A82F31FD1490953500DDEBF2 /* DebugWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugWindow.xib; sourceTree = "<group>"; };
+		A82F32461490B87500DDEBF2 /* Super Splits.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Super Splits.xcdatamodel"; sourceTree = "<group>"; };
+		A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryWindow.xib; sourceTree = "<group>"; };
+		A82F324A1490BF8800DDEBF2 /* SSHistoryWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSHistoryWindowController.h; sourceTree = "<group>"; };
+		A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSHistoryWindowController.m; sourceTree = "<group>"; };
+		A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCoreDataController.h; sourceTree = "<group>"; };
+		A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCoreDataController.m; sourceTree = "<group>"; };
 		A83C4023148F0B8C00308FD4 /* Super Splits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Super Splits.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83C4027148F0B8C00308FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A83C402A148F0B8C00308FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -105,6 +115,7 @@
 		A82F31FA149094A700DDEBF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
 				A82F31E81490813D00DDEBF2 /* SSRun.h */,
 				A82F31E91490813D00DDEBF2 /* SSRun.m */,
 			);
@@ -114,11 +125,12 @@
 		A82F31FB149094CC00DDEBF2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A82F31FD1490953500DDEBF2 /* DebugWindow.xib */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
 				A82F31D9148F694E00DDEBF2 /* MainWindow.xib */,
 				A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */,
 				A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */,
-				A82F31FD1490953500DDEBF2 /* DebugWindow.xib */,
+				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -132,12 +144,16 @@
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
 				A82F31F71490948C00DDEBF2 /* SSDebugWindowController.h */,
 				A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */,
+				A82F324A1490BF8800DDEBF2 /* SSHistoryWindowController.h */,
+				A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */,
 				A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */,
 				A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */,
 				A83C405F148F30FA00308FD4 /* SSMainController.h */,
 				A83C4060148F311200308FD4 /* SSMainController.m */,
 				A83C4077148F688300308FD4 /* SSTimerWindowController.h */,
 				A83C4078148F688300308FD4 /* SSTimerWindowController.m */,
+				A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */,
+				A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -302,6 +318,7 @@
 				A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */,
 				A887054B14901946002482E8 /* icon.icns in Resources */,
 				A82F31FE1490953500DDEBF2 /* DebugWindow.xib in Resources */,
+				A82F32491490BBC300DDEBF2 /* HistoryWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +362,9 @@
 				A82F31EE1490820900DDEBF2 /* SNESImageSource.m in Sources */,
 				A82F31F1149089E900DDEBF2 /* SSImageProcessor.m in Sources */,
 				A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */,
+				A82F32471490B87500DDEBF2 /* Super Splits.xcdatamodeld in Sources */,
+				A82F324C1490BF8900DDEBF2 /* SSHistoryWindowController.m in Sources */,
+				A82F324F1490C01000DDEBF2 /* SSCoreDataController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +550,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A82F32461490B87500DDEBF2 /* Super Splits.xcdatamodel */,
+			);
+			currentVersion = A82F32461490B87500DDEBF2 /* Super Splits.xcdatamodel */;
+			path = "Super Splits.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A83C401A148F0B8C00308FD4 /* Project object */;
 }

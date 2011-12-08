@@ -10,12 +10,16 @@
 #import <Carbon/Carbon.h>
 #import "SSTimerWindowController.h"
 #import "SSDebugWindowController.h"
+#import "SSHistoryWindowController.h"
+#import "SSCoreDataController.h"
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
 {
     SSTimerWindowController *_timerWindowController;
     SSDebugWindowController *_debugWindowController;
+    SSHistoryWindowController *_historyWindowController;
     SSMainController *_mainController;
+    SSCoreDataController *_coreDataController;
 
     IBOutlet NSMenuItem *_startStopMenu;
 	
@@ -29,5 +33,8 @@
 - (IBAction)resetRun:(id)sender;
 - (IBAction)togglePause:(id)sender;
 - (IBAction)showDebugWindow:(id)sender;
+- (IBAction)showHistoryWindow:(id)sender;
+
+- (IBAction)saveAction:(id)sender;
 
 @end

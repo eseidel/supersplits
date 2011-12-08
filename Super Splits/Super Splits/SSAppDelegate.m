@@ -34,7 +34,8 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     _timerWindowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"MainWindow"];
     _mainController = [[SSMainController alloc] init];
     _timerWindowController.mainController = _mainController;
-	
+    _coreDataController = [[SSCoreDataController alloc] init];
+
 	_hotKeyEventHandler = NewEventHandlerUPP(HotKeyHandler);
 	
 	EventTypeSpec eventType = {
@@ -91,6 +92,42 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
         [_mainController setDebugImageView:[_debugWindowController debugImageView]];
     }
     [[_debugWindowController window] makeKeyAndOrderFront:self];
+}
+
+- (IBAction)showHistoryWindow:(id)sender
+{
+    if (!_historyWindowController)
+        _historyWindowController = [[SSHistoryWindowController alloc] initWithWindowNibName:@"HistoryWindow"];
+    [[_historyWindowController window] makeKeyAndOrderFront:self];
+}
+
+/**
+ Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
+ */
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
+{
+    return [[_coreDataController managedObjectContext] undoManager];
+}
+
+/**
+ Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
+ */
+- (IBAction)saveAction:(id)sender
+{
+    NSError *error = nil;
+    
+    if (![[_coreDataController managedObjectContext] commitEditing]) {
+        NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
+    }
+    
+    if (![[_coreDataController managedObjectContext] save:&error]) {
+        [[NSApplication sharedApplication] presentError:error];
+    }
+}
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+    return [_coreDataController applicationShouldTerminate:sender];
 }
 
 @end
