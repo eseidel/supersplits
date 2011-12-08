@@ -87,36 +87,49 @@ size_t countMatchingPixelsInRect(CGImageRef frame, const uint8 *pixels, CGRect r
     return YES;
 }
 
--(BOOL)isTransitionScreen:(CGImageRef)frame
+-(BOOL)frameIsMissingEnergyText:(CGImageRef)frame withPixelData:(CFDataRef)pixelData
 {
-    CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
     const uint8 *pixels = CFDataGetBytePtr(pixelData);
-
     CGRect energyTextRect = [self findEnergyText:frame];
-    if (!CGRectEqualToRect(energyTextRect, CGRectZero)) {
-        const uint8 lowPixel[4] = {200, 200, 200, 0};
-        const uint8 highPixel[4] =  {255, 255, 255, 255};
-        size_t whitePixelCount = countMatchingPixelsInRect(frame, pixels, energyTextRect, lowPixel, highPixel);
+    if (CGRectEqualToRect(energyTextRect, CGRectZero))
+        return NO;  // We don't know, so assume not.
 
-        // The Energy text is white, but few of the pixels are actually fully white.
-        // If more than 15% of our pixels white, assume it's the energy text.
-        const float percentWhiteEnergyThreshold = 0.15f;
-        size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
-        if (whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold)) {
-            CFRelease(pixelData);
-            return YES;
-        }
-    }
+    const uint8 lowPixel[4] = {200, 200, 200, 0};
+    const uint8 highPixel[4] =  {255, 255, 255, 255};
+    size_t whitePixelCount = countMatchingPixelsInRect(frame, pixels, energyTextRect, lowPixel, highPixel);
+    
+    // The Energy text is white, but few of the pixels are actually fully white.
+    // If more than 15% of our pixels white, assume it's the energy text.
+    const float percentWhiteEnergyThreshold = 0.15f;
+    size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
+    return whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold);
+}
 
+-(BOOL)frameIsMostlyBlack:(CGImageRef)frame withPixelData:(CFDataRef)pixelData
+{
+    const uint8 *pixels = CFDataGetBytePtr(pixelData);
     const uint8 lowPixel[4] = {0, 0, 0, 0};
     const uint8 highPixel[4] =  {5, 5, 5, 255};
     CGRect fullRect = CGRectMake(0, 0, CGImageGetWidth(frame), CGImageGetHeight(frame));
     size_t blackPixelCount = countMatchingPixelsInRect(frame, pixels, fullRect, lowPixel, highPixel);
-    CFRelease(pixelData);
-
+    
     const float percentBlackTransitionThreshold = 0.8f;
     size_t totalPixelCount = fullRect.size.height * fullRect.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
+}
+
+-(BOOL)isTransitionScreen:(CGImageRef)frame
+{
+    CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(frame));
+
+    if ([self frameIsMissingEnergyText:frame withPixelData:pixelData]) {
+        CFRelease(pixelData);
+        return YES;
+    }
+
+    BOOL mostlyBlack = [self frameIsMostlyBlack:frame withPixelData:pixelData];
+    CFRelease(pixelData);
+    return mostlyBlack;
 }
 
 -(NSImage *)createDebugImage:(CGImageRef)frame
