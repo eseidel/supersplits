@@ -45,8 +45,6 @@
 
 -(void)nextFrame:(CGImageRef)frame
 {
-    // Look for if the image is a transition screen.
-    // If it's a transition screen, print room time and reset the room timer.
     if ([_imageProcessor isTransitionScreen:frame]) {
         if (![_run inTransition])
             [_run startTransition];
@@ -54,9 +52,9 @@
         if ([_run inTransition])
             [_run endTransition];
     }
-    if (_debugImageView) {
+
+    if (_debugImageView)
         [_debugImageView setImage:[_imageProcessor createDebugImage:frame]];
-    }
 }
 
 @end
