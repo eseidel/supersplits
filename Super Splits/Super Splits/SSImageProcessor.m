@@ -36,8 +36,8 @@
     const CGFloat contentBottmPadding = 14.0; // SNES98x pads 14px on the top.
     // 14px of padding at the bottom on SNES98x.
     // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450.
-    CGPoint textOrigin = { 0, 385 };
-    CGSize textSize = { 130, 20 };
+    CGPoint textOrigin = { 15, 387 };
+    CGSize textSize = { 115, 18 };
     CGRect textRect = { textOrigin, textSize };
     return CGRectOffset(textRect, 0.0, contentBottmPadding);
 }
@@ -104,8 +104,8 @@
         size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
 
         // The Energy text is white, but few of the pixels are actually fully white.
-        // If more than 5% of our pixels white, assume it's the energy text.
-        const float percentWhiteEnergyThreshold = 0.05f;
+        // If more than 15% of our pixels white, assume it's the energy text.
+        const float percentWhiteEnergyThreshold = 0.15f;
         if (whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold)) {
             CFRelease(pixelData);
             return YES;
@@ -138,7 +138,7 @@
     CGRect energyTextRect = [self findEnergyText:frame];
 
     [image lockFocus];
-    NSColor *color = [NSColor whiteColor];
+    NSColor *color = [[NSColor whiteColor] colorWithAlphaComponent:.5];
     [color setFill];
     [NSBezierPath fillRect:energyTextRect];
     [image unlockFocus];
