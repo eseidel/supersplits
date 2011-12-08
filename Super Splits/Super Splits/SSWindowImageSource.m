@@ -6,9 +6,9 @@
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
-#import "SNESImageSource.h"
+#import "SSWindowImageSource.h"
 
-@implementation SNESImageSource
+@implementation SSWindowImageSource
 
 @synthesize delegate=_delegate;
 

@@ -10,7 +10,7 @@
 		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
 		A82F31EA1490813D00DDEBF2 /* SSRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31E91490813D00DDEBF2 /* SSRun.m */; };
-		A82F31EE1490820900DDEBF2 /* SNESImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SNESImageSource.m */; };
+		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
 		A82F31F1149089E900DDEBF2 /* SSImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */; };
 		A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */; };
 		A82F31FE1490953500DDEBF2 /* DebugWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31FD1490953500DDEBF2 /* DebugWindow.xib */; };
@@ -50,8 +50,8 @@
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
 		A82F31E81490813D00DDEBF2 /* SSRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSRun.h; path = ../SSRun.h; sourceTree = "<group>"; };
 		A82F31E91490813D00DDEBF2 /* SSRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSRun.m; path = ../SSRun.m; sourceTree = "<group>"; };
-		A82F31EC1490820900DDEBF2 /* SNESImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNESImageSource.h; sourceTree = "<group>"; };
-		A82F31ED1490820900DDEBF2 /* SNESImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNESImageSource.m; sourceTree = "<group>"; };
+		A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SSWindowImageSource.h; sourceTree = "<group>"; };
+		A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSWindowImageSource.m; sourceTree = "<group>"; };
 		A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImageProcessor.h; sourceTree = "<group>"; };
 		A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImageProcessor.m; sourceTree = "<group>"; };
 		A82F31F71490948C00DDEBF2 /* SSDebugWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDebugWindowController.h; sourceTree = "<group>"; };
@@ -138,8 +138,8 @@
 		A82F31FC149094DB00DDEBF2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A82F31EC1490820900DDEBF2 /* SNESImageSource.h */,
-				A82F31ED1490820900DDEBF2 /* SNESImageSource.m */,
+				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
+				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
 				A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */,
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
 				A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */,
@@ -367,7 +367,7 @@
 				A83C4079148F688400308FD4 /* SSTimerWindowController.m in Sources */,
 				A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */,
 				A82F31EA1490813D00DDEBF2 /* SSRun.m in Sources */,
-				A82F31EE1490820900DDEBF2 /* SNESImageSource.m in Sources */,
+				A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */,
 				A82F31F1149089E900DDEBF2 /* SSImageProcessor.m in Sources */,
 				A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */,
 				A82F32471490B87500DDEBF2 /* Super Splits.xcdatamodeld in Sources */,

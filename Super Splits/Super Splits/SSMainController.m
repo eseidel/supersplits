@@ -16,7 +16,7 @@
 {
     if (self = [super init]) {
         _imageProcessor = [[SSImageProcessor alloc] init];
-        _imageSource = [[SNESImageSource alloc] init];
+        _imageSource = [[SSWindowImageSource alloc] init];
         _imageSource.delegate = self;
         [self resetRun];
     }

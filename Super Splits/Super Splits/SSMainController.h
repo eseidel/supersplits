@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "SSRun.h"
 #import "SSImageProcessor.h"
-#import "SNESImageSource.h"
+#import "SSWindowImageSource.h"
 
 @interface SSMainController : NSObject
 {
     BOOL _running;  // FIXME: This is just an alias for (BOOL)_timer
 
     SSRun *_run;
-    SNESImageSource *_imageSource;
+    SSWindowImageSource *_imageSource;
     SSImageProcessor *_imageProcessor;
 
     NSImageView *_debugImageView;

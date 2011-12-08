@@ -13,7 +13,7 @@
 @end
 
 
-@interface SNESImageSource : NSObject
+@interface SSWindowImageSource : NSObject
 {
     CGWindowID _windowID;
 	NSTimer *_timer;
