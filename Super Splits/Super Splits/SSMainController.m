@@ -42,17 +42,6 @@
     _run = [[SSRun alloc] init];
 }
 
-// Used for debugging.
-void saveCGImageToPath(CGImageRef image, NSString* path);
-void saveCGImageToPath(CGImageRef image, NSString* path)
-{
-    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
-    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
-    CGImageDestinationAddImage(destination, image, nil);
-    CGImageDestinationFinalize(destination);
-    CFRelease(destination);
-}
-
 -(void)nextFrame:(CGImageRef)frame
 {
     // Look for if the image is a transition screen.
