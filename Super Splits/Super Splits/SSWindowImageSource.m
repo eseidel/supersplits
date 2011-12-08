@@ -14,6 +14,7 @@
 
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval
 {
+    assert(!_timer);
     _windowID = [self findSNESWindowId];
     if (!_windowID)
         return NO;
@@ -26,8 +27,14 @@
     return YES;
 }
 
+-(BOOL)polling
+{
+    return (BOOL)_timer;
+}
+
 -(void)stopPolling
 {
+    assert(_timer);
     [_timer invalidate];
     _timer = nil;
     _windowID = kCGNullWindowID;

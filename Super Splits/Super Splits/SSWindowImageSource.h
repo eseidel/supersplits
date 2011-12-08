@@ -21,6 +21,7 @@
 }
 
 @property (retain) NSObject *delegate;
+@property (readonly) BOOL polling;
 
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval;
 -(void)stopPolling;

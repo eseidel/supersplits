@@ -10,7 +10,7 @@
 
 @implementation SSMainController
 
-@synthesize running=_running, currentRun=_run, debugImageView=_debugImageView;
+@synthesize currentRun=_run, debugImageView=_debugImageView;
 
 -(id)init
 {
@@ -23,18 +23,19 @@
     return self;
 }
 
+-(BOOL)running
+{
+    return _imageSource.polling;
+}
+
 -(void)startRun
 {
-    assert(!_running);
-    _running = YES;
     [_imageSource startPollingWithInterval:(1.0 / 30.0)];
 }
 
 -(void)stopRun
 {
-    assert(_running);
     [_imageSource stopPolling];
-    _running = NO;
 }
 
 -(void)resetRun
