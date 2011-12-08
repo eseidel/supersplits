@@ -33,14 +33,13 @@
     if (CGImageGetWidth(frame) != 512 || CGImageGetHeight(frame) != 500)
         return CGRectZero;
     
-    const CGFloat titleBarHeight = 22.0;
-    const CGFloat contentTopPadding = 14.0; // SNES98x pads 14px on the top.
+    const CGFloat contentBottmPadding = 14.0; // SNES98x pads 14px on the top.
     // 14px of padding at the bottom on SNES98x.
     // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450.
-    CGPoint textOrigin = { 0, 40 };
+    CGPoint textOrigin = { 0, 385 };
     CGSize textSize = { 130, 20 };
     CGRect textRect = { textOrigin, textSize };
-    return CGRectOffset(textRect, 0.0, titleBarHeight + contentTopPadding);
+    return CGRectOffset(textRect, 0.0, contentBottmPadding);
 }
 
 -(BOOL)isTransitionScreen:(CGImageRef)frame
@@ -56,9 +55,9 @@
     
     // FIXME: It appears this assertion fails if you resize the window?
     assert(bytesPerPixel * width == bytesPerRow);
-    
+
     CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
-    
+
     // FIXME: We would like to assert(CGImageGetAlphaInfo(frame) == kCGImageAlphaNoneSkipFirst)
     // but we hit that assert if the user changes spaces.  So for now we just log once
     // and ignore the window while its off screen.  I'd like to find a better way to test
@@ -74,47 +73,55 @@
         return NO;
     }
 
-    // FIXME: This works, except when fighting ridley the first time the map is an empty grid.
-    //    CGPoint mapCenter = [self findMapCenter:frame];
-    //    if (!CGPointEqualToPoint(mapCenter, CGPointZero)) {
-    //        const uint8 *pixel = pixels + (int)mapCenter.y * bytesPerRow + (int)mapCenter.x * bytesPerPixel;
-    //        // If the center of the map is black, this must be a cut-scene!
-    //        if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5) {
-    //            return YES;
-    //        }
-    //    }
-    
-    //    CGRect energyTextRect = [self findEnergyText:frame];
-    //    if (!CGRectEqualToRect(energyTextRect, CGRectZero)) {
-    //        unsigned whitePixelCount = 0;
-    //        for (size_t y = energyTextRect.origin.y; y < energyTextRect.size.height; y++) {
-    //            for (size_t x = energyTextRect.origin.x; x < energyTextRect.size.width; x++) {
-    //                const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
-    //                // It appears that despite this being "skip first" it's the last we should skip?
-    //                if (pixel[0] > 230 && pixel[1] > 230 && pixel[2] > 230)
-    //                    whitePixelCount++;
-    //            }
-    //        }
-    //        size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
-    //
-    //        const float percentWhiteEnergyThreshold = 0.5f;
-    //        if (whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold)) {
-    //            CFRelease(pixelData);
-    //            NSLog(@"No energy!");
-    //            return YES;
-    //        }
-    //    }
-    
+// FIXME: This works, except when fighting ridley the first time the map is an empty grid.
+//    CGPoint mapCenter = [self findMapCenter:frame];
+//    if (!CGPointEqualToPoint(mapCenter, CGPointZero)) {
+//        const uint8 *pixel = pixels + (int)mapCenter.y * bytesPerRow + (int)mapCenter.x * bytesPerPixel;
+//        // If the center of the map is black, this must be a cut-scene!
+//        if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5) {
+//            return YES;
+//        }
+//    }
+
+    CGRect energyTextRect = [self findEnergyText:frame];
+    if (!CGRectEqualToRect(energyTextRect, CGRectZero)) {
+        unsigned whitePixelCount = 0;
+
+        // Careful to flip from CG coordinates to offsets into the pixel buffer.
+        size_t minX = energyTextRect.origin.x;
+        size_t minY = height - CGRectGetMaxY(energyTextRect);
+        size_t maxX = CGRectGetMaxX(energyTextRect);
+        size_t maxY = height - energyTextRect.origin.y;
+
+        for (size_t y = minY; y < maxY; y++) {
+            for (size_t x = minX; x < maxX; x++) {
+                const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
+                // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
+                if (pixel[0] > 200 && pixel[1] > 200 && pixel[2] > 200)
+                    whitePixelCount++;
+            }
+        }
+        size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
+
+        // The Energy text is white, but few of the pixels are actually fully white.
+        // If more than 5% of our pixels white, assume it's the energy text.
+        const float percentWhiteEnergyThreshold = 0.05f;
+        if (whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold)) {
+            CFRelease(pixelData);
+            return YES;
+        }
+    }
+
+    size_t totalPixelCount = height * width;
     unsigned blackPixelCount = 0;
     for (size_t y = 0; y < height; y++) {
         for (size_t x = 0; x < width; x++) {
             const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
-            // It appears that despite this being "skip first" it's the last we should skip?
+            // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
             if (pixel[0] < 5 && pixel[1] < 5 && pixel[2] < 5)
                 blackPixelCount++;
         }
     }
-    size_t totalPixelCount = height * width;
     //    NSLog(@"Black pixels: %u, total: %lu", blackPixelCount, totalPixelCount);
     CFRelease(pixelData);
     
@@ -127,6 +134,15 @@
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:frame];
     NSImage *image = [[NSImage alloc] init];
     [image addRepresentation:bitmapRep];
+
+    CGRect energyTextRect = [self findEnergyText:frame];
+
+    [image lockFocus];
+    NSColor *color = [NSColor whiteColor];
+    [color setFill];
+    [NSBezierPath fillRect:energyTextRect];
+    [image unlockFocus];
+
     return image;
 }
 
