@@ -7,6 +7,7 @@
 //
 
 #import "SSMainController.h"
+#import "SSMetroidFrame.h"
 
 @implementation SSMainController
 
@@ -15,7 +16,6 @@
 -(id)init
 {
     if (self = [super init]) {
-        _imageProcessor = [[SSImageProcessor alloc] init];
         _imageSource = [[SSWindowImageSource alloc] init];
         _imageSource.delegate = self;
         _referenceRun = [[SSRunController alloc] initWithContentsOfURL:[self referenceRunURL]];
@@ -58,13 +58,14 @@
     return runsURL;
 }
 
--(void)nextFrame:(CGImageRef)frame
+-(void)nextFrame:(CGImageRef)image
 {
+    SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
     // FIXME: We may want to log when we get an unsupported image.
-    if (![_imageProcessor isSupportedImage:frame])
+    if (!frame)
         return;
 
-    if ([_imageProcessor isTransitionScreen:frame]) {
+    if ([frame isTransitionScreen]) {
         if (![_run inTransition])
             [_run startTransition];
     } else {
@@ -73,7 +74,7 @@
     }
 
     if (_debugImageView)
-        [_debugImageView setImage:[_imageProcessor createDebugImage:frame]];
+        [_debugImageView setImage:[frame createDebugImage]];
 }
 
 @end

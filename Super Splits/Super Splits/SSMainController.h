@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "SSRunController.h"
-#import "SSImageProcessor.h"
 #import "SSWindowImageSource.h"
 
 @interface SSMainController : NSObject
@@ -16,7 +15,6 @@
     SSRunController *_run;
     SSRunController *_referenceRun;
     SSWindowImageSource *_imageSource;
-    SSImageProcessor *_imageProcessor;
 
     NSImageView *_debugImageView;
 }
