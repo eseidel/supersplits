@@ -23,7 +23,7 @@
 
 @property (readonly) BOOL running;
 @property (readonly) SSRunController *currentRun;
-@property (readonly) SSRunController *referenceRun;
+@property (retain) SSRunController *referenceRun;
 @property (retain) NSImageView *debugImageView;
 
 -(NSURL *)referenceRunURL;

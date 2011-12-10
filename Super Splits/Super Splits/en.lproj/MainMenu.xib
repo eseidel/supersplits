@@ -200,7 +200,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="485032780">
+								<object class="NSMenuItem" id="865273863">
 									<reference key="NSMenu" ref="720053764"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -210,7 +210,16 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="143692537">
+								<object class="NSMenuItem" id="90817663">
+									<reference key="NSMenu" ref="720053764"/>
+									<string key="NSTitle">Load Reference Run...</string>
+									<string key="NSKeyEquiv">o</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="466915075">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">Save As...</string>
 									<string key="NSKeyEquiv">s</string>
@@ -811,9 +820,17 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">saveAsAction:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="143692537"/>
+						<reference key="destination" ref="466915075"/>
 					</object>
 					<int key="connectionID">560</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">loadReferenceRun:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="90817663"/>
+					</object>
+					<int key="connectionID">562</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -892,8 +909,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="722745758"/>
 							<reference ref="705341025"/>
-							<reference ref="485032780"/>
-							<reference ref="143692537"/>
+							<reference ref="865273863"/>
+							<reference ref="466915075"/>
+							<reference ref="90817663"/>
 						</array>
 						<reference key="parent" ref="379814623"/>
 					</object>
@@ -1222,12 +1240,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">557</int>
-						<reference key="object" ref="485032780"/>
+						<reference key="object" ref="865273863"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">558</int>
-						<reference key="object" ref="143692537"/>
+						<reference key="object" ref="466915075"/>
+						<reference key="parent" ref="720053764"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">561</int>
+						<reference key="object" ref="90817663"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 				</array>
@@ -1289,6 +1312,7 @@
 				<string key="557.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="558.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="561.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1301,7 +1325,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">560</int>
+			<int key="maxID">562</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1309,6 +1333,7 @@
 					<string key="className">SSAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="loadReferenceRun:">id</string>
 						<string key="resetRun:">id</string>
 						<string key="saveAsAction:">id</string>
 						<string key="showDebugWindow:">id</string>
@@ -1316,6 +1341,10 @@
 						<string key="togglePause:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="loadReferenceRun:">
+							<string key="name">loadReferenceRun:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="resetRun:">
 							<string key="name">resetRun:</string>
 							<string key="candidateClassName">id</string>

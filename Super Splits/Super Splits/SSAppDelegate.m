@@ -122,6 +122,18 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     [[_mainController currentRun] writeToURL:[savePanel URL]];
 }
 
+- (IBAction)loadReferenceRun:(id)sender
+{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel setAllowedFileTypes:[NSArray arrayWithObject:@"txt"]];
+    NSInteger openChoice = [openPanel runModal];
+    if (openChoice != NSFileHandlingPanelOKButton)
+        return;
+
+    SSRunController *referenceRun = [[SSRunController alloc] initWithContentsOfURL:[openPanel URL]];
+    _mainController.referenceRun = referenceRun;
+}
+
 /**
  Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
  */

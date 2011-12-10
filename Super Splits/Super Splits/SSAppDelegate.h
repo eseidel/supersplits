@@ -36,5 +36,6 @@
 - (IBAction)showHistoryWindow:(id)sender;
 
 - (IBAction)saveAsAction:(id)sender;
+- (IBAction)loadReferenceRun:(id)sender;
 
 @end
