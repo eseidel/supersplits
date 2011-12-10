@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NSUInteger SSRoomId;
+extern const SSRoomId kInvalidRoomId;
+
 @interface SSRunController : NSObject
 {
     NSDate *_overallStart;
@@ -30,6 +33,10 @@
 -(BOOL)inTransition;
 -(void)startTransition;
 -(void)endTransition;
+
+-(SSRoomId)lastRoomId;
+-(NSNumber *)timeAfterRoom:(SSRoomId)roomId;
+-(NSNumber *)splitForRoom:(SSRoomId)roomId;
 
 -(NSNumber *)roomTime;
 -(NSNumber *)totalTime;

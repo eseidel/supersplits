@@ -8,6 +8,8 @@
 
 #import "SSRunController.h"
 
+const SSRoomId kInvalidRoomId = (SSRoomId)-1;
+
 @implementation SSRunController
 
 @synthesize startTime=_overallStart, roomSplits=_roomSplits;
@@ -32,10 +34,12 @@
     if (self = [super init]) {
         // FIXME: We're abusing this class as both a controller and model!
         NSString *splitsString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+        splitsString = [splitsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if (splitsString) {
             NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
             // This is the hacky-way to do a "map" in cocoa.
             _roomSplits = [splitStrings valueForKey:@"doubleValue"];
+            NSLog(@"Loaded splits: %@ from path: %@", _roomSplits, [url path]);
         } else
             self = nil;
     }
@@ -97,6 +101,30 @@
 -(NSNumber *)totalTime
 {
     return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
+}
+
+-(SSRoomId)lastRoomId
+{
+    if (!_roomSplits || ![_roomSplits count])
+        return kInvalidRoomId;
+    return [_roomSplits count];
+}
+
+-(NSNumber *)timeAfterRoom:(SSRoomId)roomId
+{
+    if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)
+        return nil;
+    NSTimeInterval accumulatedTime = 0;
+    for (size_t x = 0; x < roomId; x++)
+        accumulatedTime += [[_roomSplits objectAtIndex:x] doubleValue];
+    return [NSNumber numberWithDouble:accumulatedTime];
+}
+
+-(NSNumber *)splitForRoom:(SSRoomId)roomId
+{
+    if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)
+        return nil;
+    return [_roomSplits objectAtIndex:roomId - 1];
 }
 
 @end
