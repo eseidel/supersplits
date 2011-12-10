@@ -200,7 +200,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="851995933">
+								<object class="NSMenuItem" id="485032780">
 									<reference key="NSMenu" ref="720053764"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -210,7 +210,7 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="725825331">
+								<object class="NSMenuItem" id="143692537">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">Save As...</string>
 									<string key="NSKeyEquiv">s</string>
@@ -809,11 +809,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">saveAction:</string>
+						<string key="label">saveAsAction:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="725825331"/>
+						<reference key="destination" ref="143692537"/>
 					</object>
-					<int key="connectionID">559</int>
+					<int key="connectionID">560</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -892,8 +892,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="722745758"/>
 							<reference ref="705341025"/>
-							<reference ref="851995933"/>
-							<reference ref="725825331"/>
+							<reference ref="485032780"/>
+							<reference ref="143692537"/>
 						</array>
 						<reference key="parent" ref="379814623"/>
 					</object>
@@ -1222,12 +1222,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">557</int>
-						<reference key="object" ref="851995933"/>
+						<reference key="object" ref="485032780"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">558</int>
-						<reference key="object" ref="725825331"/>
+						<reference key="object" ref="143692537"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 				</array>
@@ -1301,7 +1301,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">559</int>
+			<int key="maxID">560</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1310,7 +1310,7 @@
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="resetRun:">id</string>
-						<string key="saveAction:">id</string>
+						<string key="saveAsAction:">id</string>
 						<string key="showDebugWindow:">id</string>
 						<string key="showHistoryWindow:">id</string>
 						<string key="togglePause:">id</string>
@@ -1320,8 +1320,8 @@
 							<string key="name">resetRun:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="saveAction:">
-							<string key="name">saveAction:</string>
+						<object class="IBActionInfo" key="saveAsAction:">
+							<string key="name">saveAsAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showDebugWindow:">

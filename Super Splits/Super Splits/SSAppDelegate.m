@@ -111,13 +111,14 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     return [[_coreDataController managedObjectContext] undoManager];
 }
 
-- (IBAction)saveAction:(id)sender
+- (IBAction)saveAsAction:(id)sender
 {	
     NSSavePanel *savePanel = [NSSavePanel savePanel];
+    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"txt"]];
     NSInteger saveChoice = [savePanel runModal];
     if (saveChoice != NSFileHandlingPanelOKButton)
         return;
-    
+
     [[_mainController currentRun] writeToURL:[savePanel URL]];
 }
 

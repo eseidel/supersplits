@@ -35,6 +35,6 @@
 - (IBAction)showDebugWindow:(id)sender;
 - (IBAction)showHistoryWindow:(id)sender;
 
-- (IBAction)saveAction:(id)sender;
+- (IBAction)saveAsAction:(id)sender;
 
 @end
