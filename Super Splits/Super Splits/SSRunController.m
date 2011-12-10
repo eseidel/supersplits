@@ -12,6 +12,11 @@
 
 @synthesize startTime=_overallStart, roomSplits=_roomSplits;
 
++(NSArray *)runFileTypes
+{
+    return [NSArray arrayWithObject:@"txt"];
+}
+
 -(id)init
 {
     if (self = [super init]) {

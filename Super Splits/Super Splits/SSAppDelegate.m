@@ -112,9 +112,10 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 }
 
 - (IBAction)saveAsAction:(id)sender
-{	
+{
+    [_mainController stopRun]; // If we're going to show a modal panel, might as well stop the run.
     NSSavePanel *savePanel = [NSSavePanel savePanel];
-    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"txt"]];
+    [savePanel setAllowedFileTypes:[SSRunController runFileTypes]];
     NSInteger saveChoice = [savePanel runModal];
     if (saveChoice != NSFileHandlingPanelOKButton)
         return;
@@ -125,7 +126,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 - (IBAction)loadReferenceRun:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    [openPanel setAllowedFileTypes:[NSArray arrayWithObject:@"txt"]];
+    [openPanel setAllowedFileTypes:[SSRunController runFileTypes]];
     NSInteger openChoice = [openPanel runModal];
     if (openChoice != NSFileHandlingPanelOKButton)
         return;

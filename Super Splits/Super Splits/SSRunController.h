@@ -22,6 +22,8 @@
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 
++(NSArray *)runFileTypes;
+
 -(void)writeToURL:(NSURL *)url;
 
 -(void)startRoom;
