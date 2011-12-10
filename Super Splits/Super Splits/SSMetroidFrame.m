@@ -10,6 +10,8 @@
 
 @interface SSMetroidFrame (PrivateMethods)
 
+-(BOOL)isSupportedImage:(CGImageRef)frame;
+
 -(CGRect)_findGameRect;
 -(CGRect)_findMiniMap;
 -(CGRect)_findEnergyText;
@@ -25,12 +27,14 @@
 {
     if (self = [super init]) {
         _image = image;
+        if (![self isSupportedImage:image])
+            return nil;
         CFRetain(image);
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
 
         _gameRect = [self _findGameRect];
         if (CGRectEqualToRect(_gameRect, CGRectZero))
-            self = nil;
+            return nil;
     }
     return self;
 }
