@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8070E831492FEDE00167ABD /* SSRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8070E821492FEDE00167ABD /* SSRunController.m */; };
 		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
-		A82F31EA1490813D00DDEBF2 /* SSRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31E91490813D00DDEBF2 /* SSRunController.m */; };
 		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
 		A82F31F1149089E900DDEBF2 /* SSImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F0149089E900DDEBF2 /* SSImageProcessor.m */; };
 		A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */; };
@@ -45,11 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A8070E811492FEDE00167ABD /* SSRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunController.h; sourceTree = "<group>"; };
+		A8070E821492FEDE00167ABD /* SSRunController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunController.m; sourceTree = "<group>"; };
 		A82F31D9148F694E00DDEBF2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
-		A82F31E81490813D00DDEBF2 /* SSRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSRunController.h; path = ../SSRunController.h; sourceTree = "<group>"; };
-		A82F31E91490813D00DDEBF2 /* SSRunController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSRunController.m; path = ../SSRunController.m; sourceTree = "<group>"; };
 		A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSWindowImageSource.h; sourceTree = "<group>"; };
 		A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSWindowImageSource.m; sourceTree = "<group>"; };
 		A82F31EF149089E900DDEBF2 /* SSImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImageProcessor.h; sourceTree = "<group>"; };
@@ -115,9 +115,9 @@
 		A82F31FA149094A700DDEBF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A8070E811492FEDE00167ABD /* SSRunController.h */,
+				A8070E821492FEDE00167ABD /* SSRunController.m */,
 				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
-				A82F31E81490813D00DDEBF2 /* SSRunController.h */,
-				A82F31E91490813D00DDEBF2 /* SSRunController.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -366,13 +366,13 @@
 				A83C4061148F311200308FD4 /* SSMainController.m in Sources */,
 				A83C4079148F688400308FD4 /* SSTimerWindowController.m in Sources */,
 				A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */,
-				A82F31EA1490813D00DDEBF2 /* SSRunController.m in Sources */,
 				A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */,
 				A82F31F1149089E900DDEBF2 /* SSImageProcessor.m in Sources */,
 				A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */,
 				A82F32471490B87500DDEBF2 /* Super Splits.xcdatamodeld in Sources */,
 				A82F324C1490BF8900DDEBF2 /* SSHistoryWindowController.m in Sources */,
 				A82F324F1490C01000DDEBF2 /* SSCoreDataController.m in Sources */,
+				A8070E831492FEDE00167ABD /* SSRunController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
