@@ -64,7 +64,8 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
             NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomSplitDouble);
         } else {
             [_roomSplits addObject:roomSplit];
-            NSLog(@"Room split: %.2fs", roomSplitDouble);
+            NSTimeInterval transitionTime = -[_transitionStart timeIntervalSinceNow];
+            NSLog(@"Split: %.2fs, Transition: %.2fs", roomSplitDouble, transitionTime);
         }
     }
     _roomStart = [NSDate date];

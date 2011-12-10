@@ -56,7 +56,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
         //NSLog(@"Ignoring: %d, wrong app.", windowId);
         return;
     }
-    
+
     CGRect bounds;
     CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)[entry objectForKey:(id)kCGWindowBounds], &bounds);
     if (bounds.size.width < 200 || bounds.size.height < 200) {
@@ -65,7 +65,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
     }
     
     *snesWindowId = windowId;
-    NSLog(@"Found window with size: %f x %f, %d", bounds.size.width, bounds.size.height, windowId);
+    NSLog(@"Found window with size: %.1f x %.1f, %d", bounds.size.width, bounds.size.height, windowId);
 }
 
 -(CGWindowID)findSNESWindowId
