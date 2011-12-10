@@ -48,7 +48,7 @@
     SSRunController *run = [_mainController currentRun];
     [totalTimeView setObjectValue:[run totalTime]];
     [roomTimeView setObjectValue:[run roomTime]];
-    [lastRoomSplitView setObjectValue:[run lastRoomSplit]];
+    [lastRoomSplitView setObjectValue:[[run roomSplits] lastObject]];
 }
 
 @end

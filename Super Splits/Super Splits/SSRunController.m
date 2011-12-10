@@ -10,7 +10,7 @@
 
 @implementation SSRunController
 
-@synthesize startTime=_overallStart;
+@synthesize startTime=_overallStart, roomSplits=_roomSplits;
 
 -(id)init
 {
@@ -20,6 +20,30 @@
         _roomSplits = [NSMutableArray array];
     }
     return self;
+}
+
+-(id)initWithContentsOfURL:(NSURL *)url
+{
+    if (self = [super init]) {
+        // FIXME: We're abusing this class as both a controller and model!
+        NSString *splitsString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+        if (splitsString) {
+            NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
+            // This is the hacky-way to do a "map" in cocoa.
+            _roomSplits = [splitStrings valueForKey:@"doubleValue"];
+        } else
+            self = nil;
+    }
+    return self;
+}
+
+-(void)writeToURL:(NSURL *)url
+{
+    NSMutableString *splitsString = [[NSMutableString alloc] init];
+    for (NSNumber *splitTime in _roomSplits) {
+        [splitsString appendFormat:@"%.2f\n", [splitTime doubleValue]];
+    }
+    [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 -(void)startRoom
@@ -53,11 +77,6 @@
 {
     assert([self inTransition]);
     [self startRoom];
-}
-
--(NSNumber *)lastRoomSplit
-{
-    return [_roomSplits lastObject];
 }
 
 -(NSNumber *)roomTime

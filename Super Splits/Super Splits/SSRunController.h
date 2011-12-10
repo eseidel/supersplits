@@ -18,13 +18,17 @@
 }
 
 @property (readonly) NSDate *startTime;
+@property (readonly) NSArray *roomSplits;
+
+-(id)initWithContentsOfURL:(NSURL *)url;
+
+-(void)writeToURL:(NSURL *)url;
 
 -(void)startRoom;
 -(BOOL)inTransition;
 -(void)startTransition;
 -(void)endTransition;
 
--(NSNumber *)lastRoomSplit;
 -(NSNumber *)roomTime;
 -(NSNumber *)totalTime;
 @end

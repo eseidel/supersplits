@@ -14,6 +14,7 @@
 @interface SSMainController : NSObject
 {
     SSRunController *_run;
+    SSRunController *_referenceRun;
     SSWindowImageSource *_imageSource;
     SSImageProcessor *_imageProcessor;
 
@@ -22,7 +23,11 @@
 
 @property (readonly) BOOL running;
 @property (readonly) SSRunController *currentRun;
+@property (readonly) SSRunController *referenceRun;
 @property (retain) NSImageView *debugImageView;
+
+-(NSURL *)referenceRunURL;
+-(NSURL *)runsDirectoryURL;
 
 -(void)resetRun;
 -(void)startRun;

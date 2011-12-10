@@ -111,10 +111,20 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     return [[_coreDataController managedObjectContext] undoManager];
 }
 
+- (IBAction)saveAction:(id)sender
+{	
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+    NSInteger saveChoice = [savePanel runModal];
+    if (saveChoice != NSFileHandlingPanelOKButton)
+        return;
+    
+    [[_mainController currentRun] writeToURL:[savePanel URL]];
+}
+
 /**
  Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
  */
-- (IBAction)saveAction:(id)sender
+- (IBAction)coreData_saveAction:(id)sender
 {
     NSError *error = nil;
     
@@ -127,7 +137,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     }
 }
 
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+- (NSApplicationTerminateReply)coreData_applicationShouldTerminate:(NSApplication *)sender
 {
     return [_coreDataController applicationShouldTerminate:sender];
 }

@@ -10,7 +10,7 @@
 
 @implementation SSMainController
 
-@synthesize currentRun=_run, debugImageView=_debugImageView;
+@synthesize currentRun=_run, debugImageView=_debugImageView, referenceRun=_referenceRun;
 
 -(id)init
 {
@@ -18,6 +18,7 @@
         _imageProcessor = [[SSImageProcessor alloc] init];
         _imageSource = [[SSWindowImageSource alloc] init];
         _imageSource.delegate = self;
+        _referenceRun = [[SSRunController alloc] initWithContentsOfURL:[self referenceRunURL]];
         [self resetRun];
     }
     return self;
@@ -41,6 +42,27 @@
 -(void)resetRun
 {
     _run = [[SSRunController alloc] init];
+}
+                      
+-(NSURL *)referenceRunURL
+{
+    return [[self runsDirectoryURL] URLByAppendingPathComponent:@"reference.txt"];
+}
+
+-(NSURL *)runsDirectoryURL
+{
+    NSString *runsPath = @"~/Library/Application Support/Super Splits/";
+    runsPath = [runsPath stringByExpandingTildeInPath];
+    NSURL *runsURL = [NSURL fileURLWithPath:runsPath];
+    [[NSFileManager defaultManager] createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return runsURL;
+}
+
+-(NSURL *)urlForRun
+{
+    NSURL *runsDirectory = [self runsDirectoryURL];
+    NSString *filename = [NSString stringWithFormat:@"Splits from %s.txt", [[_run  startTime] description]];
+    return [runsDirectory URLByAppendingPathComponent:filename];
 }
 
 -(void)nextFrame:(CGImageRef)frame
