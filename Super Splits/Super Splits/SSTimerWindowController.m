@@ -8,6 +8,7 @@
 
 #import "SSRunController.h"
 #import "SSTimerWindowController.h"
+#import "SSTimeDeltaFormatter.h"
 #import "SSTimeIntervalFormatter.h"
 
 
@@ -21,9 +22,15 @@
     
     [self.window setLevel:NSStatusWindowLevel];
 
-    [totalTimeView setFormatter:[[SSTimeIntervalFormatter alloc] init]];
-    [roomTimeView setFormatter:[[SSTimeIntervalFormatter alloc] init]];
-    [lastRoomSplitView setFormatter:[[SSTimeIntervalFormatter alloc] init]];
+    SSTimeIntervalFormatter *intervalFormatter = [[SSTimeIntervalFormatter alloc] init];
+    [totalTimeView setFormatter:intervalFormatter];
+    [roomTimeView setFormatter:intervalFormatter];
+    [lastRoomSplitView setFormatter:intervalFormatter];
+    [roomReferenceTimeView setFormatter:intervalFormatter];
+
+    SSTimeDeltaFormatter *deltaFormatter = [[SSTimeDeltaFormatter alloc] init];
+    [totalTimeDeltaView setFormatter:deltaFormatter];
+    [lastRoomSplitDeltaView setFormatter:deltaFormatter];
 
     [self updateTimerViews];
 }
@@ -45,10 +52,31 @@
 
 -(void)updateTimerViews
 {
-    SSRunController *run = [_mainController currentRun];
-    [totalTimeView setObjectValue:[run totalTime]];
-    [roomTimeView setObjectValue:[run roomTime]];
-    [lastRoomSplitView setObjectValue:[[run roomSplits] lastObject]];
+    SSRunController *current = [_mainController currentRun];
+    SSRunController *reference = [_mainController referenceRun];
+
+    [totalTimeView setObjectValue:[current totalTime]];
+    [roomTimeView setObjectValue:[current roomTime]];
+    [lastRoomSplitView setObjectValue:[[current roomSplits] lastObject]];
+
+    SSRoomId lastRoomId = [current lastRoomId];
+    NSNumber *referenceSplit = [reference splitForRoom:lastRoomId];
+    if (referenceSplit) {
+        [roomReferenceTimeView setObjectValue:referenceSplit];
+
+        NSTimeInterval deltaAfterLastRoom = [[current timeAfterRoom:lastRoomId] doubleValue]
+                                          - [[reference timeAfterRoom:lastRoomId] doubleValue];
+        [totalTimeDeltaView setObjectValue:[NSNumber numberWithDouble:deltaAfterLastRoom]];
+
+        NSTimeInterval splitDelta = [[current splitForRoom:lastRoomId] doubleValue]
+                                  - [referenceSplit doubleValue];
+
+        [lastRoomSplitDeltaView setObjectValue:[NSNumber numberWithDouble:splitDelta]];
+    } else {
+        [totalTimeDeltaView setObjectValue:nil];
+        [roomReferenceTimeView setObjectValue:nil];
+        [lastRoomSplitDeltaView setObjectValue:nil];
+    }
 }
 
 @end

@@ -16,8 +16,11 @@
     NSTimer *_updateTimer;
 
     IBOutlet NSTextField *totalTimeView;
+    IBOutlet NSTextField *totalTimeDeltaView;
     IBOutlet NSTextField *roomTimeView;
+    IBOutlet NSTextField *roomReferenceTimeView;
     IBOutlet NSTextField *lastRoomSplitView;
+    IBOutlet NSTextField *lastRoomSplitDeltaView;
 }
 
 @property(retain) SSMainController *mainController;
