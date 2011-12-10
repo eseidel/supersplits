@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface SSTimeIntervalFormatter : NSFormatter
-{
-    NSDateFormatter *_hourFormatter;
-    NSDateFormatter *_minuteFormatter;
-    NSDateFormatter *_secondFormatter;
-}
 
 - (NSString *)stringForObjectValue:(id)anObject;
 
