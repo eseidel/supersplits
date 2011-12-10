@@ -10,29 +10,23 @@
 
 @implementation SSTimeIntervalFormatter
 
-- (id)init
-{
-    if (self = [super init]) {
-        // FIXME: There must be a cleaner way to do this.
-        _hourFormatter = [[NSDateFormatter alloc] init];
-        [_hourFormatter setDateFormat:@"H:mm:ss.S's'"];
-        _minuteFormatter = [[NSDateFormatter alloc] init];
-        [_minuteFormatter setDateFormat:@"mm:ss.S's'"];
-        _secondFormatter = [[NSDateFormatter alloc] init];
-        [_secondFormatter setDateFormat:@"ss.S's'"];
-    }
-    return self;
-}
-
 - (NSString *)stringForObjectValue:(id)anObject
 {
     NSTimeInterval timeInterval = [anObject doubleValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSinceReferenceDate:timeInterval];
-    if (timeInterval > 60 * 60)
-        return [_hourFormatter stringFromDate:date];
-    if (timeInterval > 60)
-        return [_minuteFormatter stringFromDate:date];
-    return [_secondFormatter stringFromDate:date];
+
+    int secondsRemaining = timeInterval;
+    int hours = secondsRemaining / 3600;
+    secondsRemaining -= ( hours * 3600 );
+    int minutes = secondsRemaining / 60;
+    secondsRemaining -= ( minutes * 60 );
+    int seconds = secondsRemaining;
+    int deciseconds = (timeInterval - trunc(timeInterval)) * 10.0;
+
+    if (hours > 0)
+        return [NSString stringWithFormat:@"%d%02d:%02d.%ds", hours, minutes, seconds, deciseconds];
+    if (minutes > 0)
+        return [NSString stringWithFormat:@"%d:%02d.%ds", minutes, seconds, deciseconds];
+    return [NSString stringWithFormat:@"%d.%ds", seconds, deciseconds];
 }
 
 @end
