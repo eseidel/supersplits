@@ -11,5 +11,6 @@
 @interface SSTimeDeltaFormatter : SSTimeIntervalFormatter
 
 - (NSString *)stringForObjectValue:(id)anObject;
+- (NSAttributedString *)attributedStringForObjectValue:(id)obj withDefaultAttributes:(NSDictionary *)attrs;
 
 @end

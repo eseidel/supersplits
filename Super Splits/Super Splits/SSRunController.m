@@ -110,6 +110,12 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     return [_roomSplits count];
 }
 
+-(SSRoomId)currentRoomId
+{
+    // FIXME: Should we always return a value here?
+    return [_roomSplits count] + 1;
+}
+
 -(NSNumber *)timeAfterRoom:(SSRoomId)roomId
 {
     if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)

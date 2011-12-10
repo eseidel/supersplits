@@ -34,6 +34,7 @@ extern const SSRoomId kInvalidRoomId;
 -(void)startTransition;
 -(void)endTransition;
 
+-(SSRoomId)currentRoomId;
 -(SSRoomId)lastRoomId;
 -(NSNumber *)timeAfterRoom:(SSRoomId)roomId;
 -(NSNumber *)splitForRoom:(SSRoomId)roomId;

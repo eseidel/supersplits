@@ -152,9 +152,9 @@
 								<string key="NSCellIdentifier">_NS:3944</string>
 								<reference key="NSControlView" ref="234990582"/>
 								<reference key="NSBackgroundColor" ref="465139800"/>
-								<object class="NSColor" key="NSTextColor">
-									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4yMTE3NjQ3MjMxIDEgMC4xMDk4MDM5Mjk5AA</bytes>
+								<object class="NSColor" key="NSTextColor" id="661908596">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAxIDEAA</bytes>
 								</object>
 							</object>
 						</object>
@@ -175,10 +175,7 @@
 								<string key="NSCellIdentifier">_NS:3944</string>
 								<reference key="NSControlView" ref="942976949"/>
 								<reference key="NSBackgroundColor" ref="465139800"/>
-								<object class="NSColor" key="NSTextColor" id="44311093">
-									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4yMTE3NjQ3MjMxIDEgMC4xMDk4MDM5Mjk5AA</bytes>
-								</object>
+								<reference key="NSTextColor" ref="661908596"/>
 							</object>
 						</object>
 						<object class="NSTextField" id="304812525">
@@ -198,7 +195,7 @@
 								<string key="NSCellIdentifier">_NS:3944</string>
 								<reference key="NSControlView" ref="304812525"/>
 								<reference key="NSBackgroundColor" ref="465139800"/>
-								<reference key="NSTextColor" ref="44311093"/>
+								<reference key="NSTextColor" ref="661908596"/>
 							</object>
 						</object>
 						<object class="NSTextField" id="861874315">
@@ -207,7 +204,6 @@
 							<string key="NSFrame">{{5, 3}, {79, 17}}</string>
 							<reference key="NSSuperview" ref="658788145"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:3944</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="77227096">

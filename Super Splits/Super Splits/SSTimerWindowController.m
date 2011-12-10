@@ -59,22 +59,20 @@
     [roomTimeView setObjectValue:[current roomTime]];
     [lastRoomSplitView setObjectValue:[[current roomSplits] lastObject]];
 
+    [roomReferenceTimeView setObjectValue:[reference splitForRoom:[current currentRoomId]]];
+
     SSRoomId lastRoomId = [current lastRoomId];
     NSNumber *referenceSplit = [reference splitForRoom:lastRoomId];
     if (referenceSplit) {
-        [roomReferenceTimeView setObjectValue:referenceSplit];
-
         NSTimeInterval deltaAfterLastRoom = [[current timeAfterRoom:lastRoomId] doubleValue]
                                           - [[reference timeAfterRoom:lastRoomId] doubleValue];
         [totalTimeDeltaView setObjectValue:[NSNumber numberWithDouble:deltaAfterLastRoom]];
 
         NSTimeInterval splitDelta = [[current splitForRoom:lastRoomId] doubleValue]
                                   - [referenceSplit doubleValue];
-
         [lastRoomSplitDeltaView setObjectValue:[NSNumber numberWithDouble:splitDelta]];
     } else {
         [totalTimeDeltaView setObjectValue:nil];
-        [roomReferenceTimeView setObjectValue:nil];
         [lastRoomSplitDeltaView setObjectValue:nil];
     }
 }
