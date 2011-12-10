@@ -6,11 +6,10 @@
         <relationship name="run" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="SSRun" inverseName="events" inverseEntity="SSRun" syncable="YES"/>
     </entity>
     <entity name="SSRun" representedClassName="Run" syncable="YES">
-        <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SSEvent" inverseName="run" inverseEntity="SSEvent" syncable="YES"/>
     </entity>
     <elements>
         <element name="SSEvent" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="SSRun" positionX="160" positionY="81" width="128" height="75"/>
+        <element name="SSRun" positionX="160" positionY="81" width="128" height="60"/>
     </elements>
 </model>
