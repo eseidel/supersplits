@@ -58,13 +58,6 @@
     return runsURL;
 }
 
--(NSURL *)urlForRun
-{
-    NSURL *runsDirectory = [self runsDirectoryURL];
-    NSString *filename = [NSString stringWithFormat:@"Splits from %s.txt", [[_run  startTime] description]];
-    return [runsDirectory URLByAppendingPathComponent:filename];
-}
-
 -(void)nextFrame:(CGImageRef)frame
 {
     // FIXME: We may want to log when we get an unsupported image.
