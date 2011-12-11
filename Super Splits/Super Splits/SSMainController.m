@@ -62,8 +62,10 @@
 {
     SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
     // FIXME: We may want to log when we get an unsupported image.
-    if (!frame)
+    if (!frame) {
+        NSLog(@"Unsupported image!");
         return;
+    }
 
     if ([frame isTransitionScreen]) {
         if (![_run inTransition])

@@ -40,8 +40,8 @@
     _windowID = kCGNullWindowID;
 }
 
-void SNESWindowSearchFunction(const void *inputDictionary, void *context);
-void SNESWindowSearchFunction(const void *inputDictionary, void *context)
+void WindowSearchFunction(const void *inputDictionary, void *context);
+void WindowSearchFunction(const void *inputDictionary, void *context)
 {
 	NSDictionary *entry = (__bridge NSDictionary*)inputDictionary;
 	CGWindowID *snesWindowId = (CGWindowID*)context;
@@ -71,7 +71,7 @@ void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 	CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListOptionAll, kCGNullWindowID);
     
 	CGWindowID snesWindowId = kCGNullWindowID;
-	CFArrayApplyFunction(windowList, CFRangeMake(0, CFArrayGetCount(windowList)), &SNESWindowSearchFunction, &snesWindowId);
+	CFArrayApplyFunction(windowList, CFRangeMake(0, CFArrayGetCount(windowList)), &WindowSearchFunction, &snesWindowId);
 	CFRelease(windowList);
     
     return snesWindowId;

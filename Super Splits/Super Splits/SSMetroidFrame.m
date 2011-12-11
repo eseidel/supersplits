@@ -33,8 +33,10 @@
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
 
         _gameRect = [self _findGameRect];
-        if (CGRectEqualToRect(_gameRect, CGRectZero))
+        if (CGRectEqualToRect(_gameRect, CGRectZero)) {
+            NSLog(@"Failed to find game rect!");
             return nil;
+        }
         // All our measurments are based off of Snes9x at the default scale.
         _transformFromUnitGameRect = CGAffineTransformMakeScale(_gameRect.size.width / 512.0, _gameRect.size.height / 450.0);
     }
@@ -50,34 +52,41 @@
 -(CGRect)_findGameRect
 {
     // FIXME: This is a big hack and only works for the default emulator size.
-    if (CGImageGetWidth(_image) != 512 || CGImageGetHeight(_image) != 500)
-        return CGRectZero;
-
-    const CGFloat verticalPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
-    const CGFloat titleBarHeight = 22.0; // 22px tall in lion.
-    return CGRectMake(0, verticalPadding, 512, 500 - 2 * verticalPadding - titleBarHeight);
+    if (CGImageGetWidth(_image) == 512 && CGImageGetHeight(_image) == 500) {
+        const CGFloat verticalPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
+        const CGFloat titleBarHeight = 22.0; // 22px tall in lion.
+        return CGRectMake(0, verticalPadding, 512, 500 - 2 * verticalPadding - titleBarHeight);
+    } else if (CGImageGetWidth(_image) == 320 && CGImageGetHeight(_image) == 290) {
+        const CGFloat titleBarHeight = 22.0; // 22px tall in lion.
+        const CGFloat vlcControlsHeight = 29.0;
+        return CGRectMake(0, vlcControlsHeight, 320, 290 - titleBarHeight - vlcControlsHeight);
+    }
+    return CGRectZero;
 }
 
 -(CGRect)_findStatusDivider
 {
     const CGFloat statusLineVerticalOffset = 386;
-    return CGRectMake(_gameRect.origin.x, _gameRect.origin.y + statusLineVerticalOffset,
-                      _gameRect.size.width, 1);
+    CGRect dividerRect = CGRectMake(_gameRect.origin.x, _gameRect.origin.y + statusLineVerticalOffset,
+                                    _gameRect.size.width, 1);
+    return CGRectApplyAffineTransform(dividerRect, _transformFromUnitGameRect);
 }
 
 -(CGRect)_findStatusRect
 {
     CGRect statusDivider = [self _findStatusDivider];
     CGFloat dividerTop = CGRectGetMaxY(statusDivider);
-    return CGRectMake(statusDivider.origin.x, dividerTop,
-                      statusDivider.size.width, _gameRect.size.height - dividerTop);
+    CGRect statusRect = CGRectMake(statusDivider.origin.x, dividerTop,
+                                   statusDivider.size.width, _gameRect.size.height - dividerTop);
+    return CGRectApplyAffineTransform(statusRect, _transformFromUnitGameRect);
 }
 
 -(CGRect)_findMainRect
 {
     CGRect statusDivider = [self _findStatusDivider];
     CGFloat dividerBottom = CGRectGetMinY(statusDivider);
-    return CGRectMake(_gameRect.origin.x, 0, _gameRect.size.width, dividerBottom);
+    CGRect mainRect = CGRectMake(_gameRect.origin.x, 0, _gameRect.size.width, dividerBottom);
+    return CGRectApplyAffineTransform(mainRect, _transformFromUnitGameRect);
 }
 
 -(CGRect)_findMiniMap
@@ -87,7 +96,7 @@
     CGPoint mapOrigin = CGPointMake(statusRect.origin.x + 416, statusRect.origin.y);
     CGSize mapSize = { 84, 52 };
     CGRect mapRect = { mapOrigin, mapSize };
-    return mapRect;
+    return CGRectApplyAffineTransform(mapRect, _transformFromUnitGameRect);
 }
 
 -(CGRect)_findEnergyText
@@ -96,7 +105,7 @@
     CGPoint textOrigin = CGPointMake(statusRect.origin.x + 15, statusRect.origin.y + 2);
     CGSize textSize = { 113, 14 };
     CGRect textRect = { textOrigin, textSize };
-    return textRect;
+    return CGRectApplyAffineTransform(textRect, _transformFromUnitGameRect);
 }
 
 -(size_t)countPixelsInRect:(CGRect)rect aboveColor:(const uint8[4])lowPixel belowColor:(const uint8[4])highPixel;
