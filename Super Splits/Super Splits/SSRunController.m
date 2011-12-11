@@ -47,9 +47,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     if (newState == _state)
         return;
 
-    NSTimeInterval stateDuration = -[_stateStart timeIntervalSinceNow];
-    NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
-
+    // Ignore any transition from unknown unless it's to "room".
     if (_state == UnknownState) {
         if (newState != RoomState)
             return;
@@ -57,6 +55,10 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
         _roomSplits = [NSMutableArray array];
         [self _startRoom];
     }
+
+    NSTimeInterval stateDuration = -[_stateStart timeIntervalSinceNow];
+    NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
+
     if (newState == RoomState) {
         if (_state == RoomTransitionState)
             [self _startRoom];
