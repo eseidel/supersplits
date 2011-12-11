@@ -21,6 +21,7 @@
     IBOutlet NSTextField *roomReferenceTimeView;
     IBOutlet NSTextField *lastRoomSplitView;
     IBOutlet NSTextField *lastRoomSplitDeltaView;
+    IBOutlet NSTextField *timerState;
 }
 
 @property(retain) SSMainController *mainController;

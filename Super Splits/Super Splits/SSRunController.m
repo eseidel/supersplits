@@ -36,6 +36,11 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     return @"Invalid state!";
 }
 
+-(NSString *)stateAsString
+{
+    return [self stringForState:_state];
+}
+
 -(void)setState:(SSRunState)newState
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
@@ -45,12 +50,14 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     NSTimeInterval stateDuration = -[_stateStart timeIntervalSinceNow];
     NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
+    if (_state == UnknownState) {
+        if (newState != RoomState)
+            return;
+        _overallStart = [NSDate date];
+        _roomSplits = [NSMutableArray array];
+        [self _startRoom];
+    }
     if (newState == RoomState) {
-        if (_state == UnknownState) {
-            _overallStart = [NSDate date];
-            _roomSplits = [NSMutableArray array];
-            [self _startRoom];
-        }
         if (_state == RoomTransitionState)
             [self _startRoom];
         if ((_state == BlackScreenState) && (stateDuration > 2.0)) {

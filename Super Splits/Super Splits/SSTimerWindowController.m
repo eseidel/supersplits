@@ -75,6 +75,12 @@
         [totalTimeDeltaView setObjectValue:nil];
         [lastRoomSplitDeltaView setObjectValue:nil];
     }
+    
+    if (!_mainController.running) {
+        [timerState setStringValue:@"paused"];
+    } else {
+        [timerState setStringValue:[current stateAsString]];
+    }
 }
 
 @end

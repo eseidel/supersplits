@@ -31,6 +31,7 @@ typedef enum {
 @property (readonly) NSDate *startTime;
 @property (readonly) NSArray *roomSplits;
 @property (nonatomic) SSRunState state;
+@property (readonly) NSString *stateAsString;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 
