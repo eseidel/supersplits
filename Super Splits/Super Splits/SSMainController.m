@@ -67,13 +67,10 @@
         return;
     }
 
-    if ([frame isTransitionScreen]) {
-        if (![_run inTransition])
-            [_run startTransition];
-    } else {
-        if ([_run inTransition])
-            [_run endTransition];
-    }
+    if ([frame isTransitionScreen])
+        _run.state = TransitionState;
+    else
+        _run.state = RoomState;
 
     if (_debugImageView)
         [_debugImageView setImage:[frame createDebugImage]];

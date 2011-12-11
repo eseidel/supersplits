@@ -11,6 +11,11 @@
 typedef NSUInteger SSRoomId;
 extern const SSRoomId kInvalidRoomId;
 
+typedef enum {
+    RoomState = 0,
+    TransitionState,
+} SSRunState;
+
 @interface SSRunController : NSObject
 {
     NSDate *_overallStart;
@@ -18,21 +23,18 @@ extern const SSRoomId kInvalidRoomId;
     NSDate *_transitionStart;
 
     NSMutableArray *_roomSplits;
+    SSRunState _state;
 }
 
 @property (readonly) NSDate *startTime;
 @property (readonly) NSArray *roomSplits;
+@property (nonatomic) SSRunState state;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 
 +(NSArray *)runFileTypes;
 
 -(void)writeToURL:(NSURL *)url;
-
--(void)startRoom;
--(BOOL)inTransition;
--(void)startTransition;
--(void)endTransition;
 
 -(SSRoomId)currentRoomId;
 -(SSRoomId)lastRoomId;

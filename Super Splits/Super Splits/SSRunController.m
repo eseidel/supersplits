@@ -8,11 +8,33 @@
 
 #import "SSRunController.h"
 
+@interface SSRunController (PrivateMethods)
+
+-(void)_startRoom;
+-(BOOL)_inTransition;
+-(void)_startTransition;
+-(void)_endTransition;
+
+@end
+
 const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
 @implementation SSRunController
 
-@synthesize startTime=_overallStart, roomSplits=_roomSplits;
+@synthesize startTime=_overallStart, roomSplits=_roomSplits, state=_state;
+
+-(void)setState:(SSRunState)state
+{
+    // FIXME: Should we do this with KVO instead of a manual setter?
+    if (state == _state)
+        return;
+    _state = state;
+
+    if (_state == TransitionState)
+        [self _startTransition];
+    else
+        [self _endTransition];
+}
 
 +(NSArray *)runFileTypes
 {
@@ -55,7 +77,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
--(void)startRoom
+-(void)_startRoom
 {
     if (_transitionStart) {
         NSNumber *roomSplit = [self roomTime];
@@ -72,27 +94,27 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     _transitionStart = nil;
 }
 
--(BOOL)inTransition
+-(BOOL)_inTransition
 {
     return (BOOL)_transitionStart;
 }
 
--(void)startTransition
+-(void)_startTransition
 {
-    assert(![self inTransition]);
+    assert(![self _inTransition]);
     _transitionStart = [NSDate date];
 }
 
--(void)endTransition
+-(void)_endTransition
 {
-    assert([self inTransition]);
-    [self startRoom];
+    assert([self _inTransition]);
+    [self _startRoom];
 }
 
 -(NSNumber *)roomTime
 {
     NSTimeInterval roomTime;
-    if ([self inTransition])
+    if ([self _inTransition])
         roomTime = [_transitionStart timeIntervalSinceDate:_roomStart];
     else
         roomTime = -[_roomStart timeIntervalSinceNow];
