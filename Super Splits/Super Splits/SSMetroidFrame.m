@@ -35,6 +35,8 @@
         _gameRect = [self _findGameRect];
         if (CGRectEqualToRect(_gameRect, CGRectZero))
             return nil;
+        // All our measurments are based off of Snes9x at the default scale.
+        _transformFromUnitGameRect = CGAffineTransformMakeScale(_gameRect.size.width / 512.0, _gameRect.size.height / 450.0);
     }
     return self;
 }
@@ -52,30 +54,49 @@
         return CGRectZero;
 
     const CGFloat verticalPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
-    return CGRectMake(0, 0, 512, 500 - 2 * verticalPadding);
+    const CGFloat titleBarHeight = 22.0; // 22px tall in lion.
+    return CGRectMake(0, verticalPadding, 512, 500 - 2 * verticalPadding - titleBarHeight);
+}
+
+-(CGRect)_findStatusDivider
+{
+    const CGFloat statusLineVerticalOffset = 386;
+    return CGRectMake(_gameRect.origin.x, _gameRect.origin.y + statusLineVerticalOffset,
+                      _gameRect.size.width, 1);
+}
+
+-(CGRect)_findStatusRect
+{
+    CGRect statusDivider = [self _findStatusDivider];
+    CGFloat dividerTop = CGRectGetMaxY(statusDivider);
+    return CGRectMake(statusDivider.origin.x, dividerTop,
+                      statusDivider.size.width, _gameRect.size.height - dividerTop);
+}
+
+-(CGRect)_findMainRect
+{
+    CGRect statusDivider = [self _findStatusDivider];
+    CGFloat dividerBottom = CGRectGetMinY(statusDivider);
+    return CGRectMake(_gameRect.origin.x, 0, _gameRect.size.width, dividerBottom);
 }
 
 -(CGRect)_findMiniMap
 {
-    // FIXME: This should be computed relative to _gameRect.
-    const CGFloat contentBottomPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
-    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450 (title bar is 22px).
-    // The map is at 417, 35 (on a 512 x 478 window) and is 82 x 48.
-    CGPoint mapOrigin = { 416, 387 };
+    // The map is at 417, 35 (on a 512 x 450 game rect) and is 82 x 48.
+    CGRect statusRect = [self _findStatusRect];
+    CGPoint mapOrigin = CGPointMake(statusRect.origin.x + 416, statusRect.origin.y);
     CGSize mapSize = { 84, 52 };
     CGRect mapRect = { mapOrigin, mapSize };
-    return CGRectOffset(mapRect, 0.0, contentBottomPadding);
+    return mapRect;
 }
 
 -(CGRect)_findEnergyText
 {
-    // FIXME: This should be computed relative to _gameRect.
-    const CGFloat contentBottomPadding = 14.0; // SNES98x pads 14px black on the top/bottom.
-    // Thus the window is 512x500 = 512x(500 - 22 - 14 - 14) = 512x450 (title bar is 22px).
-    CGPoint textOrigin = { 15, 387 };
-    CGSize textSize = { 115, 18 };
+    CGRect statusRect = [self _findStatusRect];
+    CGPoint textOrigin = CGPointMake(statusRect.origin.x + 15, statusRect.origin.y + 2);
+    CGSize textSize = { 113, 14 };
     CGRect textRect = { textOrigin, textSize };
-    return CGRectOffset(textRect, 0.0, contentBottomPadding);
+    return textRect;
 }
 
 -(size_t)countPixelsInRect:(CGRect)rect aboveColor:(const uint8[4])lowPixel belowColor:(const uint8[4])highPixel;
@@ -172,13 +193,16 @@
     [image addRepresentation:bitmapRep];
 
     [image lockFocus];
+    [[[NSColor blueColor] colorWithAlphaComponent:.5] setFill];
+    [NSBezierPath fillRect:[self _findGameRect]];
+    
     [[[NSColor whiteColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findEnergyText]];
 
     [[[NSColor greenColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findMiniMap]];
     [image unlockFocus];
-    
+
     return image;
 }
 

@@ -14,6 +14,7 @@
     CFDataRef _pixelData;
 
     CGRect _gameRect;
+    CGAffineTransform _transformFromUnitGameRect;
 }
 
 @property (readonly) BOOL isTransitionScreen;
