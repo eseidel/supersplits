@@ -23,11 +23,24 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
 @synthesize startTime=_overallStart, roomSplits=_roomSplits, state=_state;
 
+-(NSString *)stringForState:(SSRunState)state
+{
+    switch(state) {
+        case RoomState:
+            return @"Room";
+        case TransitionState:
+            return @"Transition";
+    }
+    return @"unknown";
+}
+
 -(void)setState:(SSRunState)state
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
     if (state == _state)
         return;
+
+    NSLog(@"%@ -> %@", [self stringForState:state], [self stringForState:_state]);
     _state = state;
 
     if (_state == TransitionState)
