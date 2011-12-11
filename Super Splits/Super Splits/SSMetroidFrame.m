@@ -72,6 +72,12 @@ const CGFloat statusLineVerticalOffset = 386;
     return CGRectZero;
 }
 
+-(CGRect)_findMainRect
+{
+    CGRect mainRect = { 0, 0, unitGameRect.size.width, statusLineVerticalOffset };
+    return CGRectApplyAffineTransform(mainRect, _fromGameRectToImage);
+}
+
 -(CGRect)_findMiniMap
 {
     // The map is at 417, 35 (on a 512 x 450 game rect) and is 82 x 48.
@@ -160,15 +166,14 @@ const CGFloat statusLineVerticalOffset = 386;
 -(BOOL)isMostlyBlack
 {
     const uint8 lowPixel[4] = {0, 0, 0, 0};
-    const uint8 highPixel[4] =  {5, 5, 5, 255};
-    // FIXME: This should operate on just the main rect, not the game rect.
-    size_t blackPixelCount = [self countPixelsInRect:_gameRectInImage aboveColor:lowPixel belowColor:highPixel];
+    const uint8 highPixel[4] =  {1, 1, 1, 255};
+    CGRect mainRect = [self _findMainRect];
+    size_t blackPixelCount = [self countPixelsInRect:mainRect aboveColor:lowPixel belowColor:highPixel];
 
-    const float percentBlackTransitionThreshold = 0.75f;
-    size_t totalPixelCount = _gameRectInImage.size.height * _gameRectInImage.size.width;
+    const float percentBlackTransitionThreshold = 0.87f;
+    size_t totalPixelCount = mainRect.size.height * mainRect.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
-
 
 -(NSImage *)createDebugImage
 {
@@ -179,7 +184,10 @@ const CGFloat statusLineVerticalOffset = 386;
     [image lockFocus];
     [[[NSColor blueColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findGameRect]];
-    
+
+    [[[NSColor orangeColor] colorWithAlphaComponent:.5] setFill];
+    [NSBezierPath fillRect:[self _findMainRect]];
+
     [[[NSColor whiteColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findEnergyText]];
 
