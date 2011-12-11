@@ -40,9 +40,6 @@
     _windowID = kCGNullWindowID;
 }
 
-NSString *kAppNameKey = @"applicationName";	// Application Name & PID
-NSString *kWindowIDKey = @"windowID"; // Window ID
-
 void SNESWindowSearchFunction(const void *inputDictionary, void *context);
 void SNESWindowSearchFunction(const void *inputDictionary, void *context)
 {
