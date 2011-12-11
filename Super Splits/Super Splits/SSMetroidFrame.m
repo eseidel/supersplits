@@ -29,8 +29,10 @@ const CGFloat statusLineVerticalOffset = 386;
 {
     if (self = [super init]) {
         _image = image;
-        if (![self isSupportedImage:image])
+        if (![self isSupportedImage:image]) {
+            NSLog(@"Unsupported image format!");
             return nil;
+        }
         CFRetain(image);
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
 
@@ -139,10 +141,12 @@ const CGFloat statusLineVerticalOffset = 386;
 -(BOOL)frameIsMissingEnergyText
 {
     CGRect energyTextRect = [self _findEnergyText];
-    if (CGRectEqualToRect(energyTextRect, CGRectZero))
+    if (CGRectEqualToRect(energyTextRect, CGRectZero)) {
+        NSLog(@"Failed to find energy rect!");
         return NO;  // We don't know, so assume not.
+    }
 
-    const uint8 lowPixel[4] = {200, 200, 200, 0};
+    const uint8 lowPixel[4] = {180, 180, 180, 0};
     const uint8 highPixel[4] =  {255, 255, 255, 255};
     size_t whitePixelCount = [self countPixelsInRect:energyTextRect aboveColor:lowPixel belowColor:highPixel];
 
@@ -159,7 +163,7 @@ const CGFloat statusLineVerticalOffset = 386;
     const uint8 highPixel[4] =  {5, 5, 5, 255};
     CGRect fullRect = CGRectMake(0, 0, CGImageGetWidth(_image), CGImageGetHeight(_image));
     size_t blackPixelCount = [self countPixelsInRect:fullRect aboveColor:lowPixel belowColor:highPixel];
-    
+
     const float percentBlackTransitionThreshold = 0.8f;
     size_t totalPixelCount = fullRect.size.height * fullRect.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
