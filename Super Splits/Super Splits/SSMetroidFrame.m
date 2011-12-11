@@ -138,7 +138,7 @@ const CGFloat statusLineVerticalOffset = 386;
     return YES;
 }
 
--(BOOL)frameIsMissingEnergyText
+-(BOOL)isMissingEnergyText
 {
     CGRect energyTextRect = [self _findEnergyText];
     if (CGRectEqualToRect(energyTextRect, CGRectZero)) {
@@ -157,7 +157,7 @@ const CGFloat statusLineVerticalOffset = 386;
     return whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold);
 }
 
--(BOOL)frameIsMostlyBlack
+-(BOOL)isMostlyBlack
 {
     const uint8 lowPixel[4] = {0, 0, 0, 0};
     const uint8 highPixel[4] =  {5, 5, 5, 255};
@@ -169,14 +169,6 @@ const CGFloat statusLineVerticalOffset = 386;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
--(BOOL)isTransitionScreen
-{    
-    if ([self frameIsMissingEnergyText])
-        return YES;
-    
-    // FIXME: We should compute which direction this transition is.
-    return [self frameIsMostlyBlack];
-}
 
 -(NSImage *)createDebugImage
 {

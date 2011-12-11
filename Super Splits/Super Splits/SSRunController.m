@@ -11,9 +11,7 @@
 @interface SSRunController (PrivateMethods)
 
 -(void)_startRoom;
--(BOOL)_inTransition;
--(void)_startTransition;
--(void)_endTransition;
+-(void)_recordLastRoom;
 
 @end
 
@@ -28,25 +26,33 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     switch(state) {
         case RoomState:
             return @"Room";
-        case TransitionState:
-            return @"Transition";
+        case RoomTransitionState:
+            return @"RoomTransition";
+        case BlackScreenState:
+            return @"BlackScreen";
     }
     return @"unknown";
 }
 
--(void)setState:(SSRunState)state
+-(void)setState:(SSRunState)newState
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
-    if (state == _state)
+    if (newState == _state)
         return;
 
-    NSLog(@"%@ -> %@", [self stringForState:state], [self stringForState:_state]);
-    _state = state;
+    NSTimeInterval stateDuration = -[_stateStart timeIntervalSinceNow];
+    NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
-    if (_state == TransitionState)
-        [self _startTransition];
-    else
-        [self _endTransition];
+    if (newState == RoomState) {
+        if (_state == RoomTransitionState)
+            [self _startRoom];
+        if ((_state == BlackScreenState) && (stateDuration > 2.0)) {
+            // This is used to differentiate between cut-scenes and black screens for pause.
+            [self _startRoom];
+        }
+    }
+    _stateStart = [NSDate date];
+    _state = newState;
 }
 
 +(NSArray *)runFileTypes
@@ -92,43 +98,25 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
 -(void)_startRoom
 {
-    if (_transitionStart) {
+    if (_stateStart) {
         NSNumber *roomSplit = [self roomTime];
         double roomSplitDouble = [roomSplit doubleValue];
-        if (roomSplitDouble < 1.5) { // FIXME: Is this too short for the shortest real room?
+        if (roomSplitDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
             NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomSplitDouble);
         } else {
             [_roomSplits addObject:roomSplit];
-            NSTimeInterval transitionTime = -[_transitionStart timeIntervalSinceNow];
+            NSTimeInterval transitionTime = -[_stateStart timeIntervalSinceNow];
             NSLog(@"Split: %.2fs, Transition: %.2fs", roomSplitDouble, transitionTime);
         }
     }
     _roomStart = [NSDate date];
-    _transitionStart = nil;
-}
-
--(BOOL)_inTransition
-{
-    return (BOOL)_transitionStart;
-}
-
--(void)_startTransition
-{
-    assert(![self _inTransition]);
-    _transitionStart = [NSDate date];
-}
-
--(void)_endTransition
-{
-    assert([self _inTransition]);
-    [self _startRoom];
 }
 
 -(NSNumber *)roomTime
 {
     NSTimeInterval roomTime;
-    if ([self _inTransition])
-        roomTime = [_transitionStart timeIntervalSinceDate:_roomStart];
+    if (_state != RoomState)
+        roomTime = [_stateStart timeIntervalSinceDate:_roomStart];
     else
         roomTime = -[_roomStart timeIntervalSinceNow];
     return [NSNumber numberWithDouble:roomTime];

@@ -13,14 +13,15 @@ extern const SSRoomId kInvalidRoomId;
 
 typedef enum {
     RoomState = 0,
-    TransitionState,
+    RoomTransitionState,
+    BlackScreenState,
 } SSRunState;
 
 @interface SSRunController : NSObject
 {
     NSDate *_overallStart;
     NSDate *_roomStart;
-    NSDate *_transitionStart;
+    NSDate *_stateStart;
 
     NSMutableArray *_roomSplits;
     SSRunState _state;

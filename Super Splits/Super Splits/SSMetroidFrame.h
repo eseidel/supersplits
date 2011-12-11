@@ -17,7 +17,8 @@
     CGAffineTransform _fromGameRectToImage;
 }
 
-@property (readonly) BOOL isTransitionScreen;
+@property (readonly) BOOL isMissingEnergyText;
+@property (readonly) BOOL isMostlyBlack;
 
 -(id)initWithCGImage:(CGImageRef)image;
 

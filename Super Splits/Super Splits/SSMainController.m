@@ -67,10 +67,13 @@
         return;
     }
 
-    if ([frame isTransitionScreen])
-        _run.state = TransitionState;
-    else
+    if (frame.isMissingEnergyText) {
+        _run.state = BlackScreenState;
+    } else if (frame.isMostlyBlack) {
+        _run.state = RoomTransitionState;
+    } else {
         _run.state = RoomState;
+    }
 
     if (_debugImageView)
         [_debugImageView setImage:[frame createDebugImage]];
