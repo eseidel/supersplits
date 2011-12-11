@@ -12,7 +12,8 @@ typedef NSUInteger SSRoomId;
 extern const SSRoomId kInvalidRoomId;
 
 typedef enum {
-    RoomState = 0,
+    UnknownState = 0,
+    RoomState,
     RoomTransitionState,
     BlackScreenState,
 } SSRunState;

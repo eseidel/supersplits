@@ -30,8 +30,10 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
             return @"RoomTransition";
         case BlackScreenState:
             return @"BlackScreen";
+        case UnknownState:
+            return @"Unknown";
     }
-    return @"unknown";
+    return @"Invalid state!";
 }
 
 -(void)setState:(SSRunState)newState
@@ -44,6 +46,11 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
     if (newState == RoomState) {
+        if (_state == UnknownState) {
+            _overallStart = [NSDate date];
+            _roomSplits = [NSMutableArray array];
+            [self _startRoom];
+        }
         if (_state == RoomTransitionState)
             [self _startRoom];
         if ((_state == BlackScreenState) && (stateDuration > 2.0)) {
@@ -63,9 +70,6 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 -(id)init
 {
     if (self = [super init]) {
-        _overallStart = [NSDate date];
-        _roomStart = [NSDate date];
-        _roomSplits = [NSMutableArray array];
     }
     return self;
 }
