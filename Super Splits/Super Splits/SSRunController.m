@@ -27,9 +27,9 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
         case RoomState:
             return @"Room";
         case RoomTransitionState:
-            return @"RoomTransition";
+            return @"Door";
         case BlackScreenState:
-            return @"BlackScreen";
+            return @"Black";
         case UnknownState:
             return @"Unknown";
     }
