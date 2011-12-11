@@ -152,7 +152,7 @@ const CGFloat statusLineVerticalOffset = 386;
 
     // The Energy text is white, but few of the pixels are actually fully white.
     // If more than 15% of our pixels white, assume it's the energy text.
-    const float percentWhiteEnergyThreshold = 0.15f;
+    const float percentWhiteEnergyThreshold = 0.10f;
     size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
     return whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold);
 }
@@ -161,11 +161,11 @@ const CGFloat statusLineVerticalOffset = 386;
 {
     const uint8 lowPixel[4] = {0, 0, 0, 0};
     const uint8 highPixel[4] =  {5, 5, 5, 255};
-    CGRect fullRect = CGRectMake(0, 0, CGImageGetWidth(_image), CGImageGetHeight(_image));
-    size_t blackPixelCount = [self countPixelsInRect:fullRect aboveColor:lowPixel belowColor:highPixel];
+    // FIXME: This should operate on just the main rect, not the game rect.
+    size_t blackPixelCount = [self countPixelsInRect:_gameRectInImage aboveColor:lowPixel belowColor:highPixel];
 
-    const float percentBlackTransitionThreshold = 0.8f;
-    size_t totalPixelCount = fullRect.size.height * fullRect.size.width;
+    const float percentBlackTransitionThreshold = 0.75f;
+    size_t totalPixelCount = _gameRectInImage.size.height * _gameRectInImage.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
