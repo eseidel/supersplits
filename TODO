@@ -1,7 +1,8 @@
-- Be able to read from a saved FLV file
-- some rooms (like dragon) are dark enough to be transitions
 - Reset can get the app confused (fails to update the timer).
 - Wait-to-start behavior is somewhat non-discoverable.
+- assert() on saving
+- need to read mini-map
+- make larger, with black background.
 
 Future thoughts:
 
