@@ -110,7 +110,10 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     for (NSNumber *splitTime in _roomSplits) {
         [splitsString appendFormat:@"%.2f\n", [splitTime doubleValue]];
     }
-    [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    NSError *error = nil;
+    [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (error)
+        NSLog(@"Error saving: %@", error);
 }
 
 -(void)_startRoom
@@ -124,6 +127,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
             [_roomSplits addObject:roomSplit];
             NSTimeInterval transitionTime = -[_stateStart timeIntervalSinceNow];
             NSLog(@"Split: %.2fs, Transition: %.2fs", roomSplitDouble, transitionTime);
+            [self autosave];
         }
     }
     _roomStart = [NSDate date];
@@ -155,6 +159,23 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 {
     // FIXME: Should we always return a value here?
     return [_roomSplits count] + 1;
+}
+
+-(void)autosave
+{
+    NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
+    runsDirectory = [runsDirectory stringByExpandingTildeInPath];
+    NSURL *runsURL = [NSURL fileURLWithPath:runsDirectory];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
+
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM-dd-yyyy hh:mma"];
+    NSString *dateString = [dateFormat stringFromDate:_overallStart];
+
+    NSString *runName = [NSString stringWithFormat:@"%@ Autosave.txt", dateString];
+    NSURL *runURL = [runsURL URLByAppendingPathComponent:runName];
+    [self writeToURL:runURL];
 }
 
 -(NSNumber *)timeAfterRoom:(SSRoomId)roomId

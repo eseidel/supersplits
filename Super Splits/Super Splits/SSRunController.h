@@ -38,6 +38,7 @@ typedef enum {
 +(NSArray *)runFileTypes;
 
 -(void)writeToURL:(NSURL *)url;
+-(void)autosave;
 
 -(SSRoomId)currentRoomId;
 -(SSRoomId)lastRoomId;
