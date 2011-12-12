@@ -221,7 +221,7 @@ const CGFloat statusLineVerticalOffset = 386;
     CGRect mainRect = [self _findMainRect];
     size_t blackPixelCount = [self countPixelsInRect:mainRect aboveColor:lowPixel belowColor:highPixel];
 
-    const float percentBlackTransitionThreshold = 0.90f;
+    const float percentBlackTransitionThreshold = 0.87f;
     size_t totalPixelCount = mainRect.size.height * mainRect.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
