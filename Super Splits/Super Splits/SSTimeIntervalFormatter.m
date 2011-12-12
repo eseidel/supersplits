@@ -24,7 +24,7 @@
     int sign = timeInterval < 0 ? -1 : 1;
 
     if (hours > 0)
-        return [NSString stringWithFormat:@"%d%02d:%02d.%ds", sign * hours, minutes, seconds, deciseconds];
+        return [NSString stringWithFormat:@"%d:%02d:%02d.%ds", sign * hours, minutes, seconds, deciseconds];
     if (minutes > 0)
         return [NSString stringWithFormat:@"%d:%02d.%ds", sign * minutes, seconds, deciseconds];
     return [NSString stringWithFormat:@"%d.%ds", sign * seconds, deciseconds];
