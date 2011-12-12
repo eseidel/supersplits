@@ -19,6 +19,7 @@
 
 @property (readonly) BOOL isMissingEnergyText;
 @property (readonly) BOOL isMostlyBlack;
+@property (readonly) NSString *miniMapString;
 
 -(id)initWithCGImage:(CGImageRef)image;
 

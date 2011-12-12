@@ -226,6 +226,34 @@ const CGFloat statusLineVerticalOffset = 386;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
+-(NSString *)miniMapString
+{
+    const uint8 lowPixel[4] = {0, 0, 0, 0};
+    const uint8 highPixel[4] =  {5, 5, 5, 255};
+
+    NSMutableString *mapString = [NSMutableString string];
+    
+    CGRect mapRect = [self _findMiniMap];
+    // The map is 5 x 3.
+    CGSize mapSquare = { mapRect.size.width / 5.0, mapRect.size.height / 3.0 };
+    for (size_t y = 0; y < 3; y++) {
+        for (size_t x = 0; x < 5; x++) {
+            CGRect rect = { mapRect.origin.x + mapSquare.width * x,
+                            mapRect.origin.y + mapSquare.height * y,
+                            mapSquare.width, mapSquare.height };
+//            NSLog(@"%f, %f - %f, %f", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+            size_t blackPixelCount = [self countPixelsInRect:rect aboveColor:lowPixel belowColor:highPixel];
+
+            const float emptyMapSquareThreshold = 0.40f;
+            size_t totalPixelCount = rect.size.width * rect.size.height;
+            bool isEmpty = blackPixelCount > (size_t)((float)totalPixelCount * emptyMapSquareThreshold);
+            [mapString appendString:(isEmpty ? @"0" : @"1")];
+        }
+        [mapString appendString:@", "];
+    }
+    return mapString;
+}
+
 -(NSImage *)createDebugImage
 {
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:_image];

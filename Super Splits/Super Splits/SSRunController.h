@@ -26,6 +26,7 @@ typedef enum {
 
     NSMutableArray *_roomSplits;
     SSRunState _state;
+    NSString *_roomName;
     double _speedMultiplier;
 }
 
@@ -34,6 +35,7 @@ typedef enum {
 @property (nonatomic) SSRunState state;
 @property (readonly) NSString *stateAsString;
 @property (nonatomic) double speedMultiplier;
+@property (retain, nonatomic) NSString *roomName;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 

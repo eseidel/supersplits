@@ -73,6 +73,7 @@
         _run.state = RoomTransitionState;
     } else {
         _run.state = RoomState;
+        _run.roomName = frame.miniMapString;
     }
 
     if (_debugImageView)

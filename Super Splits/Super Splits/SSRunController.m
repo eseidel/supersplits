@@ -20,7 +20,9 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
 @implementation SSRunController
 
-@synthesize startTime=_overallStart, roomSplits=_roomSplits, state=_state, speedMultiplier=_speedMultiplier;
+@synthesize startTime=_overallStart, roomSplits=_roomSplits,
+            state=_state, speedMultiplier=_speedMultiplier,
+            roomName=_roomName;
 
 -(NSString *)stringForState:(SSRunState)state
 {
@@ -74,6 +76,16 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     }
     _stateStart = [NSDate date];
     _state = newState;
+}
+
+-(void)setRoomName:(NSString *)roomName
+{
+    // FIXME: Should we do this with KVO instead of a manual setter?
+    if ([_roomName isEqualToString:roomName])
+        return;
+
+    NSLog(@"Room: %@ -> %@", _roomName, roomName);
+    _roomName = roomName;
 }
 
 +(NSArray *)runFileTypes
