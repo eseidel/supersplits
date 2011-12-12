@@ -12,6 +12,7 @@
 
 -(void)_startRoom;
 -(void)_recordLastRoom;
+-(NSTimeInterval)_stateTime;
 
 @end
 
@@ -19,7 +20,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
 @implementation SSRunController
 
-@synthesize startTime=_overallStart, roomSplits=_roomSplits, state=_state;
+@synthesize startTime=_overallStart, roomSplits=_roomSplits, state=_state, speedMultiplier=_speedMultiplier;
 
 -(NSString *)stringForState:(SSRunState)state
 {
@@ -56,7 +57,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
         [self _startRoom];
     }
 
-    NSTimeInterval stateDuration = -[_stateStart timeIntervalSinceNow];
+    NSTimeInterval stateDuration = [self _stateTime];
     NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
     if (newState == RoomState) {
@@ -83,6 +84,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 -(id)init
 {
     if (self = [super init]) {
+        _speedMultiplier = 1.0;
     }
     return self;
 }
@@ -121,12 +123,12 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     if (_stateStart) {
         NSNumber *roomSplit = [self roomTime];
         double roomSplitDouble = [roomSplit doubleValue];
+        // FIXME: Does this check belong here instead of in setState?
         if (roomSplitDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
             NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomSplitDouble);
         } else {
             [_roomSplits addObject:roomSplit];
-            NSTimeInterval transitionTime = -[_stateStart timeIntervalSinceNow];
-            NSLog(@"Split: %.2fs, Transition: %.2fs", roomSplitDouble, transitionTime);
+            NSLog(@"Split: %.2fs, Transition: %.2fs", roomSplitDouble, [self _stateTime]);
             [self autosave];
         }
     }
@@ -140,12 +142,17 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
         roomTime = [_stateStart timeIntervalSinceDate:_roomStart];
     else
         roomTime = -[_roomStart timeIntervalSinceNow];
-    return [NSNumber numberWithDouble:roomTime];
+    return [NSNumber numberWithDouble:roomTime * _speedMultiplier];
 }
 
 -(NSNumber *)totalTime
 {
-    return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
+    return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow] * _speedMultiplier];
+}
+
+-(NSTimeInterval)_stateTime
+{
+    return -[_stateStart timeIntervalSinceNow] * _speedMultiplier;
 }
 
 -(SSRoomId)lastRoomId
