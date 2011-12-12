@@ -127,7 +127,56 @@ const CGFloat statusLineVerticalOffset = 386;
                 matchingPixelCount++;
         }
     }
+
     return matchingPixelCount;
+}
+
+// This method is for debugging.
+-(NSImage *)subimageForRect:(CGRect)rect
+{
+    // We're using a less-efficent pixel-copying method in order to
+    // match how countPixelsInRect works. 
+    const uint8 *pixels = CFDataGetBytePtr(_pixelData);
+    
+    size_t height = CGImageGetHeight(_image);
+    size_t bitsPerPixel = CGImageGetBitsPerPixel(_image);
+    size_t bytesPerPixel = bitsPerPixel / 8;
+    assert(bytesPerPixel == 4); // This function assumes 4-byte pixels.
+    size_t bytesPerRow = CGImageGetBytesPerRow(_image);
+    
+    // FIXME: It appears this assertion fails if you resize the window?
+    assert(bytesPerPixel * CGImageGetWidth(_image) == bytesPerRow);
+    
+    // Careful to flip from CG coordinates to offsets into the pixel buffer.
+    size_t minX = rect.origin.x;
+    size_t minY = height - CGRectGetMaxY(rect);
+    size_t maxX = CGRectGetMaxX(rect);
+    size_t maxY = height - rect.origin.y;
+
+    CGContextRef context = CGBitmapContextCreate(NULL,
+                                               rect.size.width,
+                                               rect.size.height,
+                                               CGImageGetBitsPerComponent(_image),
+                                               bytesPerRow,  // FIXME: Unclear why this value is correct.
+                                               CGImageGetColorSpace(_image),
+                                               CGImageGetBitmapInfo(_image));
+
+    uint8 *newPixels = CGBitmapContextGetData(context);
+    for (size_t y = minY; y < maxY; y++) {
+        for (size_t x = minX; x < maxX; x++) {
+            const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
+            uint8* newPixel = newPixels + (y - minY) * bytesPerRow + (x - minX) * bytesPerPixel;
+            newPixel[0] = pixel[0];
+            newPixel[1] = pixel[1];
+            newPixel[2] = pixel[2];
+            newPixel[3] = pixel[3];
+        }
+    }
+    CGImageRef newImage = CGBitmapContextCreateImage(context);
+    NSImage *image = [[NSImage alloc] init];
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:newImage];
+    [image addRepresentation:bitmapRep];
+    return image;
 }
 
 -(BOOL)isSupportedImage:(CGImageRef)frame
@@ -158,7 +207,9 @@ const CGFloat statusLineVerticalOffset = 386;
 
     // The Energy text is white, but few of the pixels are actually fully white.
     // If more than 15% of our pixels white, assume it's the energy text.
-    const float percentWhiteEnergyThreshold = 0.10f;
+    // Currently this is set very low, as with antialiasing, we end up with very few "white"
+    // pixels when rendering the screen at a small size.
+    const float percentWhiteEnergyThreshold = 0.05f;
     size_t totalPixelCount = energyTextRect.size.width * energyTextRect.size.height;
     return whitePixelCount < (size_t)((float)totalPixelCount * percentWhiteEnergyThreshold);
 }
@@ -166,11 +217,11 @@ const CGFloat statusLineVerticalOffset = 386;
 -(BOOL)isMostlyBlack
 {
     const uint8 lowPixel[4] = {0, 0, 0, 0};
-    const uint8 highPixel[4] =  {1, 1, 1, 255};
+    const uint8 highPixel[4] =  {5, 5, 5, 255};
     CGRect mainRect = [self _findMainRect];
     size_t blackPixelCount = [self countPixelsInRect:mainRect aboveColor:lowPixel belowColor:highPixel];
 
-    const float percentBlackTransitionThreshold = 0.87f;
+    const float percentBlackTransitionThreshold = 0.90f;
     size_t totalPixelCount = mainRect.size.height * mainRect.size.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }

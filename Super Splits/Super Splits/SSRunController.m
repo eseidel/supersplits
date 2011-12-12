@@ -60,8 +60,12 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
     if (newState == RoomState) {
-        if (_state == RoomTransitionState)
-            [self _startRoom];
+        if (_state == RoomTransitionState) {
+            if (stateDuration < 1.0)
+                NSLog(@"Ignoring short door transition? Assuming just a very black room.");
+            else
+                [self _startRoom];
+        }
         if ((_state == BlackScreenState) && (stateDuration > 2.0)) {
             // This is used to differentiate between cut-scenes and black screens for pause.
             [self _startRoom];
