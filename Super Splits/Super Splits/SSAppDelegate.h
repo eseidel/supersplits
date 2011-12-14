@@ -8,10 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
-#import "SSTimerWindowController.h"
-#import "SSDebugWindowController.h"
-#import "SSHistoryWindowController.h"
-#import "SSCoreDataController.h"
+
+@class SSTimerWindowController;
+@class SSDebugWindowController;
+@class SSHistoryWindowController;
+@class SSMainController;
+@class SSCoreDataController;
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
 {

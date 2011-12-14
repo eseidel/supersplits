@@ -8,6 +8,8 @@
 
 #import "SSHistoryWindowController.h"
 
+#import "SSCoreDataController.h"
+
 @implementation SSHistoryWindowController
 
 @synthesize coreDataController=_coreDataController;

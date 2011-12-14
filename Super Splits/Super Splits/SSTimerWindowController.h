@@ -1,5 +1,5 @@
 //
-//  SSWindowController.h
+//  SSTimerWindowController.h
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SSMainController.h"
+
+@class SSMainController;
 
 @interface SSTimerWindowController : NSWindowController
 {

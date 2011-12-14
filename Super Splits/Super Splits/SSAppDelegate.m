@@ -8,6 +8,13 @@
 
 #import "SSAppDelegate.h"
 
+#import "SSCoreDataController.h"
+#import "SSDebugWindowController.h"
+#import "SSHistoryWindowController.h"
+#import "SSMainController.h"
+#import "SSRunController.h"
+#import "SSTimerWindowController.h"
+
 #define START_STOP_HOT_KEY_ID 'stss'
 #define RESET_HOT_KEY_ID 'strt'
 

@@ -1,16 +1,18 @@
 //
-//  SSWindowController.m
+//  SSTimerWindowController.m
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
-#import "SSRunController.h"
 #import "SSTimerWindowController.h"
+
+#import "SSMainController.h"
+#import "SSRunController.h"
+#import "SSSplit.h"
 #import "SSTimeDeltaFormatter.h"
 #import "SSTimeIntervalFormatter.h"
-#import "SSSplit.h"
 
 @implementation SSTimerWindowController
 

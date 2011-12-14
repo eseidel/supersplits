@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SSCoreDataController.h"
+
+@class SSCoreDataController;
 
 @interface SSHistoryWindowController : NSWindowController
 {
