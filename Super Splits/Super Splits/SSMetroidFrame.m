@@ -31,10 +31,13 @@ const CGFloat statusLineVerticalOffset = 386;
         _image = image;
         if (![self isSupportedImage:image]) {
             NSLog(@"Unsupported image format!");
+            _image = nil;
             return nil;
         }
         CFRetain(image);
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
+        if (!_pixelData)
+            return nil;
 
         _gameRectInImage = [self _findGameRect];
         if (CGRectEqualToRect(_gameRectInImage, CGRectZero)) {
@@ -52,8 +55,10 @@ const CGFloat statusLineVerticalOffset = 386;
 
 -(void)dealloc
 {
-    CFRelease(_pixelData);
-    CFRelease(_image);
+    if (_pixelData)
+        CFRelease(_pixelData);
+    if (_image)
+        CFRelease(_image);
 }
 
 -(CGRect)_findGameRect
