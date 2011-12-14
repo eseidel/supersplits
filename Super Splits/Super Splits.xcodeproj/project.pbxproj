@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A8070E831492FEDE00167ABD /* SSRunController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8070E821492FEDE00167ABD /* SSRunController.m */; };
+		A816D84014983DF900EBA19B /* SSSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D83F14983DF900EBA19B /* SSSplit.m */; };
 		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
 		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
@@ -48,6 +49,8 @@
 /* Begin PBXFileReference section */
 		A8070E811492FEDE00167ABD /* SSRunController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunController.h; sourceTree = "<group>"; };
 		A8070E821492FEDE00167ABD /* SSRunController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunController.m; sourceTree = "<group>"; };
+		A816D83E14983DF900EBA19B /* SSSplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplit.h; sourceTree = "<group>"; };
+		A816D83F14983DF900EBA19B /* SSSplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplit.m; sourceTree = "<group>"; };
 		A82F31D9148F694E00DDEBF2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				A8070E811492FEDE00167ABD /* SSRunController.h */,
 				A8070E821492FEDE00167ABD /* SSRunController.m */,
 				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
+				A816D83E14983DF900EBA19B /* SSSplit.h */,
+				A816D83F14983DF900EBA19B /* SSSplit.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -379,6 +384,7 @@
 				A8070E831492FEDE00167ABD /* SSRunController.m in Sources */,
 				A839FA98149364600003B4B1 /* SSTimeDeltaFormatter.m in Sources */,
 				A839FAA4149404C30003B4B1 /* SSMetroidFrame.m in Sources */,
+				A816D84014983DF900EBA19B /* SSSplit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

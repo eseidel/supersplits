@@ -7,6 +7,7 @@
 //
 
 #import "SSRunController.h"
+#import "SSSplit.h"
 
 @interface SSRunController (PrivateMethods)
 
@@ -22,7 +23,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
 @synthesize startTime=_overallStart, roomSplits=_roomSplits,
             state=_state, speedMultiplier=_speedMultiplier,
-            roomName=_roomName;
+            mapState=_mapState;
 
 -(NSString *)stringForState:(SSRunState)state
 {
@@ -78,14 +79,14 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     _state = newState;
 }
 
--(void)setRoomName:(NSString *)roomName
+-(void)setMapState:(NSString *)mapState
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
-    if ([_roomName isEqualToString:roomName])
+    if ([_mapState isEqualToString:mapState])
         return;
 
-    NSLog(@"Room: %@ -> %@", _roomName, roomName);
-    _roomName = roomName;
+    NSLog(@"Room: %@ -> %@", _mapState, mapState);
+    _mapState = mapState;
 }
 
 +(NSArray *)runFileTypes
@@ -110,8 +111,10 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
         if (splitsString) {
             NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
             // This is the hacky-way to do a "map" in cocoa.
-            _roomSplits = [splitStrings valueForKey:@"doubleValue"];
-            NSLog(@"Loaded splits: %@ from path: %@", _roomSplits, [url path]);
+            _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
+            for (NSString *splitString in splitStrings)
+                [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
+            NSLog(@"Loaded %lu splits from path: %@", [_roomSplits count], [url path]);
         } else
             self = nil;
     }
@@ -121,8 +124,8 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 -(void)writeToURL:(NSURL *)url
 {
     NSMutableString *splitsString = [[NSMutableString alloc] init];
-    for (NSNumber *splitTime in _roomSplits) {
-        [splitsString appendFormat:@"%.2f\n", [splitTime doubleValue]];
+    for (SSSplit *split in _roomSplits) {
+        [splitsString appendFormat:@"%@\n", [split stringForArchiving]];
     }
     NSError *error = nil;
     [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&error];
@@ -133,14 +136,16 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 -(void)_startRoom
 {
     if (_stateStart) {
-        NSNumber *roomSplit = [self roomTime];
-        double roomSplitDouble = [roomSplit doubleValue];
+        NSNumber *roomTime = [self roomTime];
+        double roomTimeDouble = [roomTime doubleValue];
         // FIXME: Does this check belong here instead of in setState?
-        if (roomSplitDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
-            NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomSplitDouble);
+        if (roomTimeDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
+            NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomTimeDouble);
         } else {
-            [_roomSplits addObject:roomSplit];
-            NSLog(@"Split: %.2fs, Transition: %.2fs", roomSplitDouble, [self _stateTime]);
+            SSSplit *split = [[SSSplit alloc] init];
+            split.duration = roomTime;
+            [_roomSplits addObject:split];
+            NSLog(@"Split: %.2fs, Transition: %.2fs", roomTimeDouble, [self _stateTime]);
             [self autosave];
         }
     }
@@ -202,8 +207,10 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)
         return nil;
     NSTimeInterval accumulatedTime = 0;
-    for (size_t x = 0; x < roomId; x++)
-        accumulatedTime += [[_roomSplits objectAtIndex:x] doubleValue];
+    for (size_t x = 0; x < roomId; x++) {
+        SSSplit *split = [_roomSplits objectAtIndex:x];
+        accumulatedTime += [[split duration] doubleValue];
+    }
     return [NSNumber numberWithDouble:accumulatedTime];
 }
 
@@ -211,7 +218,8 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 {
     if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)
         return nil;
-    return [_roomSplits objectAtIndex:roomId - 1];
+    SSSplit *split = [_roomSplits objectAtIndex:roomId - 1];
+    return [split duration];
 }
 
 @end

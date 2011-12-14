@@ -73,7 +73,8 @@
         _run.state = RoomTransitionState;
     } else {
         _run.state = RoomState;
-        _run.roomName = frame.miniMapString;
+        // Important to set that we're in a room before we update the current map state.
+        _run.mapState = frame.miniMapString;
     }
 
     if (_debugImageView)

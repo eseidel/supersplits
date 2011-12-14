@@ -23,10 +23,11 @@ typedef enum {
     NSDate *_overallStart;
     NSDate *_roomStart;
     NSDate *_stateStart;
+    NSString *_roomEntryMapState;
 
     NSMutableArray *_roomSplits;
     SSRunState _state;
-    NSString *_roomName;
+    NSString *_mapState;
     double _speedMultiplier;
 }
 
@@ -35,7 +36,7 @@ typedef enum {
 @property (nonatomic) SSRunState state;
 @property (readonly) NSString *stateAsString;
 @property (nonatomic) double speedMultiplier;
-@property (retain, nonatomic) NSString *roomName;
+@property (retain, nonatomic) NSString *mapState;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 

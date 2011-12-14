@@ -10,7 +10,7 @@
 #import "SSTimerWindowController.h"
 #import "SSTimeDeltaFormatter.h"
 #import "SSTimeIntervalFormatter.h"
-
+#import "SSSplit.h"
 
 @implementation SSTimerWindowController
 
@@ -57,7 +57,8 @@
 
     [totalTimeView setObjectValue:[current totalTime]];
     [roomTimeView setObjectValue:[current roomTime]];
-    [lastRoomSplitView setObjectValue:[[current roomSplits] lastObject]];
+    SSSplit *lastSplit = [[current roomSplits] lastObject];
+    [lastRoomSplitView setObjectValue:[lastSplit duration]];
 
     [roomReferenceTimeView setObjectValue:[reference splitForRoom:[current currentRoomId]]];
 
