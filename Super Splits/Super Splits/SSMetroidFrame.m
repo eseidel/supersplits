@@ -229,7 +229,8 @@ const CGFloat statusLineVerticalOffset = 386;
 -(NSString *)miniMapString
 {
     const uint8 lowPixel[4] = {0, 0, 0, 0};
-    const uint8 highPixel[4] =  {5, 5, 5, 255};
+    // We're very flexible about what we call "black" to avoid false positives from antialiasing.
+    const uint8 highPixel[4] =  {25, 25, 25, 255};
 
     NSMutableString *mapString = [NSMutableString string];
     
@@ -241,15 +242,18 @@ const CGFloat statusLineVerticalOffset = 386;
             CGRect rect = { mapRect.origin.x + mapSquare.width * x,
                             mapRect.origin.y + mapSquare.height * y,
                             mapSquare.width, mapSquare.height };
-//            NSLog(@"%f, %f - %f, %f", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
             size_t blackPixelCount = [self countPixelsInRect:rect aboveColor:lowPixel belowColor:highPixel];
 
-            const float emptyMapSquareThreshold = 0.40f;
+            // 30% black is enough to signify an empty square.
+            // At small frame sizes the border dominates the square, and 40% is slightly too agressive.
+            // We could also inset the square by some percent and use a more agressive percent black.
+            const float emptyMapSquareThreshold = 0.30f;
             size_t totalPixelCount = rect.size.width * rect.size.height;
             bool isEmpty = blackPixelCount > (size_t)((float)totalPixelCount * emptyMapSquareThreshold);
             [mapString appendString:(isEmpty ? @"0" : @"1")];
         }
-        [mapString appendString:@", "];
+        if (y < 2)
+            [mapString appendString:@", "];
     }
     return mapString;
 }
