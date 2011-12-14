@@ -10,9 +10,9 @@
 
 @interface SSSplit : NSObject
 {
+    NSNumber *_duration;
     NSString *_entryMapState;
     NSString *_exitMapState;
-    NSNumber *_duration;
 }
 
 @property (retain) NSString *entryMapState;
