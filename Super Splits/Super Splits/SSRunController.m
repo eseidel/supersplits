@@ -87,6 +87,8 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 
     NSLog(@"Room: %@ -> %@", _mapState, mapState);
     _mapState = mapState;
+    if (!_roomEntryMapState)
+        _roomEntryMapState = _mapState;
 }
 
 +(NSArray *)runFileTypes
@@ -144,11 +146,18 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
         } else {
             SSSplit *split = [[SSSplit alloc] init];
             split.duration = roomTime;
+            split.entryMapState = _roomEntryMapState;
+            // We're careful in SSMainController to set the current state before setting the new
+            // map state, so we can use _mapState here as the exit map state.
+            split.exitMapState = _mapState;
+
             [_roomSplits addObject:split];
             NSLog(@"Split: %.2fs, Transition: %.2fs", roomTimeDouble, [self _stateTime]);
             [self autosave];
         }
     }
+
+    _roomEntryMapState = nil;
     _roomStart = [NSDate date];
 }
 
