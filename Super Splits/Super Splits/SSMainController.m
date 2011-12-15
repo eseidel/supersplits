@@ -26,7 +26,7 @@
 
 -(BOOL)running
 {
-    return _imageSource.polling;
+    return [_imageSource polling];
 }
 
 -(void)startRun

@@ -82,7 +82,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (IBAction)togglePause:(id)sender
 {
-    if (!_mainController.running) {
+    if (![_mainController running]) {
         [_mainController startRun];
         [_timerWindowController startUpdating];
     } else {
