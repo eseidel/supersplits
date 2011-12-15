@@ -14,6 +14,7 @@
 #import "SSMainController.h"
 #import "SSRunController.h"
 #import "SSTimerWindowController.h"
+#import "SSUserDefaults.h"
 
 #define START_STOP_HOT_KEY_ID 'stss'
 #define RESET_HOT_KEY_ID 'strt'
@@ -36,8 +37,17 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 @implementation SSAppDelegate
 
+- (void)_registerDefaults
+{
+    NSDictionary *defaultsDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0]
+                                                             forKey:kSpeedMultiplierDefaultName];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsDict];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self _registerDefaults];
+
     _timerWindowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"MainWindow"];
     _mainController = [[SSMainController alloc] init];
     _timerWindowController.mainController = _mainController;

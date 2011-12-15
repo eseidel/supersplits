@@ -8,6 +8,7 @@
 
 #import "SSRunController.h"
 #import "SSSplit.h"
+#import "SSUserDefaults.h"
 
 @interface SSRunController (PrivateMethods)
 
@@ -109,7 +110,7 @@ const NSUInteger kInvalidSplitIndex = -1;
 -(id)init
 {
     if (self = [super init]) {
-        _speedMultiplier = 1.0;
+        _speedMultiplier = [[NSUserDefaults standardUserDefaults] floatForKey:kSpeedMultiplierDefaultName];
     }
     return self;
 }
