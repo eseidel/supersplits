@@ -66,7 +66,7 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     if (newState == RoomState) {
         if (_state == RoomTransitionState) {
             if (stateDuration < 1.0)
-                NSLog(@"WARNING: Ignoring short door transition? Assuming just a very black room.");
+                NSLog(@"WARNING: Ignoring short (%.2f) door transition? Assuming just a very black room.", stateDuration);
             else
                 [self _startRoom];
         }
