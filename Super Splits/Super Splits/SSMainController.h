@@ -29,6 +29,7 @@
 @property (readonly) SSRunController *currentRun;
 @property (retain) SSRunController *referenceRun;
 @property (retain) NSImageView *debugImageView;
+@property (readonly) NSNumber *lastMatchedSplitNumber;
 
 -(NSURL *)referenceRunURL;
 -(NSURL *)runsDirectoryURL;

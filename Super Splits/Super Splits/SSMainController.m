@@ -127,6 +127,13 @@
     _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
 }
 
+-(NSNumber *)lastMatchedSplitNumber
+{
+    if (_lastMatchedReferenceSplitIndex == kInvalidSplitIndex)
+        return nil;
+    return [NSNumber numberWithInteger:_lastMatchedReferenceSplitIndex + 1];
+}
+
 -(SSSplit *)currentSplitReference
 {
     if (_currentReferenceSplitIndex == kInvalidSplitIndex)

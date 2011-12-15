@@ -64,7 +64,13 @@
     [roomReferenceTimeView setObjectValue:[currentRoomReference duration]];
     [totalTimeDeltaView setObjectValue:[_mainController deltaAfterPreviousSplit]];
     [lastRoomSplitDeltaView setObjectValue:[_mainController deltaForPreviousSplit]];
-    
+
+    NSNumber *lastMatchedSplitNumber = [_mainController lastMatchedSplitNumber];
+    SSRunController *reference = [_mainController referenceRun];
+    NSString *referenceFractionString = [NSString stringWithFormat:@"%@ / %lu", lastMatchedSplitNumber, [[reference roomSplits] count]];
+    [referenceFractionView setStringValue:referenceFractionString];
+    [splitCountView setIntegerValue:[[current roomSplits] count] + 1];
+
     if (!_mainController.running) {
         [timerState setStringValue:@"paused"];
     } else {

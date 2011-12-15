@@ -23,6 +23,8 @@
     IBOutlet NSTextField *lastRoomSplitView;
     IBOutlet NSTextField *lastRoomSplitDeltaView;
     IBOutlet NSTextField *timerState;
+    IBOutlet NSTextField *referenceFractionView;
+    IBOutlet NSTextField *splitCountView;
 }
 
 @property(retain) SSMainController *mainController;
