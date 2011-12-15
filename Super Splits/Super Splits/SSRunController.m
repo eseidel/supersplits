@@ -152,11 +152,17 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
             split.exitMapState = _mapState;
 
             [_roomSplits addObject:split];
-            NSLog(@"Split: %.2fs, Transition: %.2fs", roomTimeDouble, [self _stateTime]);
+            NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTimeDouble, split.entryMapState, split.exitMapState, [self _stateTime]);
             [self autosave];
         }
     }
 
+    // Super Metroid doesn't update the minimap until *after* the door animation completes.
+    // Our room transition detection currently thinks the door animation ends slightly
+    // before it does.  So instead of setting _roomEntryMapState = _mapState here, we
+    // set it to nil and update it if/when the map ever changes inside this room.
+    // If the map never changes, then when we record the room we'll use the ending
+    // state for the previous room.
     _roomEntryMapState = nil;
     _roomStart = [NSDate date];
 }
