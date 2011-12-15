@@ -33,7 +33,7 @@ const CGFloat statusLineVerticalOffset = 386;
             NSLog(@"Unsupported image format!");
             return nil;
         }
-        CFRetain(image);
+        CGImageRetain(image);
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
 
         _gameRectInImage = [self _findGameRect];
@@ -52,8 +52,10 @@ const CGFloat statusLineVerticalOffset = 386;
 
 -(void)dealloc
 {
-    CFRelease(_pixelData);
-    CFRelease(_image);
+    if (_pixelData) {
+        CFRelease(_pixelData);
+    }
+    CGImageRelease(_image);
 }
 
 -(CGRect)_findGameRect
@@ -173,9 +175,11 @@ const CGFloat statusLineVerticalOffset = 386;
         }
     }
     CGImageRef newImage = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
     NSImage *image = [[NSImage alloc] init];
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:newImage];
     [image addRepresentation:bitmapRep];
+    CGImageRelease(newImage);
     return image;
 }
 
