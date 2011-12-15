@@ -111,8 +111,8 @@
     if (![[_referenceRun roomSplits] count])
         return;
 
-    // If we're ever off by more than 10 runs, something is very wrong.
-    const NSUInteger scanLimit = 10;
+    // If we're ever off by more than 6 rooms, something is very wrong.
+    const NSUInteger scanLimit = 6;
 
     // This should probably use _run._roomEntryMapState, but we know we
     // just set the mapState so use that for now.
