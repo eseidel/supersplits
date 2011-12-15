@@ -36,9 +36,7 @@ extern const NSUInteger kInvalidSplitIndex;
 @property (readonly) NSString *stateAsString;
 @property (nonatomic) double speedMultiplier;
 @property (retain, nonatomic) NSString *mapState;
-
-// True when we've entered a new room but don't yet have a map state for it.
-@property (readonly) BOOL waitingForMapState;
+@property (readonly) NSString *roomEntryMapState;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 

@@ -23,7 +23,8 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 @synthesize startTime=_overallStart, roomSplits=_roomSplits,
             state=_state, speedMultiplier=_speedMultiplier,
-            mapState=_mapState;
+            mapState=_mapState, roomEntryMapState=_roomEntryMapState;
+
 
 -(NSString *)stringForState:(SSRunState)state
 {
@@ -61,7 +62,7 @@ const NSUInteger kInvalidSplitIndex = -1;
     }
 
     NSTimeInterval stateDuration = [self _stateTime];
-    NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
+    //NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
     if (newState == RoomState) {
         if (_state == RoomTransitionState) {
@@ -95,14 +96,9 @@ const NSUInteger kInvalidSplitIndex = -1;
     //NSLog(@"Map: %@ -> %@", _mapState, mapState);
     _mapState = mapState;
     if (!_roomEntryMapState) {
-        NSLog(@"Entry Map State: %@, %.2fs after door", _mapState, [[self roomTime] doubleValue]);
+        //NSLog(@"Entry Map State: %@, %.2fs after door", _mapState, [[self roomTime] doubleValue]);
         _roomEntryMapState = _mapState;
     }
-}
-
--(BOOL)waitingForMapState
-{
-    return _roomStart && !_roomEntryMapState;
 }
 
 +(NSArray *)runFileTypes
@@ -232,6 +228,9 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 -(NSUInteger)indexOfFirstSplitAfter:(NSUInteger)startIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit
 {
+    if (startIndex == kInvalidSplitIndex)
+        startIndex = -1; // This is intentionally relying on overflow behavior to start the search at 0.
+
     for (NSUInteger splitsScanned = 0;  splitsScanned < scanLimit; splitsScanned++) {
         NSUInteger splitIndex = startIndex + splitsScanned + 1;
         if (splitIndex >= [_roomSplits count])

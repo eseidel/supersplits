@@ -14,6 +14,7 @@
 
 @interface SSMainController (PrivateMethods)
 
+-(BOOL)_haveSearchedForCurrentSplit;
 -(void)_updateReferenceCursors;
 
 @end
@@ -55,6 +56,7 @@
     _previousReferenceSplitIndex = kInvalidSplitIndex;
     _currentReferenceSplitIndex = kInvalidSplitIndex;
     _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
+    _lastSearchedSplitIndex = kInvalidSplitIndex;
 }
                       
 -(NSURL *)referenceRunURL
@@ -86,7 +88,6 @@
     } else {
         NSArray *previousSplits = [_run roomSplits];
         NSUInteger previousSplitCount = [previousSplits count];
-        BOOL wasWaitingForEntryMapState = [_run waitingForMapState];
 
         _run.state = RoomState;
         // Important to set that we're in a room before we update the current map state.
@@ -98,7 +99,7 @@
             _currentReferenceSplitIndex = kInvalidSplitIndex;
         }
         // Only update the reference cursors once we have a map for this room.
-        if (wasWaitingForEntryMapState && ![_run waitingForMapState])
+        if ([_run roomEntryMapState] && ![self _haveSearchedForCurrentSplit])
             [self _updateReferenceCursors];
     }
 
@@ -106,22 +107,27 @@
         [_debugImageView setImage:[frame createDebugImage]];
 }
 
+-(BOOL)_haveSearchedForCurrentSplit
+{
+    if (_lastSearchedSplitIndex == kInvalidSplitIndex)
+        return NO;
+    return _lastSearchedSplitIndex >= [[_run roomSplits] count];
+}
+
 -(void)_updateReferenceCursors
 {
+    assert(![self _haveSearchedForCurrentSplit]);
     if (![[_referenceRun roomSplits] count])
         return;
-
+    
     // If we're ever off by more than 6 rooms, something is very wrong.
     const NSUInteger scanLimit = 6;
 
     // This should probably use _run._roomEntryMapState, but we know we
     // just set the mapState so use that for now.
     NSString *mapState = _run.mapState;
-    NSUInteger startIndex = _lastMatchedReferenceSplitIndex;
-    if (startIndex == kInvalidSplitIndex)
-        startIndex = 0;
-
-    _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:startIndex withEntryMap:mapState scanLimit:scanLimit];
+    _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:_lastMatchedReferenceSplitIndex withEntryMap:mapState scanLimit:scanLimit];
+    _lastSearchedSplitIndex = [[_run roomSplits] count];
     if (_currentReferenceSplitIndex == kInvalidSplitIndex)
         return;
     _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
