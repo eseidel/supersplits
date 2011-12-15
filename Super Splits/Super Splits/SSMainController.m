@@ -148,14 +148,20 @@
     return [[_referenceRun roomSplits] objectAtIndex:_previousReferenceSplitIndex];
 }
 
--(NSNumber *)deltaAfterPreviousSplit
+-(NSNumber *)deltaToStartOfCurrentRoom
 {
-    if (_previousReferenceSplitIndex == kInvalidSplitIndex)
+    NSNumber *referenceTimeAfterLastRoom = nil;
+    if (_previousReferenceSplitIndex != kInvalidSplitIndex)
+        referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:_previousReferenceSplitIndex];
+    else if (_currentReferenceSplitIndex != kInvalidSplitIndex) {
+        // If we don't have a previous split (the last room was confused)
+        // but we do know what this room is, then we compute the time
+        // up until this room from the reference.
+        referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:_currentReferenceSplitIndex - 1];
+    } else
         return nil;
 
     NSNumber *timeAfterLastRoom = [_run timeAfterSplitAtIndex:([[_run roomSplits] count] - 1)];
-    NSNumber *referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:_previousReferenceSplitIndex];
-
     NSTimeInterval deltaAfterLastRoom = [timeAfterLastRoom doubleValue] - [referenceTimeAfterLastRoom doubleValue];
     return [NSNumber numberWithDouble:deltaAfterLastRoom];
 }

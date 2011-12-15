@@ -62,7 +62,7 @@
 
     SSSplit *currentRoomReference = [_mainController currentSplitReference];
     [roomReferenceTimeView setObjectValue:[currentRoomReference duration]];
-    [totalTimeDeltaView setObjectValue:[_mainController deltaAfterPreviousSplit]];
+    [totalTimeDeltaView setObjectValue:[_mainController deltaToStartOfCurrentRoom]];
     [lastRoomSplitDeltaView setObjectValue:[_mainController deltaForPreviousSplit]];
 
     NSNumber *lastMatchedSplitNumber = [_mainController lastMatchedSplitNumber];

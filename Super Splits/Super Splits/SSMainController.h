@@ -41,7 +41,7 @@
 -(SSSplit *)currentSplitReference;
 -(SSSplit *)previousSplitReference;
 
--(NSNumber *)deltaAfterPreviousSplit;
+-(NSNumber *)deltaToStartOfCurrentRoom;
 -(NSNumber *)deltaForPreviousSplit;
 
 @end
