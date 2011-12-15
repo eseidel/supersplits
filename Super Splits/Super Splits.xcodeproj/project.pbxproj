@@ -189,6 +189,7 @@
 				A83C4024148F0B8C00308FD4 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		A83C4024148F0B8C00308FD4 /* Products */ = {
 			isa = PBXGroup;

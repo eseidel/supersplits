@@ -34,7 +34,7 @@ const CGFloat statusLineVerticalOffset = 386;
             _image = nil;
             return nil;
         }
-        CFRetain(image);
+        CGImageRetain(image);
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
         if (!_pixelData)
             return nil;
@@ -55,10 +55,10 @@ const CGFloat statusLineVerticalOffset = 386;
 
 -(void)dealloc
 {
-    if (_pixelData)
+    if (_pixelData) {
         CFRelease(_pixelData);
-    if (_image)
-        CFRelease(_image);
+    }
+    CGImageRelease(_image);
 }
 
 -(CGRect)_findGameRect
@@ -178,9 +178,11 @@ const CGFloat statusLineVerticalOffset = 386;
         }
     }
     CGImageRef newImage = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
     NSImage *image = [[NSImage alloc] init];
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:newImage];
     [image addRepresentation:bitmapRep];
+    CGImageRelease(newImage);
     return image;
 }
 
