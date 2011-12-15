@@ -17,7 +17,7 @@
 
 @end
 
-const SSRoomId kInvalidRoomId = (SSRoomId)-1;
+const NSUInteger kInvalidSplitIndex = -1;
 
 @implementation SSRunController
 
@@ -82,13 +82,27 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
 -(void)setMapState:(NSString *)mapState
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
-    if ([_mapState isEqualToString:mapState])
+    if ([_mapState isEqualToString:mapState]) {
+        if (!_roomEntryMapState && [[self roomTime] doubleValue] > 1.0) {
+            // If it's been more than a second, assume that we already have
+            // the right minimap for this room, even if its the same as the last.
+            NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", _mapState);
+            _roomEntryMapState = _mapState;
+        }
         return;
+    }
 
-    NSLog(@"Room: %@ -> %@", _mapState, mapState);
+    //NSLog(@"Map: %@ -> %@", _mapState, mapState);
     _mapState = mapState;
-    if (!_roomEntryMapState)
+    if (!_roomEntryMapState) {
+        NSLog(@"Entry Map State: %@, %.2fs after door", _mapState, [[self roomTime] doubleValue]);
         _roomEntryMapState = _mapState;
+    }
+}
+
+-(BOOL)waitingForMapState
+{
+    return _roomStart && !_roomEntryMapState;
 }
 
 +(NSArray *)runFileTypes
@@ -187,19 +201,6 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     return -[_stateStart timeIntervalSinceNow] * _speedMultiplier;
 }
 
--(SSRoomId)lastRoomId
-{
-    if (!_roomSplits || ![_roomSplits count])
-        return kInvalidRoomId;
-    return [_roomSplits count];
-}
-
--(SSRoomId)currentRoomId
-{
-    // FIXME: Should we always return a value here?
-    return [_roomSplits count] + 1;
-}
-
 -(void)autosave
 {
     NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
@@ -217,24 +218,35 @@ const SSRoomId kInvalidRoomId = (SSRoomId)-1;
     [self writeToURL:runURL];
 }
 
--(NSNumber *)timeAfterRoom:(SSRoomId)roomId
+-(NSNumber *)timeAfterSplitAtIndex:(NSUInteger)splitIndex
 {
-    if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)
+    if (splitIndex >= [_roomSplits count])
         return nil;
     NSTimeInterval accumulatedTime = 0;
-    for (size_t x = 0; x < roomId; x++) {
+    for (size_t x = 0; x <= splitIndex; x++) {
         SSSplit *split = [_roomSplits objectAtIndex:x];
         accumulatedTime += [[split duration] doubleValue];
     }
     return [NSNumber numberWithDouble:accumulatedTime];
 }
 
--(NSNumber *)splitForRoom:(SSRoomId)roomId
+-(NSUInteger)indexOfFirstSplitAfter:(NSUInteger)startIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit
 {
-    if (roomId > [_roomSplits count] || roomId == kInvalidRoomId)
-        return nil;
-    SSSplit *split = [_roomSplits objectAtIndex:roomId - 1];
-    return [split duration];
+    for (NSUInteger splitsScanned = 0;  splitsScanned < scanLimit; splitsScanned++) {
+        NSUInteger splitIndex = startIndex + splitsScanned + 1;
+        if (splitIndex >= [_roomSplits count])
+            break;
+
+        SSSplit *split = [_roomSplits objectAtIndex:splitIndex];
+        if ([split.entryMapState isEqualToString:mapState]) {
+            if (splitsScanned)
+                NSLog(@"WARNING: Found matching split at offset %lu from expected", splitsScanned);
+            return splitIndex;
+        }
+        //NSLog(@"%@ does not match %@", split.entryMapState, mapState);
+    }
+    NSLog(@"ERROR: Split scanning limit (%lu) reached, failed to find: %@ after %lu", scanLimit, mapState, startIndex);
+    return kInvalidSplitIndex;
 }
 
 @end

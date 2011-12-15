@@ -8,15 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NSUInteger SSRoomId;
-extern const SSRoomId kInvalidRoomId;
-
 typedef enum {
     UnknownState = 0,
     RoomState,
     RoomTransitionState,
     BlackScreenState,
 } SSRunState;
+
+extern const NSUInteger kInvalidSplitIndex;
 
 @interface SSRunController : NSObject
 {
@@ -38,6 +37,9 @@ typedef enum {
 @property (nonatomic) double speedMultiplier;
 @property (retain, nonatomic) NSString *mapState;
 
+// True when we've entered a new room but don't yet have a map state for it.
+@property (readonly) BOOL waitingForMapState;
+
 -(id)initWithContentsOfURL:(NSURL *)url;
 
 +(NSArray *)runFileTypes;
@@ -45,11 +47,10 @@ typedef enum {
 -(void)writeToURL:(NSURL *)url;
 -(void)autosave;
 
--(SSRoomId)currentRoomId;
--(SSRoomId)lastRoomId;
--(NSNumber *)timeAfterRoom:(SSRoomId)roomId;
--(NSNumber *)splitForRoom:(SSRoomId)roomId;
-
 -(NSNumber *)roomTime;
 -(NSNumber *)totalTime;
+
+-(NSNumber *)timeAfterSplitAtIndex:(NSUInteger)splitIndex;
+-(NSUInteger)indexOfFirstSplitAfter:(NSUInteger)splitIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit;
+
 @end

@@ -55,29 +55,15 @@
 -(void)updateTimerViews
 {
     SSRunController *current = [_mainController currentRun];
-    SSRunController *reference = [_mainController referenceRun];
-
     [totalTimeView setObjectValue:[current totalTime]];
     [roomTimeView setObjectValue:[current roomTime]];
     SSSplit *lastSplit = [[current roomSplits] lastObject];
     [lastRoomSplitView setObjectValue:[lastSplit duration]];
 
-    [roomReferenceTimeView setObjectValue:[reference splitForRoom:[current currentRoomId]]];
-
-    SSRoomId lastRoomId = [current lastRoomId];
-    NSNumber *referenceSplit = [reference splitForRoom:lastRoomId];
-    if (referenceSplit) {
-        NSTimeInterval deltaAfterLastRoom = [[current timeAfterRoom:lastRoomId] doubleValue]
-                                          - [[reference timeAfterRoom:lastRoomId] doubleValue];
-        [totalTimeDeltaView setObjectValue:[NSNumber numberWithDouble:deltaAfterLastRoom]];
-
-        NSTimeInterval splitDelta = [[current splitForRoom:lastRoomId] doubleValue]
-                                  - [referenceSplit doubleValue];
-        [lastRoomSplitDeltaView setObjectValue:[NSNumber numberWithDouble:splitDelta]];
-    } else {
-        [totalTimeDeltaView setObjectValue:nil];
-        [lastRoomSplitDeltaView setObjectValue:nil];
-    }
+    SSSplit *currentRoomReference = [_mainController currentSplitReference];
+    [roomReferenceTimeView setObjectValue:[currentRoomReference duration]];
+    [totalTimeDeltaView setObjectValue:[_mainController deltaAfterPreviousSplit]];
+    [lastRoomSplitDeltaView setObjectValue:[_mainController deltaForPreviousSplit]];
     
     if (!_mainController.running) {
         [timerState setStringValue:@"paused"];

@@ -7,14 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SSRunController.h"
-#import "SSWindowImageSource.h"
+
+@class SSRunController;
+@class SSWindowImageSource;
+@class SSSplit;
 
 @interface SSMainController : NSObject
 {
     SSRunController *_run;
     SSRunController *_referenceRun;
     SSWindowImageSource *_imageSource;
+
+    NSUInteger _currentReferenceSplitIndex; // Reference for current room.
+    NSUInteger _previousReferenceSplitIndex; // Reference for the previous room.
+    NSUInteger _lastMatchedReferenceSplitIndex; // Last room we successfully matched a reference for.
 
     NSImageView *_debugImageView;
 }
@@ -30,6 +36,12 @@
 -(void)resetRun;
 -(void)startRun;
 -(void)stopRun;
+
+-(SSSplit *)currentSplitReference;
+-(SSSplit *)previousSplitReference;
+
+-(NSNumber *)deltaAfterPreviousSplit;
+-(NSNumber *)deltaForPreviousSplit;
 
 @end
 

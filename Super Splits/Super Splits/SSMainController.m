@@ -8,6 +8,16 @@
 
 #import "SSMainController.h"
 #import "SSMetroidFrame.h"
+#import "SSRunController.h"
+#import "SSSplit.h"
+#import "SSWindowImageSource.h"
+
+@interface SSMainController (PrivateMethods)
+
+-(void)_updateReferenceCursors;
+
+@end
+
 
 @implementation SSMainController
 
@@ -42,6 +52,9 @@
 -(void)resetRun
 {
     _run = [[SSRunController alloc] init];
+    _previousReferenceSplitIndex = kInvalidSplitIndex;
+    _currentReferenceSplitIndex = kInvalidSplitIndex;
+    _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
 }
                       
 -(NSURL *)referenceRunURL
@@ -71,13 +84,86 @@
     } else if (frame.isMostlyBlack) {
         _run.state = RoomTransitionState;
     } else {
+        NSArray *previousSplits = [_run roomSplits];
+        NSUInteger previousSplitCount = [previousSplits count];
+        BOOL wasWaitingForEntryMapState = [_run waitingForMapState];
+
         _run.state = RoomState;
         // Important to set that we're in a room before we update the current map state.
         _run.mapState = frame.miniMapString;
+
+        if (previousSplits && previousSplitCount != [[_run roomSplits] count]) {
+            // We must have added a split, move our reference indexes back one.
+            _previousReferenceSplitIndex = _currentReferenceSplitIndex;
+            _currentReferenceSplitIndex = kInvalidSplitIndex;
+        }
+        // Only update the reference cursors once we have a map for this room.
+        if (wasWaitingForEntryMapState && ![_run waitingForMapState])
+            [self _updateReferenceCursors];
     }
 
     if (_debugImageView)
         [_debugImageView setImage:[frame createDebugImage]];
+}
+
+-(void)_updateReferenceCursors
+{
+    if (![[_referenceRun roomSplits] count])
+        return;
+
+    // If we're ever off by more than 10 runs, something is very wrong.
+    const NSUInteger scanLimit = 10;
+
+    // This should probably use _run._roomEntryMapState, but we know we
+    // just set the mapState so use that for now.
+    NSString *mapState = _run.mapState;
+    NSUInteger startIndex = _lastMatchedReferenceSplitIndex;
+    if (startIndex == kInvalidSplitIndex)
+        startIndex = 0;
+
+    _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:startIndex withEntryMap:mapState scanLimit:scanLimit];
+    if (_currentReferenceSplitIndex == kInvalidSplitIndex)
+        return;
+    _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
+}
+
+-(SSSplit *)currentSplitReference
+{
+    if (_currentReferenceSplitIndex == kInvalidSplitIndex)
+        return nil;
+    return [[_referenceRun roomSplits] objectAtIndex:_currentReferenceSplitIndex];
+}
+
+-(SSSplit *)previousSplitReference
+{
+    if (_previousReferenceSplitIndex == kInvalidSplitIndex)
+        return nil;
+    return [[_referenceRun roomSplits] objectAtIndex:_previousReferenceSplitIndex];
+}
+
+-(NSNumber *)deltaAfterPreviousSplit
+{
+    if (_previousReferenceSplitIndex == kInvalidSplitIndex)
+        return nil;
+
+    NSNumber *timeAfterLastRoom = [_run timeAfterSplitAtIndex:([[_run roomSplits] count] - 1)];
+    NSNumber *referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:_previousReferenceSplitIndex];
+
+    NSTimeInterval deltaAfterLastRoom = [timeAfterLastRoom doubleValue] - [referenceTimeAfterLastRoom doubleValue];
+    return [NSNumber numberWithDouble:deltaAfterLastRoom];
+}
+
+-(NSNumber *)deltaForPreviousSplit
+{
+    if (_previousReferenceSplitIndex == kInvalidSplitIndex)
+        return nil;
+
+    NSNumber *previousSplitReferenceDuration = [[self previousSplitReference] duration];
+    SSSplit *previousSplit = [[_run roomSplits] lastObject];
+    NSNumber *previousSplitDuration = [previousSplit duration];
+
+    NSTimeInterval deltaForPreviousSplit = [previousSplitDuration doubleValue] - [previousSplitReferenceDuration doubleValue];
+    return [NSNumber numberWithDouble:deltaForPreviousSplit];
 }
 
 @end
