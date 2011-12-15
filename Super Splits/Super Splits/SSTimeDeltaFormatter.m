@@ -24,7 +24,9 @@
 {
     NSString *string = [self stringForObjectValue:obj];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
-    if ([obj doubleValue] > 0)
+    // FIXME: This is a bit of a hack, SSTimeDeltaFormatter should not hard-code the precision.
+    // This is to avoid seeing -0.0 in red.
+    if ([obj doubleValue] > 0.1)
         [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0, [string length])];
     return attrString;
 }
