@@ -9,6 +9,7 @@
 #import "SSMainController.h"
 #import "SSMetroidFrame.h"
 #import "SSRunController.h"
+#import "SSRun.h"
 #import "SSSplit.h"
 #import "SSWindowImageSource.h"
 
@@ -22,14 +23,14 @@
 
 @implementation SSMainController
 
-@synthesize currentRun=_run, debugImageView=_debugImageView, referenceRun=_referenceRun;
+@synthesize runController=_runController, debugImageView=_debugImageView, referenceRun=_referenceRun;
 
 -(id)init
 {
     if (self = [super init]) {
         _imageSource = [[SSWindowImageSource alloc] init];
         _imageSource.delegate = self;
-        _referenceRun = [[SSRunController alloc] initWithContentsOfURL:[self referenceRunURL]];
+        _referenceRun = [[SSRun alloc] initWithContentsOfURL:[self referenceRunURL]];
         [self resetRun];
     }
     return self;
@@ -52,7 +53,9 @@
 
 -(void)resetRun
 {
-    _run = [[SSRunController alloc] init];
+    if ([self running])
+        [self stopRun];
+    _runController = [[SSRunController alloc] init];
     _previousReferenceSplitIndex = kInvalidSplitIndex;
     _currentReferenceSplitIndex = kInvalidSplitIndex;
     _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
@@ -82,24 +85,24 @@
     }
 
     if (frame.isMissingEnergyText) {
-        _run.state = BlackScreenState;
+        _runController.state = BlackScreenState;
     } else if (frame.isMostlyBlack) {
-        _run.state = RoomTransitionState;
+        _runController.state = RoomTransitionState;
     } else {
-        NSArray *previousSplits = [_run roomSplits];
+        NSArray *previousSplits = [[_runController currentRun] roomSplits];
         NSUInteger previousSplitCount = [previousSplits count];
 
-        _run.state = RoomState;
+        _runController.state = RoomState;
         // Important to set that we're in a room before we update the current map state.
-        _run.mapState = frame.miniMapString;
+        _runController.mapState = frame.miniMapString;
 
-        if (previousSplits && previousSplitCount != [[_run roomSplits] count]) {
+        if (previousSplits && previousSplitCount != [[[_runController currentRun] roomSplits] count]) {
             // We must have added a split, move our reference indexes back one.
             _previousReferenceSplitIndex = _currentReferenceSplitIndex;
             _currentReferenceSplitIndex = kInvalidSplitIndex;
         }
         // Only update the reference cursors once we have a map for this room.
-        if ([_run roomEntryMapState] && ![self _haveSearchedForCurrentSplit])
+        if ([_runController roomEntryMapState] && ![self _haveSearchedForCurrentSplit])
             [self _updateReferenceCursors];
     }
 
@@ -111,7 +114,7 @@
 {
     if (_lastSearchedSplitIndex == kInvalidSplitIndex)
         return NO;
-    return _lastSearchedSplitIndex >= [[_run roomSplits] count];
+    return _lastSearchedSplitIndex >= [[[_runController currentRun] roomSplits] count];
 }
 
 -(void)_updateReferenceCursors
@@ -119,15 +122,15 @@
     assert(![self _haveSearchedForCurrentSplit]);
     if (![[_referenceRun roomSplits] count])
         return;
-    
+
     // If we're ever off by more than 6 rooms, something is very wrong.
     const NSUInteger scanLimit = 6;
 
     // This should probably use _run._roomEntryMapState, but we know we
     // just set the mapState so use that for now.
-    NSString *mapState = _run.mapState;
+    NSString *mapState = _runController.mapState;
     _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:_lastMatchedReferenceSplitIndex withEntryMap:mapState scanLimit:scanLimit];
-    _lastSearchedSplitIndex = [[_run roomSplits] count];
+    _lastSearchedSplitIndex = [[[_runController currentRun] roomSplits] count];
     if (_currentReferenceSplitIndex == kInvalidSplitIndex)
         return;
     _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
@@ -167,7 +170,8 @@
     } else
         return nil;
 
-    NSNumber *timeAfterLastRoom = [_run timeAfterSplitAtIndex:([[_run roomSplits] count] - 1)];
+    SSRun *run = [_runController currentRun];
+    NSNumber *timeAfterLastRoom = [run timeAfterSplitAtIndex:([[run roomSplits] count] - 1)];
     NSTimeInterval deltaAfterLastRoom = [timeAfterLastRoom doubleValue] - [referenceTimeAfterLastRoom doubleValue];
     return [NSNumber numberWithDouble:deltaAfterLastRoom];
 }
@@ -178,7 +182,8 @@
         return nil;
 
     NSNumber *previousSplitReferenceDuration = [[self previousSplitReference] duration];
-    SSSplit *previousSplit = [[_run roomSplits] lastObject];
+    SSRun *run = [_runController currentRun];
+    SSSplit *previousSplit = [[run roomSplits] lastObject];
     NSNumber *previousSplitDuration = [previousSplit duration];
 
     NSTimeInterval deltaForPreviousSplit = [previousSplitDuration doubleValue] - [previousSplitReferenceDuration doubleValue];

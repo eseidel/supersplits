@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class SSRun;
 @class SSRunController;
 @class SSWindowImageSource;
 @class SSSplit;
 
 @interface SSMainController : NSObject
 {
-    SSRunController *_run;
-    SSRunController *_referenceRun;
+    SSRunController *_runController;
+    SSRun *_referenceRun;
     SSWindowImageSource *_imageSource;
 
     NSUInteger _currentReferenceSplitIndex; // Reference for current room.
@@ -27,8 +28,8 @@
 }
 
 @property (readonly) BOOL running;
-@property (readonly) SSRunController *currentRun;
-@property (retain) SSRunController *referenceRun;
+@property (readonly) SSRunController *runController;
+@property (retain) SSRun *referenceRun;
 @property (retain) NSImageView *debugImageView;
 @property (readonly) NSNumber *lastMatchedSplitNumber;
 

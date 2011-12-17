@@ -12,6 +12,7 @@
 #import "SSDebugWindowController.h"
 #import "SSHistoryWindowController.h"
 #import "SSMainController.h"
+#import "SSRun.h"
 #import "SSRunController.h"
 #import "SSTimerWindowController.h"
 #import "SSUserDefaults.h"
@@ -122,7 +123,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (IBAction)saveAsAction:(id)sender
 {
-    if (_mainController.running)
+    if ([_mainController running])
         [_mainController stopRun]; // If we're going to show a modal panel, might as well stop the run._
 
     NSSavePanel *savePanel = [NSSavePanel savePanel];
@@ -131,7 +132,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     if (saveChoice != NSFileHandlingPanelOKButton)
         return;
 
-    [[_mainController currentRun] writeToURL:[savePanel URL]];
+    [[[_mainController runController] currentRun] writeToURL:[savePanel URL]];
 }
 
 - (IBAction)loadReferenceRun:(id)sender
@@ -142,7 +143,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     if (openChoice != NSFileHandlingPanelOKButton)
         return;
 
-    SSRunController *referenceRun = [[SSRunController alloc] initWithContentsOfURL:[openPanel URL]];
+    SSRun *referenceRun = [[SSRun alloc] initWithContentsOfURL:[openPanel URL]];
     _mainController.referenceRun = referenceRun;
 }
 

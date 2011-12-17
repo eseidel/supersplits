@@ -9,6 +9,7 @@
 #import "SSTimerWindowController.h"
 
 #import "SSMainController.h"
+#import "SSRun.h"
 #import "SSRunController.h"
 #import "SSSplit.h"
 #import "SSTimeDeltaFormatter.h"
@@ -54,9 +55,11 @@
 
 -(void)updateTimerViews
 {
-    SSRunController *current = [_mainController currentRun];
-    [totalTimeView setObjectValue:[current totalTime]];
-    [roomTimeView setObjectValue:[current roomTime]];
+    SSRunController *runController = [_mainController runController];
+    SSRun *current = [runController currentRun];
+
+    [totalTimeView setObjectValue:[runController totalTime]];
+    [roomTimeView setObjectValue:[runController roomTime]];
     SSSplit *lastSplit = [[current roomSplits] lastObject];
     [lastRoomSplitView setObjectValue:[lastSplit duration]];
 
@@ -66,15 +69,15 @@
     [lastRoomSplitDeltaView setObjectValue:[_mainController deltaForPreviousSplit]];
 
     NSNumber *lastMatchedSplitNumber = [_mainController lastMatchedSplitNumber];
-    SSRunController *reference = [_mainController referenceRun];
+    SSRun *reference = [_mainController referenceRun];
     NSString *referenceFractionString = [NSString stringWithFormat:@"%@ / %lu", lastMatchedSplitNumber, [[reference roomSplits] count]];
     [referenceFractionView setStringValue:referenceFractionString];
     [splitCountView setIntegerValue:[[current roomSplits] count] + 1];
 
-    if (!_mainController.running) {
+    if (![_mainController running]) {
         [timerState setStringValue:@"paused"];
     } else {
-        [timerState setStringValue:[current stateAsString]];
+        [timerState setStringValue:[runController stateAsString]];
     }
 }
 
