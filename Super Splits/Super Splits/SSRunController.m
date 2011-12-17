@@ -110,7 +110,10 @@
 {
     if (self = [super init]) {
         _run = [[SSRun alloc] init];
-        _speedMultiplier = [[NSUserDefaults standardUserDefaults] floatForKey:kSpeedMultiplierDefaultName];
+        [self bind:@"speedMultiplier"
+          toObject:[NSUserDefaultsController sharedUserDefaultsController]
+       withKeyPath:[@"values." stringByAppendingString:kSpeedMultiplierDefaultName]
+           options:nil];
     }
     return self;
 }
