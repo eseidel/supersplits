@@ -58,6 +58,8 @@
     if (_state == UnknownState) {
         if (newState != RoomState)
             return;
+        // FIXME: When we detect the first room is actually about 3s after
+        // the conventional start of a speed run.
         _overallStart = [NSDate date];
         _run = [[SSRun alloc] init];
         [self _startRoom];
