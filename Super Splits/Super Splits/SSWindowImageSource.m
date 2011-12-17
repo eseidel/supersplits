@@ -56,7 +56,7 @@ void WindowSearchFunction(const void *inputDictionary, void *context)
 
     CGRect bounds;
     CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)[entry objectForKey:(id)kCGWindowBounds], &bounds);
-    if (bounds.size.width < 200 || bounds.size.height < 200) {
+    if (bounds.size.width < 250 || bounds.size.height < 250) {
         //NSLog(@"Ignoring: %d, too small.", windowId);
         return;
     }
