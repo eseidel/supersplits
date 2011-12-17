@@ -29,7 +29,7 @@
 
 -(BOOL)polling
 {
-    return (BOOL)_timer;
+    return !!_timer;
 }
 
 -(void)stopPolling
