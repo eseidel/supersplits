@@ -35,6 +35,8 @@
             return @"Door";
         case BlackScreenState:
             return @"Cutscene";
+        case ItemScreenState:
+            return @"Item";
         case UnknownState:
             return @"Ready";
     }
@@ -62,7 +64,7 @@
     }
 
     NSTimeInterval stateDuration = [self _stateTime];
-    //NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
+    NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
 
     if (newState == RoomState) {
         if (_state == RoomTransitionState) {

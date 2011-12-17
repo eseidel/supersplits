@@ -18,6 +18,7 @@
 }
 
 @property (readonly) BOOL isMissingEnergyText;
+@property (readonly) BOOL isItemScreen;
 @property (readonly) BOOL isMostlyBlack;
 @property (readonly) NSString *miniMapString;
 

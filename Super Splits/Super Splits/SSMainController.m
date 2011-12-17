@@ -88,6 +88,8 @@
         _runController.state = BlackScreenState;
     } else if (frame.isMostlyBlack) {
         _runController.state = RoomTransitionState;
+    } else if (frame.isItemScreen) {
+        _runController.state = ItemScreenState;
     } else {
         NSArray *previousSplits = [[_runController currentRun] roomSplits];
         NSUInteger previousSplitCount = [previousSplits count];

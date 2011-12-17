@@ -15,6 +15,7 @@ typedef enum {
     RoomState,
     RoomTransitionState,
     BlackScreenState,
+    ItemScreenState,
 } SSRunState;
 
 @interface SSRunController : NSObject

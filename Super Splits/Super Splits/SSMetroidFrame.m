@@ -233,6 +233,42 @@ const CGFloat statusLineVerticalOffset = 386;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
+-(CGRect)_findUpperItemTextRect
+{
+    CGPoint textOrigin = CGPointMake(205, 210);
+    CGSize textSize = { 113, 16 }; // Just wide enough to hold "MISSLE"
+    CGRect textRect = { textOrigin, textSize };
+    return CGRectApplyAffineTransform(textRect, _fromGameRectToImage);
+}
+
+-(CGRect)_findLowerItemTextRect
+{
+    CGPoint textOrigin = CGPointMake(205, 193);
+    CGSize textSize = { 113, 16 };
+    CGRect textRect = { textOrigin, textSize };
+    return CGRectApplyAffineTransform(textRect, _fromGameRectToImage);
+}
+
+-(BOOL)isItemScreen
+{
+    // The pink is about 194, 90, 142, using +/-20 for now.
+    const uint8 lowPixel[4] = {120, 70, 170, 0};
+    const uint8 highPixel[4] =  {160, 110, 210, 255};
+
+    CGRect itemRect = [self _findLowerItemTextRect];
+    size_t pinkPixelCount = [self countPixelsInRect:itemRect aboveColor:lowPixel belowColor:highPixel];
+    // FIXME: 3% is a very poor indicator, we need to handle antialiasing better!
+    const float percentPinkItemThreshold = 0.03f;
+    size_t totalPixelCount = itemRect.size.height * itemRect.size.width;
+    if (pinkPixelCount > (size_t)((float)totalPixelCount * percentPinkItemThreshold))
+        return YES;
+
+    itemRect = [self _findUpperItemTextRect];
+    pinkPixelCount = [self countPixelsInRect:itemRect aboveColor:lowPixel belowColor:highPixel];
+    totalPixelCount = itemRect.size.height * itemRect.size.width;
+    return pinkPixelCount > (size_t)((float)totalPixelCount * percentPinkItemThreshold);
+}
+
 -(NSString *)miniMapString
 {
     const uint8 lowPixel[4] = {0, 0, 0, 0};
@@ -283,6 +319,12 @@ const CGFloat statusLineVerticalOffset = 386;
 
     [[[NSColor greenColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findMiniMap]];
+    
+    [[[NSColor yellowColor] colorWithAlphaComponent:.5] setFill];
+    [NSBezierPath fillRect:[self _findUpperItemTextRect]];
+
+    [[[NSColor yellowColor] colorWithAlphaComponent:.5] setFill];
+    [NSBezierPath fillRect:[self _findLowerItemTextRect]];
     [image unlockFocus];
 
     return image;
