@@ -13,7 +13,7 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 @implementation SSRun
 
-@synthesize roomSplits=_roomSplits, events=_events;
+@synthesize roomSplits=_roomSplits, events=_events, url=_url;
 
 -(id)init
 {
@@ -29,18 +29,23 @@ const NSUInteger kInvalidSplitIndex = -1;
     if (self = [super init]) {
         NSString *splitsString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
         splitsString = [splitsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if (splitsString) {
-            NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
-            // This is the hacky-way to do a "map" in cocoa.
-            _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
-            for (NSString *splitString in splitStrings)
-                [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
-            // Not saving or reading events yet.
-            NSLog(@"Loaded %lu splits from path: %@", [_roomSplits count], [url path]);
-        } else
-            self = nil;
+        if (!splitsString)
+            return nil;
+        _url = url;
+        NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
+        // This is the hacky-way to do a "map" in cocoa.
+        _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
+        for (NSString *splitString in splitStrings)
+            [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
+        // Not saving or reading events yet.
+        NSLog(@"Loaded %lu splits from path: %@", [_roomSplits count], [url path]);
     }
     return self;
+}
+
+-(NSString *)filename
+{
+    return [_url lastPathComponent];
 }
 
 -(void)writeToURL:(NSURL *)url
@@ -54,6 +59,8 @@ const NSUInteger kInvalidSplitIndex = -1;
     [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&error];
     if (error)
         NSLog(@"Error saving: %@", error);
+    if (!_url)
+        _url = url;
 }
 
 -(NSNumber *)timeAfterSplitAtIndex:(NSUInteger)splitIndex

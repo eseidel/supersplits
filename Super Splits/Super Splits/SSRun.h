@@ -10,10 +10,14 @@
 
 extern const NSUInteger kInvalidSplitIndex;
 
+// FIXME: Should this subclass from NSDocument?
 @interface SSRun : NSObject
 
 @property (readonly, retain) NSMutableArray *roomSplits;
 @property (readonly, retain) NSMutableArray *events;
+@property (readonly, retain) NSURL *url;
+@property (readonly) NSString *filename;
+
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 -(void)writeToURL:(NSURL *)url;
