@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSObject (SSImageSourceDelegate)
--(void)nextFrame:(CGImageRef)frame;
+-(void)nextFrame:(CGImageRef)frame atOffset:(NSTimeInterval)offset;
 @end
 
 

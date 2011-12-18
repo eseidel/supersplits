@@ -62,6 +62,7 @@
     _currentReferenceSplitIndex = kInvalidSplitIndex;
     _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
     _lastSearchedSplitIndex = kInvalidSplitIndex;
+    _imageSource.start = nil;
 }
                       
 -(NSURL *)referenceRunURL
@@ -78,7 +79,7 @@
     return runsURL;
 }
 
--(void)nextFrame:(CGImageRef)image
+-(void)nextFrame:(CGImageRef)image atOffset:(NSTimeInterval)offset
 {
     self.lastFrame = [[SSMetroidFrame alloc] initWithCGImage:image];
     if (!_lastFrame) {

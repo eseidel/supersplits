@@ -46,7 +46,7 @@
 -(NSNumber *)deltaForPreviousSplit;
 
 // ImageSourceDelegate
--(void)nextFrame:(CGImageRef)image;
+-(void)nextFrame:(CGImageRef)image atOffset:(NSTimeInterval)offset;
 
 @end
 

@@ -10,6 +10,8 @@
 
 @implementation SSWindowImageSource
 
+@synthesize start=_start;
+
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval
 {
     assert(!_timer);
@@ -22,6 +24,8 @@
                                             selector:@selector(timerFired)
                                             userInfo:self
                                              repeats:true];
+    if (!_start)
+        _start = [NSDate date];
     return YES;
 }
 
@@ -36,6 +40,7 @@
     [_timer invalidate];
     _timer = nil;
     _windowID = kCGNullWindowID;
+    // Note: Currently not clearing start.  Unclear how "pause" should function.
 }
 
 void WindowSearchFunction(const void *inputDictionary, void *context);
@@ -83,8 +88,9 @@ void WindowSearchFunction(const void *inputDictionary, void *context)
         return;
     
     CGImageRef windowImage = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, _windowID, kCGWindowImageBoundsIgnoreFraming | kCGWindowImageShouldBeOpaque);
-    
-    [self.delegate nextFrame:windowImage];
+
+    NSTimeInterval offset = -[_start timeIntervalSinceNow];
+    [self.delegate nextFrame:windowImage atOffset:offset];
     CGImageRelease(windowImage);
 }
 

@@ -17,6 +17,7 @@
 }
 
 @property (readonly) BOOL polling;
+@property (retain) NSDate *start;
 
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval;
 -(void)stopPolling;
