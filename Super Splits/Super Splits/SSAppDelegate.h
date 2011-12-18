@@ -37,7 +37,8 @@
 - (IBAction)showDebugWindow:(id)sender;
 - (IBAction)showHistoryWindow:(id)sender;
 
-- (IBAction)saveAsAction:(id)sender;
+- (IBAction)saveAs:(id)sender;
+- (IBAction)saveAsReference:(id)sender;
 - (IBAction)loadReferenceRun:(id)sender;
 
 @end

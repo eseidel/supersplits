@@ -122,7 +122,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     return [[_coreDataController managedObjectContext] undoManager];
 }
 
-- (IBAction)saveAsAction:(id)sender
+- (IBAction)saveAs:(id)sender
 {
     if ([_mainController running])
         [_mainController stopRun]; // If we're going to show a modal panel, might as well stop the run._
@@ -134,6 +134,14 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
         return;
 
     [[[_mainController runController] currentRun] writeToURL:[savePanel URL]];
+}
+
+- (IBAction)saveAsReference:(id)sender
+{
+    if ([_mainController running])
+        [_mainController stopRun];
+
+    [[[_mainController runController] currentRun] writeToURL:[_mainController referenceRunURL]];
 }
 
 - (IBAction)loadReferenceRun:(id)sender
