@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class SSMetroidFrame;
 @class SSRun;
 @class SSRunController;
 @class SSWindowImageSource;
@@ -23,14 +24,12 @@
     NSUInteger _previousReferenceSplitIndex; // Reference for the previous room.
     NSUInteger _lastMatchedReferenceSplitIndex; // Last room we successfully matched a reference for.
     NSUInteger _lastSearchedSplitIndex;
-
-    NSImageView *_debugImageView;
 }
 
 @property (readonly) BOOL running;
 @property (readonly) SSRunController *runController;
 @property (retain) SSRun *referenceRun;
-@property (retain) NSImageView *debugImageView;
+@property (retain) SSMetroidFrame *lastFrame;
 @property (readonly) NSNumber *lastMatchedSplitNumber;
 
 -(NSURL *)referenceRunURL;
@@ -45,6 +44,9 @@
 
 -(NSNumber *)deltaToStartOfCurrentRoom;
 -(NSNumber *)deltaForPreviousSplit;
+
+// ImageSourceDelegate
+-(void)nextFrame:(CGImageRef)image;
 
 @end
 

@@ -21,9 +21,8 @@
 @property (readonly) BOOL isItemScreen;
 @property (readonly) BOOL isMostlyBlack;
 @property (readonly) NSString *miniMapString;
+@property (readonly, retain) NSImage *debugImage;
 
 -(id)initWithCGImage:(CGImageRef)image;
-
--(NSImage *)createDebugImage;
 
 @end

@@ -25,6 +25,8 @@ const CGFloat statusLineVerticalOffset = 386;
 
 @implementation SSMetroidFrame
 
+@synthesize debugImage=_debugImage;
+
 -(id)initWithCGImage:(CGImageRef)image
 {
     if (self = [super init]) {
@@ -301,13 +303,16 @@ const CGFloat statusLineVerticalOffset = 386;
     return mapString;
 }
 
--(NSImage *)createDebugImage
+-(NSImage *)debugImage
 {
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:_image];
-    NSImage *image = [[NSImage alloc] init];
-    [image addRepresentation:bitmapRep];
+    if (_debugImage)
+        return _debugImage;
 
-    [image lockFocus];
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:_image];
+    _debugImage = [[NSImage alloc] init];
+    [_debugImage addRepresentation:bitmapRep];
+
+    [_debugImage lockFocus];
     [[[NSColor blueColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findGameRect]];
 
@@ -325,9 +330,9 @@ const CGFloat statusLineVerticalOffset = 386;
 
     [[[NSColor yellowColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findLowerItemTextRect]];
-    [image unlockFocus];
+    [_debugImage unlockFocus];
 
-    return image;
+    return _debugImage;
 }
 
 @end

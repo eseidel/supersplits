@@ -10,6 +10,6 @@
 
 @implementation SSDebugWindowController
 
-@synthesize debugImageView=_debugImage;
+@synthesize mainController=_mainController;
 
 @end

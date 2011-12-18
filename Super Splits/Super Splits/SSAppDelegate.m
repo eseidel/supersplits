@@ -102,7 +102,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     if (!_debugWindowController) {
         _debugWindowController = [[SSDebugWindowController alloc] initWithWindowNibName:@"DebugWindow"];
         [_debugWindowController window]; // Load the window.
-        [_mainController setDebugImageView:[_debugWindowController debugImageView]];
+        _debugWindowController.mainController = _mainController;
     }
     [[_debugWindowController window] makeKeyAndOrderFront:self];
 }

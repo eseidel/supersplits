@@ -23,7 +23,7 @@
 
 @implementation SSMainController
 
-@synthesize runController=_runController, debugImageView=_debugImageView, referenceRun=_referenceRun;
+@synthesize runController=_runController, referenceRun=_referenceRun, lastFrame=_lastFrame;
 
 -(id)init
 {
@@ -78,17 +78,17 @@
 
 -(void)nextFrame:(CGImageRef)image
 {
-    SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
-    if (!frame) {
+    self.lastFrame = [[SSMetroidFrame alloc] initWithCGImage:image];
+    if (!_lastFrame) {
         NSLog(@"Unsupported image!");
         return;
     }
 
-    if (frame.isMissingEnergyText) {
+    if (_lastFrame.isMissingEnergyText) {
         _runController.state = BlackScreenState;
-    } else if (frame.isMostlyBlack) {
+    } else if (_lastFrame.isMostlyBlack) {
         _runController.state = RoomTransitionState;
-    } else if (frame.isItemScreen) {
+    } else if (_lastFrame.isItemScreen) {
         _runController.state = ItemScreenState;
     } else {
         NSArray *previousSplits = [[_runController currentRun] roomSplits];
@@ -96,7 +96,7 @@
 
         _runController.state = RoomState;
         // Important to set that we're in a room before we update the current map state.
-        _runController.mapState = frame.miniMapString;
+        _runController.mapState = _lastFrame.miniMapString;
 
         if (previousSplits && previousSplitCount != [[[_runController currentRun] roomSplits] count]) {
             // We must have added a split, move our reference indexes back one.
@@ -107,9 +107,6 @@
         if ([_runController roomEntryMapState] && ![self _haveSearchedForCurrentSplit])
             [self _updateReferenceCursors];
     }
-
-    if (_debugImageView)
-        [_debugImageView setImage:[frame createDebugImage]];
 }
 
 -(BOOL)_haveSearchedForCurrentSplit
