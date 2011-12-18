@@ -1,4 +1,7 @@
 - Wait-to-start behavior is somewhat non-discoverable.
+- Start should offset by +3s.
+- detect snes freeze load screen?
+- events should use absolute offsets, instead of durations.
 
 Future thoughts:
 
@@ -11,11 +14,8 @@ One way to represent a run is as a series of events.
 
 and to sum up game time, wall time, etc. from those events.
 
-What is my value add?
-Splits.  Difference from last run.
-
-In the first approximation, I can keep a list of transitions/rooms
-and tell you how you compare to the time after that many transitions on a previous run.
-
-Make it wait for the game to actually start counting?
- - Set a "running" flag and then only start the run when we exit a transition.
+start: 0.0, <datetime>
+door: 10.5
+room: 10.8
+map: 12.3, <mapstate>
+item: 12.8
