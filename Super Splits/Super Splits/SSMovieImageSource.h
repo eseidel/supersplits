@@ -10,4 +10,6 @@
 
 @interface SSMovieImageSource : SSImageSource
 
+@property (retain) QTMovie *movie;
+
 @end

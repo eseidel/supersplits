@@ -17,6 +17,9 @@
 #import "SSTimerWindowController.h"
 #import "SSUserDefaults.h"
 
+#import <QTKit/QTKit.h>
+#import "SSMovieImageSource.h"
+
 #define START_STOP_HOT_KEY_ID 'stss'
 #define RESET_HOT_KEY_ID 'strt'
 
@@ -154,6 +157,20 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
     SSRun *referenceRun = [[SSRun alloc] initWithContentsOfURL:[openPanel URL]];
     _mainController.referenceRun = referenceRun;
+}
+
+- (IBAction)importFromMovie:(id)sender
+{
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel setAllowedFileTypes:[QTMovie movieFileTypes:QTIncludeAllTypes]];
+    NSInteger openChoice = [openPanel runModal];
+    if (openChoice != NSFileHandlingPanelOKButton)
+        return;
+    
+//    SSMovieImageSource *imageSource = [[SSMovieImageSource alloc] init];
+//    imageSource.delegate = 
+    // FIXME: We need to break RunController out of MainController and make it
+    // not rely on realtime before this can work.
 }
 
 /**

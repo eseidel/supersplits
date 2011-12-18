@@ -10,4 +10,6 @@
 
 @implementation SSMovieImageSource
 
+@synthesize movie=_movie;
+
 @end
