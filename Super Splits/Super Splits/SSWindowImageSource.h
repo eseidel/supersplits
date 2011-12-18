@@ -8,19 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (SSImageSourceDelegate)
--(void)nextFrame:(CGImageRef)frame;
-@end
+#import "SSImageSource.h"
 
-
-@interface SSWindowImageSource : NSObject
+@interface SSWindowImageSource : SSImageSource
 {
     CGWindowID _windowID;
 	NSTimer *_timer;
-    NSObject *_delegate;
 }
 
-@property (retain) NSObject *delegate;
 @property (readonly) BOOL polling;
 
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval;

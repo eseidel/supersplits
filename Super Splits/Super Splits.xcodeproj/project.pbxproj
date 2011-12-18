@@ -37,6 +37,8 @@
 		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
 		A83C4079148F688400308FD4 /* SSTimerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4078148F688300308FD4 /* SSTimerWindowController.m */; };
 		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
+		A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB54D149DE64200D6370F /* SSImageSource.m */; };
+		A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB551149DE69400D6370F /* SSMovieImageSource.m */; };
 		B929E80E14908626009EB322 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B929E80D14908626009EB322 /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +107,10 @@
 		A83C4077148F688300308FD4 /* SSTimerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimerWindowController.h; sourceTree = "<group>"; };
 		A83C4078148F688300308FD4 /* SSTimerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimerWindowController.m; sourceTree = "<group>"; };
 		A887054A14901946002482E8 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		A89EB54C149DE64200D6370F /* SSImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImageSource.h; sourceTree = "<group>"; };
+		A89EB54D149DE64200D6370F /* SSImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImageSource.m; sourceTree = "<group>"; };
+		A89EB550149DE69400D6370F /* SSMovieImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImageSource.h; sourceTree = "<group>"; };
+		A89EB551149DE69400D6370F /* SSMovieImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImageSource.m; sourceTree = "<group>"; };
 		B929E80D14908626009EB322 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -178,6 +184,10 @@
 				A839FAA3149404C30003B4B1 /* SSMetroidFrame.m */,
 				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
 				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
+				A89EB54C149DE64200D6370F /* SSImageSource.h */,
+				A89EB54D149DE64200D6370F /* SSImageSource.m */,
+				A89EB550149DE69400D6370F /* SSMovieImageSource.h */,
+				A89EB551149DE69400D6370F /* SSMovieImageSource.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -410,6 +420,8 @@
 				A816D850149A029A00EBA19B /* SSUserDefaults.m in Sources */,
 				A816D862149C414700EBA19B /* SSRun.m in Sources */,
 				A816D866149D71FD00EBA19B /* SSEvent.m in Sources */,
+				A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */,
+				A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

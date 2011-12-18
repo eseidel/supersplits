@@ -10,8 +10,6 @@
 
 @implementation SSWindowImageSource
 
-@synthesize delegate=_delegate;
-
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval
 {
     assert(!_timer);
@@ -84,7 +82,7 @@ void WindowSearchFunction(const void *inputDictionary, void *context)
     
     CGImageRef windowImage = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, _windowID, kCGWindowImageBoundsIgnoreFraming | kCGWindowImageShouldBeOpaque);
     
-    [_delegate nextFrame:windowImage];
+    [self.delegate nextFrame:windowImage];
     CGImageRelease(windowImage);
 }
 
