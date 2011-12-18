@@ -54,7 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A8070E811492FEDE00167ABD /* SSRunBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SSRunBuilder.h; sourceTree = "<group>"; };
+		A8070E811492FEDE00167ABD /* SSRunBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunBuilder.h; sourceTree = "<group>"; };
 		A8070E821492FEDE00167ABD /* SSRunBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunBuilder.m; sourceTree = "<group>"; };
 		A816D83E14983DF900EBA19B /* SSSplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplit.h; sourceTree = "<group>"; };
 		A816D83F14983DF900EBA19B /* SSSplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplit.m; sourceTree = "<group>"; };
@@ -142,17 +142,17 @@
 		A82F31FA149094A700DDEBF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A816D864149D71FC00EBA19B /* SSEvent.h */,
+				A816D865149D71FD00EBA19B /* SSEvent.m */,
+				A816D860149C414700EBA19B /* SSRun.h */,
+				A816D861149C414700EBA19B /* SSRun.m */,
 				A8070E811492FEDE00167ABD /* SSRunBuilder.h */,
 				A8070E821492FEDE00167ABD /* SSRunBuilder.m */,
-				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
 				A816D83E14983DF900EBA19B /* SSSplit.h */,
 				A816D83F14983DF900EBA19B /* SSSplit.m */,
 				A816D84D149A028000EBA19B /* SSUserDefaults.h */,
 				A816D84F149A029A00EBA19B /* SSUserDefaults.m */,
-				A816D860149C414700EBA19B /* SSRun.h */,
-				A816D861149C414700EBA19B /* SSRun.m */,
-				A816D864149D71FC00EBA19B /* SSEvent.h */,
-				A816D865149D71FD00EBA19B /* SSEvent.m */,
+				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -164,12 +164,12 @@
 				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
 				A82F31D9148F694E00DDEBF2 /* MainWindow.xib */,
+				A816D8451499D2F600EBA19B /* SSBlackView.h */,
+				A816D8461499D2F600EBA19B /* SSBlackView.m */,
 				A839FA96149364600003B4B1 /* SSTimeDeltaFormatter.h */,
 				A839FA97149364600003B4B1 /* SSTimeDeltaFormatter.m */,
 				A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */,
 				A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */,
-				A816D8451499D2F600EBA19B /* SSBlackView.h */,
-				A816D8461499D2F600EBA19B /* SSBlackView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -181,16 +181,16 @@
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
 				A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */,
 				A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */,
+				A89EB54C149DE64200D6370F /* SSImageSource.h */,
+				A89EB54D149DE64200D6370F /* SSImageSource.m */,
 				A83C405F148F30FA00308FD4 /* SSMainController.h */,
 				A83C4060148F311200308FD4 /* SSMainController.m */,
 				A839FAA2149404C30003B4B1 /* SSMetroidFrame.h */,
 				A839FAA3149404C30003B4B1 /* SSMetroidFrame.m */,
-				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
-				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
-				A89EB54C149DE64200D6370F /* SSImageSource.h */,
-				A89EB54D149DE64200D6370F /* SSImageSource.m */,
 				A89EB550149DE69400D6370F /* SSMovieImageSource.h */,
 				A89EB551149DE69400D6370F /* SSMovieImageSource.m */,
+				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
+				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
