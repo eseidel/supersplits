@@ -64,7 +64,7 @@
     _lastSearchedSplitIndex = kInvalidSplitIndex;
     _imageSource.start = nil;
 }
-                      
+
 -(NSURL *)referenceRunURL
 {
     return [[self runsDirectoryURL] URLByAppendingPathComponent:@"reference.txt"];
@@ -112,6 +112,8 @@
     }
 }
 
+// FIXME: All this reference finding logic could instead be triggered when
+// currentRoomNumber changes.
 -(BOOL)_haveSearchedForCurrentSplit
 {
     if (_lastSearchedSplitIndex == kInvalidSplitIndex)
