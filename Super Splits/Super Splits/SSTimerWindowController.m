@@ -55,11 +55,11 @@
 
 -(void)updateTimerViews
 {
-    SSRunBuilder *runController = [_mainController runController];
-    SSRun *current = [runController currentRun];
+    SSRunBuilder *runBuilder = [_mainController runBuilder];
+    SSRun *current = [runBuilder run];
 
-    [totalTimeView setObjectValue:[runController totalTime]];
-    [roomTimeView setObjectValue:[runController roomTime]];
+    [totalTimeView setObjectValue:[runBuilder totalTime]];
+    [roomTimeView setObjectValue:[runBuilder roomTime]];
     SSSplit *lastSplit = [[current roomSplits] lastObject];
     [lastRoomSplitView setObjectValue:[lastSplit duration]];
 
@@ -77,7 +77,7 @@
     if (![_mainController running]) {
         [timerState setStringValue:@"paused"];
     } else {
-        [timerState setStringValue:[runController stateAsString]];
+        [timerState setStringValue:[runBuilder stateAsString]];
     }
 }
 

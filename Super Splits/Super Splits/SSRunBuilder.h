@@ -33,7 +33,7 @@ typedef enum {
     NSString *_mapState;
 }
 
-@property (readonly) SSRun *currentRun;
+@property (readonly) SSRun *run;
 
 @property NSTimeInterval offset;
 

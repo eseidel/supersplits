@@ -37,7 +37,7 @@
 -(NSArray *)runs
 {
     NSMutableArray *runs = [NSMutableArray array];
-    [runs addObject:_mainController.runController.currentRun];
+    [runs addObject:_mainController.runBuilder.run];
     if (_mainController.referenceRun)
         [runs addObject:_mainController.referenceRun];
     return runs;

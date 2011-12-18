@@ -16,7 +16,6 @@
 
 @interface SSMainController : NSObject
 {
-    SSRunBuilder *_runController;
     SSRun *_referenceRun;
     SSWindowImageSource *_imageSource;
 
@@ -27,7 +26,7 @@
 }
 
 @property (readonly) BOOL running;
-@property (readonly) SSRunBuilder *runController;
+@property (readonly, retain) SSRunBuilder *runBuilder;
 @property (retain) SSRun *referenceRun;
 @property (retain) SSMetroidFrame *lastFrame;
 @property (readonly) NSNumber *lastMatchedSplitNumber;

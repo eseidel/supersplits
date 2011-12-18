@@ -22,7 +22,7 @@
 
 @implementation SSRunBuilder
 
-@synthesize currentRun=_run, state=_state, offset=_offset,
+@synthesize run=_run, state=_state, offset=_offset,
             mapState=_mapState, roomEntryMapState=_roomEntryMapState;
 
 

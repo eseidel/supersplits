@@ -136,7 +136,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     if (saveChoice != NSFileHandlingPanelOKButton)
         return;
 
-    [[[_mainController runController] currentRun] writeToURL:[savePanel URL]];
+    [[[_mainController runBuilder] run] writeToURL:[savePanel URL]];
 }
 
 - (IBAction)saveAsReference:(id)sender
@@ -144,7 +144,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     if ([_mainController running])
         [_mainController stopRun];
 
-    [[[_mainController runController] currentRun] writeToURL:[_mainController referenceRunURL]];
+    [[[_mainController runBuilder] run] writeToURL:[_mainController referenceRunURL]];
 }
 
 - (IBAction)loadReferenceRun:(id)sender
