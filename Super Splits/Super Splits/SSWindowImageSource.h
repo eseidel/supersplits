@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (SNESImageSourceDelegate)
+@interface NSObject (SSImageSourceDelegate)
 -(void)nextFrame:(CGImageRef)frame;
 @end
 
