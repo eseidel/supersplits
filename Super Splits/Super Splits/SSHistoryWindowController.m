@@ -9,10 +9,12 @@
 #import "SSHistoryWindowController.h"
 
 #import "SSCoreDataController.h"
+#import "SSMainController.h"
+#import "SSRunController.h"
 
 @implementation SSHistoryWindowController
 
-@synthesize coreDataController=_coreDataController;
+@synthesize coreDataController=_coreDataController, mainController=_mainController;
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -30,6 +32,15 @@
 {
     [super windowDidLoad];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+}
+
+-(NSArray *)runs
+{
+    NSMutableArray *runs = [NSMutableArray array];
+    [runs addObject:_mainController.runController.currentRun];
+    if (_mainController.referenceRun)
+        [runs addObject:_mainController.referenceRun];
+    return runs;
 }
 
 @end
