@@ -43,8 +43,6 @@ typedef enum {
 @property (retain, nonatomic) NSString *mapState;
 @property (readonly) NSString *roomEntryMapState;
 
-+(NSArray *)runFileTypes;
-
 -(NSNumber *)roomTime;
 -(NSNumber *)totalTime;
 

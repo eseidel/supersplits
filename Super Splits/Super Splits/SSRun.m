@@ -15,6 +15,11 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 @synthesize roomSplits=_roomSplits, events=_events, url=_url;
 
++(NSArray *)runFileTypes
+{
+    return [NSArray arrayWithObject:@"txt"];
+}
+
 -(id)init
 {
     if (self = [super init]) {

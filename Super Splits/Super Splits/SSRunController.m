@@ -129,11 +129,6 @@
     }
 }
 
-+(NSArray *)runFileTypes
-{
-    return [NSArray arrayWithObject:@"txt"];
-}
-
 -(id)init
 {
     if (self = [super init]) {
