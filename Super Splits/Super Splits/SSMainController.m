@@ -87,6 +87,7 @@
         return;
     }
 
+    _runController.offset = offset;
     if (_lastFrame.isMissingEnergyText) {
         _runController.state = BlackScreenState;
     } else if (_lastFrame.isMostlyBlack) {

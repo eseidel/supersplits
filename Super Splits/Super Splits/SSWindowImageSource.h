@@ -14,10 +14,13 @@
 {
     CGWindowID _windowID;
 	NSTimer *_timer;
+
+    double _speedMultiplier;
 }
 
 @property (readonly) BOOL polling;
 @property (retain) NSDate *start;
+@property (nonatomic) double speedMultiplier;
 
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval;
 -(void)stopPolling;

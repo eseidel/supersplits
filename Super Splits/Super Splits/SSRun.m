@@ -18,6 +18,7 @@ const NSUInteger kInvalidSplitIndex = -1;
 -(id)init
 {
     if (self = [super init]) {
+        _startDate = [NSDate date];
         _roomSplits = [NSMutableArray array];
         _events = [NSMutableArray array];
     }
@@ -95,6 +96,37 @@ const NSUInteger kInvalidSplitIndex = -1;
     }
     NSLog(@"ERROR: Split scanning limit (%lu) reached, failed to find: %@ after %lu", scanLimit, mapState, startIndex);
     return kInvalidSplitIndex;
+}
+
+-(NSURL *)autosaveDirectory
+{
+    NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
+    runsDirectory = [runsDirectory stringByExpandingTildeInPath];
+    NSURL *runsURL = [NSURL fileURLWithPath:runsDirectory];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return runsURL;
+}
+
+-(NSString *)autosaveName
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MM-dd-yyyy hh:mma"];
+    NSString *dateString = [dateFormat stringFromDate:_startDate];
+    return [NSString stringWithFormat:@"%@ Autosave.txt", dateString];
+}
+
+-(NSURL *)autosaveURL
+{
+    return [[self autosaveDirectory] URLByAppendingPathComponent:[self autosaveName]];
+}
+
+-(void)autosave
+{
+    if (!_url)
+        [self writeToURL:[self autosaveURL]];
+
+    [self writeToURL:_url];
 }
 
 @end

@@ -21,27 +21,29 @@ typedef enum {
 @interface SSRunController : NSObject
 {
     SSRun *_run;
-    NSDate *_overallStart;
-    NSDate *_roomStart;
-    NSDate *_stateStart;
+
+    NSTimeInterval _offset;
+    NSTimeInterval _startOffset;
+
+    NSTimeInterval _roomStart;
+    NSTimeInterval _stateStart;
     NSString *_roomEntryMapState;
 
     SSRunState _state;
     NSString *_mapState;
-    double _speedMultiplier;
 }
 
 @property (readonly) SSRun *currentRun;
-@property (readonly) NSDate *startTime;
+
+@property NSTimeInterval offset;
+
 @property (nonatomic) SSRunState state;
 @property (readonly) NSString *stateAsString;
-@property (nonatomic) double speedMultiplier;
+
 @property (retain, nonatomic) NSString *mapState;
 @property (readonly) NSString *roomEntryMapState;
 
 +(NSArray *)runFileTypes;
-
--(void)autosave;
 
 -(NSNumber *)roomTime;
 -(NSNumber *)totalTime;

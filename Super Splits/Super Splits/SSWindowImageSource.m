@@ -7,17 +7,31 @@
 //
 
 #import "SSWindowImageSource.h"
+#import "SSUserDefaults.h"
 
 @implementation SSWindowImageSource
 
-@synthesize start=_start;
+@synthesize start=_start, speedMultiplier=_speedMultiplier;
+
+-(id)init
+{
+    if (self = [super init]) {
+        [self bind:@"speedMultiplier"
+          toObject:[NSUserDefaultsController sharedUserDefaultsController]
+       withKeyPath:[@"values." stringByAppendingString:kSpeedMultiplierDefaultName]
+           options:nil];
+    }
+    return self;
+}
 
 -(BOOL)startPollingWithInterval:(NSTimeInterval)interval
 {
     assert(!_timer);
     _windowID = [self findSNESWindowId];
-    if (!_windowID)
+    if (!_windowID) {
+        NSLog(@"Failed to find window! Not starting.");
         return NO;
+    }
 
     _timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                               target:self
@@ -89,7 +103,7 @@ void WindowSearchFunction(const void *inputDictionary, void *context)
     
     CGImageRef windowImage = CGWindowListCreateImage(CGRectNull, kCGWindowListOptionIncludingWindow, _windowID, kCGWindowImageBoundsIgnoreFraming | kCGWindowImageShouldBeOpaque);
 
-    NSTimeInterval offset = -[_start timeIntervalSinceNow];
+    NSTimeInterval offset = -[_start timeIntervalSinceNow] * _speedMultiplier;
     [self.delegate nextFrame:windowImage atOffset:offset];
     CGImageRelease(windowImage);
 }

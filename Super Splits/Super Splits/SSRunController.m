@@ -11,7 +11,6 @@
 #import "SSEvent.h"
 #import "SSRun.h"
 #import "SSSplit.h"
-#import "SSUserDefaults.h"
 
 @interface SSRunController (PrivateMethods)
 
@@ -23,8 +22,7 @@
 
 @implementation SSRunController
 
-@synthesize currentRun=_run, startTime=_overallStart,
-            state=_state, speedMultiplier=_speedMultiplier,
+@synthesize currentRun=_run, state=_state, offset=_offset,
             mapState=_mapState, roomEntryMapState=_roomEntryMapState;
 
 
@@ -69,7 +67,7 @@
         default:
             event.type = InvalidEvent;
     }
-    event.offset = [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
+    event.offset = [NSNumber numberWithDouble:_offset];
     return event;
 }
 
@@ -85,7 +83,7 @@
             return;
         // FIXME: When we detect the first room is actually about 3s after
         // the conventional start of a speed run.
-        _overallStart = [NSDate date];
+        _startOffset = _offset;
         _run = [[SSRun alloc] init];
         [self _startRoom];
     }
@@ -106,7 +104,7 @@
         }
     }
     [_run.events addObject:[self createEventForNewState:newState]];
-    _stateStart = [NSDate date];
+    _stateStart = _offset;
     _state = newState;
 }
 
@@ -140,10 +138,6 @@
 {
     if (self = [super init]) {
         _run = [[SSRun alloc] init];
-        [self bind:@"speedMultiplier"
-          toObject:[NSUserDefaultsController sharedUserDefaultsController]
-       withKeyPath:[@"values." stringByAppendingString:kSpeedMultiplierDefaultName]
-           options:nil];
     }
     return self;
 }
@@ -166,7 +160,7 @@
 
             [[_run roomSplits] addObject:split];
             NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTimeDouble, split.entryMapState, split.exitMapState, [self _stateTime]);
-            [self autosave];
+            [_run autosave];
         }
     }
 
@@ -177,44 +171,32 @@
     // If the map never changes, then when we record the room we'll use the ending
     // state for the previous room.
     _roomEntryMapState = nil;
-    _roomStart = [NSDate date];
+    _roomStart = _offset;
 }
 
 -(NSNumber *)roomTime
 {
+    if (_state == UnknownState)
+        return nil;
+
     NSTimeInterval roomTime;
     if (_state != RoomState)
-        roomTime = [_stateStart timeIntervalSinceDate:_roomStart];
+        roomTime = _stateStart - _roomStart;
     else
-        roomTime = -[_roomStart timeIntervalSinceNow];
-    return [NSNumber numberWithDouble:roomTime * _speedMultiplier];
+        roomTime = _offset - _roomStart;
+    return [NSNumber numberWithDouble:roomTime];
 }
 
 -(NSNumber *)totalTime
 {
-    return [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow] * _speedMultiplier];
+    if (_state == UnknownState)
+        return nil;
+    return [NSNumber numberWithDouble:_offset - _startOffset];
 }
 
 -(NSTimeInterval)_stateTime
 {
-    return -[_stateStart timeIntervalSinceNow] * _speedMultiplier;
-}
-
--(void)autosave
-{
-    NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
-    runsDirectory = [runsDirectory stringByExpandingTildeInPath];
-    NSURL *runsURL = [NSURL fileURLWithPath:runsDirectory];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
-
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM-dd-yyyy hh:mma"];
-    NSString *dateString = [dateFormat stringFromDate:_overallStart];
-
-    NSString *runName = [NSString stringWithFormat:@"%@ Autosave.txt", dateString];
-    NSURL *runURL = [runsURL URLByAppendingPathComponent:runName];
-    [_run writeToURL:runURL];
+    return _offset - _stateStart;
 }
 
 @end

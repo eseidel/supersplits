@@ -12,6 +12,9 @@ extern const NSUInteger kInvalidSplitIndex;
 
 // FIXME: Should this subclass from NSDocument?
 @interface SSRun : NSObject
+{
+    NSDate *_startDate;
+}
 
 @property (readonly, retain) NSMutableArray *roomSplits;
 @property (readonly, retain) NSMutableArray *events;
@@ -21,6 +24,8 @@ extern const NSUInteger kInvalidSplitIndex;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 -(void)writeToURL:(NSURL *)url;
+
+-(void)autosave;
 
 -(NSNumber *)timeAfterSplitAtIndex:(NSUInteger)splitIndex;
 -(NSUInteger)indexOfFirstSplitAfter:(NSUInteger)splitIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit;
