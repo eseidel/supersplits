@@ -43,7 +43,9 @@
 
 -(void)startRun
 {
-    [_imageSource startPollingWithInterval:(1.0 / 30.0)];
+    // FIXME: scansPerSecond should be a preference.
+    double scansPerSecond = 10.0;
+    [_imageSource startPollingWithInterval:(1.0 / scansPerSecond)];
 }
 
 -(void)stopRun

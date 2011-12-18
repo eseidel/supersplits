@@ -7,3 +7,4 @@
 //
 
 extern NSString *kSpeedMultiplierDefaultName;
+extern NSString *kScansPerSecondDefaultName;

@@ -9,3 +9,4 @@
 #import "SSUserDefaults.h"
 
 NSString *kSpeedMultiplierDefaultName = @"SSSpeedMultiplier";
+NSString *kScansPerSecondDefaultName = @"SSScansPerSecond";
