@@ -10,7 +10,7 @@
 
 #import "SSMainController.h"
 #import "SSRun.h"
-#import "SSRunController.h"
+#import "SSRunBuilder.h"
 #import "SSSplit.h"
 #import "SSTimeDeltaFormatter.h"
 #import "SSTimeIntervalFormatter.h"
@@ -55,7 +55,7 @@
 
 -(void)updateTimerViews
 {
-    SSRunController *runController = [_mainController runController];
+    SSRunBuilder *runController = [_mainController runController];
     SSRun *current = [runController currentRun];
 
     [totalTimeView setObjectValue:[runController totalTime]];

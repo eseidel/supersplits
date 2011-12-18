@@ -1,18 +1,18 @@
 //
-//  SSRunController.m
+//  SSRunBuilder.m
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
-#import "SSRunController.h"
+#import "SSRunBuilder.h"
 
 #import "SSEvent.h"
 #import "SSRun.h"
 #import "SSSplit.h"
 
-@interface SSRunController (PrivateMethods)
+@interface SSRunBuilder (PrivateMethods)
 
 -(void)_startRoom;
 -(void)_recordLastRoom;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation SSRunController
+@implementation SSRunBuilder
 
 @synthesize currentRun=_run, state=_state, offset=_offset,
             mapState=_mapState, roomEntryMapState=_roomEntryMapState;

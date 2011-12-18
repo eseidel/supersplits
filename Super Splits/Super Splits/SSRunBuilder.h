@@ -1,5 +1,5 @@
 //
-//  SSRunController.h
+//  SSRunBuilder.h
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
@@ -18,7 +18,7 @@ typedef enum {
     ItemScreenState,
 } SSRunState;
 
-@interface SSRunController : NSObject
+@interface SSRunBuilder : NSObject
 {
     SSRun *_run;
 

@@ -12,7 +12,6 @@
 
 @interface SSDebugWindowController : NSWindowController
 
-// FIXME: This should be SSRunController eventually.
 @property (retain) SSMainController *mainController;
 
 @end

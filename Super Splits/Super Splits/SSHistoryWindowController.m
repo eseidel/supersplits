@@ -10,7 +10,7 @@
 
 #import "SSCoreDataController.h"
 #import "SSMainController.h"
-#import "SSRunController.h"
+#import "SSRunBuilder.h"
 
 @implementation SSHistoryWindowController
 

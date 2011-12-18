@@ -10,13 +10,13 @@
 
 @class SSMetroidFrame;
 @class SSRun;
-@class SSRunController;
+@class SSRunBuilder;
 @class SSWindowImageSource;
 @class SSSplit;
 
 @interface SSMainController : NSObject
 {
-    SSRunController *_runController;
+    SSRunBuilder *_runController;
     SSRun *_referenceRun;
     SSWindowImageSource *_imageSource;
 
@@ -27,7 +27,7 @@
 }
 
 @property (readonly) BOOL running;
-@property (readonly) SSRunController *runController;
+@property (readonly) SSRunBuilder *runController;
 @property (retain) SSRun *referenceRun;
 @property (retain) SSMetroidFrame *lastFrame;
 @property (readonly) NSNumber *lastMatchedSplitNumber;

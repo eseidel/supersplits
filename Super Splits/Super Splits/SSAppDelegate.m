@@ -13,7 +13,7 @@
 #import "SSHistoryWindowController.h"
 #import "SSMainController.h"
 #import "SSRun.h"
-#import "SSRunController.h"
+#import "SSRunBuilder.h"
 #import "SSTimerWindowController.h"
 #import "SSUserDefaults.h"
 

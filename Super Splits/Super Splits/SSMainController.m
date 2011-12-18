@@ -8,7 +8,7 @@
 
 #import "SSMainController.h"
 #import "SSMetroidFrame.h"
-#import "SSRunController.h"
+#import "SSRunBuilder.h"
 #import "SSRun.h"
 #import "SSSplit.h"
 #import "SSWindowImageSource.h"
@@ -57,7 +57,7 @@
 {
     if ([self running])
         [self stopRun];
-    _runController = [[SSRunController alloc] init];
+    _runController = [[SSRunBuilder alloc] init];
     _previousReferenceSplitIndex = kInvalidSplitIndex;
     _currentReferenceSplitIndex = kInvalidSplitIndex;
     _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
