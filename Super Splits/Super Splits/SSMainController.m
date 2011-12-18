@@ -70,6 +70,7 @@
     return [[self runsDirectoryURL] URLByAppendingPathComponent:@"reference.txt"];
 }
 
+// FIXME: This is a copy of SSRun autosaveDirectoryURL.
 -(NSURL *)runsDirectoryURL
 {
     NSString *runsPath = @"~/Library/Application Support/Super Splits/";

@@ -103,6 +103,7 @@ const NSUInteger kInvalidSplitIndex = -1;
     return kInvalidSplitIndex;
 }
 
+// FIXME: This is the same as runDirectoryURL in MainController.
 -(NSURL *)autosaveDirectory
 {
     NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
