@@ -39,6 +39,7 @@
 		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
 		A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB54D149DE64200D6370F /* SSImageSource.m */; };
 		A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB551149DE69400D6370F /* SSMovieImageSource.m */; };
+		A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89EB555149DE94600D6370F /* QTKit.framework */; };
 		B929E80E14908626009EB322 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B929E80D14908626009EB322 /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		A89EB54D149DE64200D6370F /* SSImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImageSource.m; sourceTree = "<group>"; };
 		A89EB550149DE69400D6370F /* SSMovieImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImageSource.h; sourceTree = "<group>"; };
 		A89EB551149DE69400D6370F /* SSMovieImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImageSource.m; sourceTree = "<group>"; };
+		A89EB555149DE94600D6370F /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		B929E80D14908626009EB322 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 			files = (
 				A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */,
 				B929E80E14908626009EB322 /* Carbon.framework in Frameworks */,
+				A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +231,7 @@
 		A83C4026148F0B8C00308FD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A89EB555149DE94600D6370F /* QTKit.framework */,
 				A83C4027148F0B8C00308FD4 /* Cocoa.framework */,
 				B929E80D14908626009EB322 /* Carbon.framework */,
 				A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */,
