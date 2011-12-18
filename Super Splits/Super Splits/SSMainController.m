@@ -125,7 +125,10 @@
     if (![[_referenceRun roomSplits] count])
         return;
 
-    // If we're ever off by more than 6 rooms, something is very wrong.
+    // This number controls how many splits in the reference room we would ever
+    // skip when looking for a room.  If our room detection was perfect, we could
+    // set this to inifinity and be fine, but since our room detection is crude
+    // and there are thus duplicate mapstates during the run, we use a small value.
     const NSUInteger scanLimit = 6;
 
     // This should probably use _run._roomEntryMapState, but we know we
