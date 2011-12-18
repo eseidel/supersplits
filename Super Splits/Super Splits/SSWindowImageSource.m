@@ -41,13 +41,15 @@
 void WindowSearchFunction(const void *inputDictionary, void *context);
 void WindowSearchFunction(const void *inputDictionary, void *context)
 {
+    NSString *targetApplicationName = @"Snes9x";
+    //NSString *targetApplicationName = @"VLC";
 	NSDictionary *entry = (__bridge NSDictionary*)inputDictionary;
-	CGWindowID *snesWindowId = (CGWindowID*)context;
+	CGWindowID *foundWindowId = (CGWindowID*)context;
     CGWindowID windowId = [[entry objectForKey:(id)kCGWindowNumber] unsignedIntValue];
     
     // Grab the application name, but since it's optional we need to check before we can use it.
     NSString *applicationName = [entry objectForKey:(id)kCGWindowOwnerName];
-    if (![applicationName isEqualToString:@"Snes9x"]) {
+    if (![applicationName isEqualToString:targetApplicationName]) {
         //NSLog(@"Ignoring: %d, wrong app.", windowId);
         return;
     }
@@ -58,9 +60,9 @@ void WindowSearchFunction(const void *inputDictionary, void *context)
         //NSLog(@"Ignoring: %d, too small.", windowId);
         return;
     }
-    
-    *snesWindowId = windowId;
-    NSLog(@"Found window with size: %.1f x %.1f, %d", bounds.size.width, bounds.size.height, windowId);
+
+    *foundWindowId = windowId;
+    NSLog(@"Found window in %@ with size: %.1f x %.1f, id: %d", applicationName, bounds.size.width, bounds.size.height, windowId);
 }
 
 -(CGWindowID)findSNESWindowId
