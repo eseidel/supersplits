@@ -1,5 +1,5 @@
 //
-//  SSRun.h
+//  SSRunController.h
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.

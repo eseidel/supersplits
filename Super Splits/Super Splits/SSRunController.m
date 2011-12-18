@@ -1,5 +1,5 @@
 //
-//  SSRun.m
+//  SSRunController.m
 //  Super Splits
 //
 //  Created by Eric Seidel on 12/7/11.
@@ -7,6 +7,8 @@
 //
 
 #import "SSRunController.h"
+
+#import "SSEvent.h"
 #import "SSRun.h"
 #import "SSSplit.h"
 #import "SSUserDefaults.h"
@@ -48,6 +50,29 @@
     return [self stringForState:_state];
 }
 
+-(SSEvent *)createEventForNewState:(SSRunState)newState
+{
+    SSEvent *event = [[SSEvent alloc] init];
+    switch (newState) {
+        case RoomState:
+            event.type = RoomEvent;
+            break;
+        case RoomTransitionState:
+            event.type = DoorEvent;
+            break;
+        case BlackScreenState:
+            event.type = CutsceneEvent;
+            break;
+        case ItemScreenState:
+            event.type = ItemEvent;
+            break;
+        default:
+            event.type = InvalidEvent;
+    }
+    event.offset = [NSNumber numberWithDouble:-[_overallStart timeIntervalSinceNow]];
+    return event;
+}
+
 -(void)setState:(SSRunState)newState
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
@@ -80,6 +105,7 @@
             [self _startRoom];
         }
     }
+    [_run.events addObject:[self createEventForNewState:newState]];
     _stateStart = [NSDate date];
     _state = newState;
 }

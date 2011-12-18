@@ -12,6 +12,7 @@
 		A816D8471499D2F700EBA19B /* SSBlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D8461499D2F600EBA19B /* SSBlackView.m */; };
 		A816D850149A029A00EBA19B /* SSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D84F149A029A00EBA19B /* SSUserDefaults.m */; };
 		A816D862149C414700EBA19B /* SSRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D861149C414700EBA19B /* SSRun.m */; };
+		A816D866149D71FD00EBA19B /* SSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D865149D71FD00EBA19B /* SSEvent.m */; };
 		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
 		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
@@ -60,6 +61,8 @@
 		A816D84F149A029A00EBA19B /* SSUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSUserDefaults.m; sourceTree = "<group>"; };
 		A816D860149C414700EBA19B /* SSRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRun.h; sourceTree = "<group>"; };
 		A816D861149C414700EBA19B /* SSRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRun.m; sourceTree = "<group>"; };
+		A816D864149D71FC00EBA19B /* SSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSEvent.h; sourceTree = "<group>"; };
+		A816D865149D71FD00EBA19B /* SSEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSEvent.m; sourceTree = "<group>"; };
 		A82F31D9148F694E00DDEBF2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				A816D84F149A029A00EBA19B /* SSUserDefaults.m */,
 				A816D860149C414700EBA19B /* SSRun.h */,
 				A816D861149C414700EBA19B /* SSRun.m */,
+				A816D864149D71FC00EBA19B /* SSEvent.h */,
+				A816D865149D71FD00EBA19B /* SSEvent.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -404,6 +409,7 @@
 				A816D8471499D2F700EBA19B /* SSBlackView.m in Sources */,
 				A816D850149A029A00EBA19B /* SSUserDefaults.m in Sources */,
 				A816D862149C414700EBA19B /* SSRun.m in Sources */,
+				A816D866149D71FD00EBA19B /* SSEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

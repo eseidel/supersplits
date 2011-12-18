@@ -11,10 +11,9 @@
 extern const NSUInteger kInvalidSplitIndex;
 
 @interface SSRun : NSObject
-{
-    NSMutableArray *_roomSplits;
-}
-@property (readonly) NSMutableArray *roomSplits;
+
+@property (readonly, retain) NSMutableArray *roomSplits;
+@property (readonly, retain) NSMutableArray *events;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 -(void)writeToURL:(NSURL *)url;

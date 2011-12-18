@@ -13,12 +13,13 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 @implementation SSRun
 
-@synthesize roomSplits=_roomSplits;
+@synthesize roomSplits=_roomSplits, events=_events;
 
 -(id)init
 {
     if (self = [super init]) {
         _roomSplits = [NSMutableArray array];
+        _events = [NSMutableArray array];
     }
     return self;
 }
@@ -34,6 +35,7 @@ const NSUInteger kInvalidSplitIndex = -1;
             _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
             for (NSString *splitString in splitStrings)
                 [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
+            // Not saving or reading events yet.
             NSLog(@"Loaded %lu splits from path: %@", [_roomSplits count], [url path]);
         } else
             self = nil;
@@ -47,6 +49,7 @@ const NSUInteger kInvalidSplitIndex = -1;
     for (SSSplit *split in _roomSplits) {
         [splitsString appendFormat:@"%@\n", [split stringForArchiving]];
     }
+    // Not saving events yet.
     NSError *error = nil;
     [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&error];
     if (error)
