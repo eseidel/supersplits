@@ -2,6 +2,8 @@
 - Start should offset by +3s.
 - detect snes freeze load screen?
 - events should use absolute offsets, instead of durations.
+- show expected time left
+
 
 Future thoughts:
 
