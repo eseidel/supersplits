@@ -80,28 +80,18 @@
         return;
     }
 
-    _runBuilder.offset = offset;
-    if (_lastFrame.isMissingEnergyText) {
-        _runBuilder.state = BlackScreenState;
-    } else if (_lastFrame.isMostlyBlack) {
-        _runBuilder.state = RoomTransitionState;
-    } else if (_lastFrame.isItemScreen) {
-        _runBuilder.state = ItemScreenState;
-    } else {
-        NSArray *previousSplits = [[_runBuilder run] roomSplits];
-        NSUInteger previousSplitCount = [previousSplits count];
+    NSArray *previousSplits = [[_runBuilder run] roomSplits];
+    NSUInteger previousSplitCount = [previousSplits count];
 
-        _runBuilder.state = RoomState;
-        // Important to set that we're in a room before we update the current map state.
-        _runBuilder.mapState = _lastFrame.miniMapString;
+    [_runBuilder updateWithFrame:_lastFrame atOffset:offset];
 
-        // When the "room number" changes, we invalidate our cached split indicies.
-        if (previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count])
-            [_runComparison roomChanged];
-        // Only update the reference cursors once we have a map for this room.
-        if ([_runBuilder roomEntryMapState] && ![_runComparison haveSearchedForCurrentSplit])
-            [_runComparison updateReferenceCursors];
-    }
+    // FIXME: This logic could all be done via some KVO between RunComparison and RunBuilder.
+    // When the "room number" changes, we invalidate our cached split indicies.
+    if (previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count])
+        [_runComparison roomChanged];
+    // Only update the reference cursors once we have a map for this room.
+    if ([_runBuilder roomEntryMapState] && ![_runComparison haveSearchedForCurrentSplit])
+        [_runComparison updateReferenceCursors];
 }
 
 @end

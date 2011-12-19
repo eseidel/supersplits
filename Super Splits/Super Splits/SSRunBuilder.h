@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class SSMetroidFrame;
 @class SSRun;
 
 typedef enum {
@@ -46,5 +47,6 @@ typedef enum {
 -(NSNumber *)roomTime;
 -(NSNumber *)totalTime;
 
+-(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset;
 
 @end

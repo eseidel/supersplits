@@ -9,6 +9,7 @@
 #import "SSRunBuilder.h"
 
 #import "SSEvent.h"
+#import "SSMetroidFrame.h"
 #import "SSRun.h"
 #import "SSSplit.h"
 
@@ -69,6 +70,22 @@
     }
     event.offset = [NSNumber numberWithDouble:_offset];
     return event;
+}
+
+-(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset
+{
+    self.offset = offset;
+    if (frame.isMissingEnergyText) {
+        self.state = BlackScreenState;
+    } else if (frame.isMostlyBlack) {
+        self.state = RoomTransitionState;
+    } else if (frame.isItemScreen) {
+        self.state = ItemScreenState;
+    } else {
+        self.state = RoomState;
+        // Important to set that we're in a room before we update the current map state.
+        self.mapState = frame.miniMapString;
+    }
 }
 
 -(void)setState:(SSRunState)newState
