@@ -20,6 +20,22 @@ const NSUInteger kInvalidSplitIndex = -1;
     return [NSArray arrayWithObject:@"txt"];
 }
 
++(NSURL *)defaultRunsDirectory
+{
+    NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
+    runsDirectory = [runsDirectory stringByExpandingTildeInPath];
+    NSURL *runsURL = [NSURL fileURLWithPath:runsDirectory];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return runsURL;
+}
+
++(NSURL *)defaultURLForRunWithName:(NSString *)name
+{
+    NSString *filename = [name stringByAppendingPathExtension:@"txt"];
+    return [[SSRun defaultRunsDirectory] URLByAppendingPathComponent:filename];
+}
+
 -(id)init
 {
     if (self = [super init]) {
@@ -103,34 +119,18 @@ const NSUInteger kInvalidSplitIndex = -1;
     return kInvalidSplitIndex;
 }
 
-// FIXME: This is the same as runDirectoryURL in MainController.
--(NSURL *)autosaveDirectory
-{
-    NSString *runsDirectory = @"~/Library/Application Support/Super Splits";
-    runsDirectory = [runsDirectory stringByExpandingTildeInPath];
-    NSURL *runsURL = [NSURL fileURLWithPath:runsDirectory];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
-    return runsURL;
-}
-
 -(NSString *)autosaveName
 {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"MM-dd-yyyy hh:mma"];
     NSString *dateString = [dateFormat stringFromDate:_startDate];
-    return [NSString stringWithFormat:@"%@ Autosave.txt", dateString];
-}
-
--(NSURL *)autosaveURL
-{
-    return [[self autosaveDirectory] URLByAppendingPathComponent:[self autosaveName]];
+    return [NSString stringWithFormat:@"%@ Autosave", dateString];
 }
 
 -(void)autosave
 {
     if (!_url)
-        [self writeToURL:[self autosaveURL]];
+        [self writeToURL:[SSRun defaultURLForRunWithName:[self autosaveName]]];
 
     [self writeToURL:_url];
 }

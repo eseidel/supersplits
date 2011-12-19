@@ -59,17 +59,7 @@
 
 -(NSURL *)referenceRunURL
 {
-    return [[self runsDirectoryURL] URLByAppendingPathComponent:@"reference.txt"];
-}
-
-// FIXME: This is a copy of SSRun autosaveDirectoryURL.
--(NSURL *)runsDirectoryURL
-{
-    NSString *runsPath = @"~/Library/Application Support/Super Splits/";
-    runsPath = [runsPath stringByExpandingTildeInPath];
-    NSURL *runsURL = [NSURL fileURLWithPath:runsPath];
-    [[NSFileManager defaultManager] createDirectoryAtURL:runsURL withIntermediateDirectories:YES attributes:nil error:nil];
-    return runsURL;
+    return [SSRun defaultURLForRunWithName:@"reference"];
 }
 
 -(void)nextFrame:(CGImageRef)image atOffset:(NSTimeInterval)offset

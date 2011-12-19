@@ -30,7 +30,6 @@
 -(void)stopRun;
 
 -(NSURL *)referenceRunURL;
--(NSURL *)runsDirectoryURL;
 
 // ImageSourceDelegate
 -(void)nextFrame:(CGImageRef)image atOffset:(NSTimeInterval)offset;

@@ -21,6 +21,7 @@ extern const NSUInteger kInvalidSplitIndex;
 @property (readonly, retain) NSURL *url;
 @property (readonly) NSString *filename;
 
++(NSURL *)defaultURLForRunWithName:(NSString *)name;
 +(NSArray *)runFileTypes;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
