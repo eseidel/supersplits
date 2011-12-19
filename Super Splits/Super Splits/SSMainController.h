@@ -11,41 +11,28 @@
 @class SSMetroidFrame;
 @class SSRun;
 @class SSRunBuilder;
+@class SSRunComparison;
 @class SSWindowImageSource;
 @class SSSplit;
 
 @interface SSMainController : NSObject
-{
-    SSRun *_referenceRun;
-    SSWindowImageSource *_imageSource;
 
-    NSUInteger _currentReferenceSplitIndex; // Reference for current room.
-    NSUInteger _previousReferenceSplitIndex; // Reference for the previous room.
-    NSUInteger _lastMatchedReferenceSplitIndex; // Last room we successfully matched a reference for.
-    NSUInteger _lastSearchedSplitIndex;
-}
-
+@property (retain) SSWindowImageSource *imageSource;
 @property (readonly) BOOL running;
-@property (readonly, retain) SSRunBuilder *runBuilder;
-@property (retain) SSRun *referenceRun;
 @property (retain) SSMetroidFrame *lastFrame;
-@property (readonly) NSNumber *lastMatchedSplitNumber;
 
--(NSURL *)referenceRunURL;
--(NSURL *)runsDirectoryURL;
+@property (readonly, retain) SSRunBuilder *runBuilder;
+@property (readonly, retain) SSRunComparison *runComparison;
+@property (retain) SSRun *referenceRun;
 
 -(void)resetRun;
 -(void)startRun;
 -(void)stopRun;
 
--(SSSplit *)currentSplitReference;
--(SSSplit *)previousSplitReference;
-
--(NSNumber *)deltaToStartOfCurrentRoom;
--(NSNumber *)deltaForPreviousSplit;
+-(NSURL *)referenceRunURL;
+-(NSURL *)runsDirectoryURL;
 
 // ImageSourceDelegate
 -(void)nextFrame:(CGImageRef)image atOffset:(NSTimeInterval)offset;
 
 @end
-

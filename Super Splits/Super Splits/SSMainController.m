@@ -8,22 +8,15 @@
 
 #import "SSMainController.h"
 #import "SSMetroidFrame.h"
-#import "SSRunBuilder.h"
 #import "SSRun.h"
+#import "SSRunComparison.h"
+#import "SSRunBuilder.h"
 #import "SSSplit.h"
 #import "SSWindowImageSource.h"
 
-@interface SSMainController (PrivateMethods)
-
--(BOOL)_haveSearchedForCurrentSplit;
--(void)_updateReferenceCursors;
-
-@end
-
-
 @implementation SSMainController
 
-@synthesize runBuilder=_runBuilder, referenceRun=_referenceRun, lastFrame=_lastFrame;
+@synthesize runBuilder=_runBuilder, imageSource=_imageSource, lastFrame=_lastFrame, referenceRun=_referenceRun, runComparison=_runComparison;
 
 -(id)init
 {
@@ -57,11 +50,10 @@
 {
     if ([self running])
         [self stopRun];
+    _runComparison = [[SSRunComparison alloc] init];
     _runBuilder = [[SSRunBuilder alloc] init];
-    _previousReferenceSplitIndex = kInvalidSplitIndex;
-    _currentReferenceSplitIndex = kInvalidSplitIndex;
-    _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
-    _lastSearchedSplitIndex = kInvalidSplitIndex;
+    _runComparison.runBuilder = _runBuilder;
+    _runComparison.referenceRun = _referenceRun;
     _imageSource.start = nil;
 }
 
@@ -103,100 +95,13 @@
         // Important to set that we're in a room before we update the current map state.
         _runBuilder.mapState = _lastFrame.miniMapString;
 
-        if (previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count]) {
-            // We must have added a split, move our reference indexes back one.
-            _previousReferenceSplitIndex = _currentReferenceSplitIndex;
-            _currentReferenceSplitIndex = kInvalidSplitIndex;
-        }
+        // When the "room number" changes, we invalidate our cached split indicies.
+        if (previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count])
+            [_runComparison roomChanged];
         // Only update the reference cursors once we have a map for this room.
-        if ([_runBuilder roomEntryMapState] && ![self _haveSearchedForCurrentSplit])
-            [self _updateReferenceCursors];
+        if ([_runBuilder roomEntryMapState] && ![_runComparison haveSearchedForCurrentSplit])
+            [_runComparison updateReferenceCursors];
     }
-}
-
-// FIXME: All this reference finding logic could instead be triggered when
-// currentRoomNumber changes.
--(BOOL)_haveSearchedForCurrentSplit
-{
-    if (_lastSearchedSplitIndex == kInvalidSplitIndex)
-        return NO;
-    return _lastSearchedSplitIndex >= [[[_runBuilder run] roomSplits] count];
-}
-
--(void)_updateReferenceCursors
-{
-    assert(![self _haveSearchedForCurrentSplit]);
-    if (![[_referenceRun roomSplits] count])
-        return;
-
-    // This number controls how many splits in the reference room we would ever
-    // skip when looking for a room.  If our room detection was perfect, we could
-    // set this to inifinity and be fine, but since our room detection is crude
-    // and there are thus duplicate mapstates during the run, we use a small value.
-    const NSUInteger scanLimit = 6;
-
-    // This should probably use _run._roomEntryMapState, but we know we
-    // just set the mapState so use that for now.
-    NSString *mapState = _runBuilder.mapState;
-    _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:_lastMatchedReferenceSplitIndex withEntryMap:mapState scanLimit:scanLimit];
-    _lastSearchedSplitIndex = [[[_runBuilder run] roomSplits] count];
-    if (_currentReferenceSplitIndex == kInvalidSplitIndex)
-        return;
-    _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
-}
-
--(NSNumber *)lastMatchedSplitNumber
-{
-    if (_lastMatchedReferenceSplitIndex == kInvalidSplitIndex)
-        return nil;
-    return [NSNumber numberWithInteger:_lastMatchedReferenceSplitIndex + 1];
-}
-
--(SSSplit *)currentSplitReference
-{
-    if (_currentReferenceSplitIndex == kInvalidSplitIndex)
-        return nil;
-    return [[_referenceRun roomSplits] objectAtIndex:_currentReferenceSplitIndex];
-}
-
--(SSSplit *)previousSplitReference
-{
-    if (_previousReferenceSplitIndex == kInvalidSplitIndex)
-        return nil;
-    return [[_referenceRun roomSplits] objectAtIndex:_previousReferenceSplitIndex];
-}
-
--(NSNumber *)deltaToStartOfCurrentRoom
-{
-    NSNumber *referenceTimeAfterLastRoom = nil;
-    if (_previousReferenceSplitIndex != kInvalidSplitIndex)
-        referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:_previousReferenceSplitIndex];
-    else if (_currentReferenceSplitIndex != kInvalidSplitIndex) {
-        // If we don't have a previous split (the last room was confused)
-        // but we do know what this room is, then we compute the time
-        // up until this room from the reference.
-        referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:_currentReferenceSplitIndex - 1];
-    } else
-        return nil;
-
-    SSRun *run = [_runBuilder run];
-    NSNumber *timeAfterLastRoom = [run timeAfterSplitAtIndex:([[run roomSplits] count] - 1)];
-    NSTimeInterval deltaAfterLastRoom = [timeAfterLastRoom doubleValue] - [referenceTimeAfterLastRoom doubleValue];
-    return [NSNumber numberWithDouble:deltaAfterLastRoom];
-}
-
--(NSNumber *)deltaForPreviousSplit
-{
-    if (_previousReferenceSplitIndex == kInvalidSplitIndex)
-        return nil;
-
-    NSNumber *previousSplitReferenceDuration = [[self previousSplitReference] duration];
-    SSRun *run = [_runBuilder run];
-    SSSplit *previousSplit = [[run roomSplits] lastObject];
-    NSNumber *previousSplitDuration = [previousSplit duration];
-
-    NSTimeInterval deltaForPreviousSplit = [previousSplitDuration doubleValue] - [previousSplitReferenceDuration doubleValue];
-    return [NSNumber numberWithDouble:deltaForPreviousSplit];
 }
 
 @end

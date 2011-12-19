@@ -11,6 +11,7 @@
 #import "SSMainController.h"
 #import "SSRun.h"
 #import "SSRunBuilder.h"
+#import "SSRunComparison.h"
 #import "SSSplit.h"
 #import "SSTimeDeltaFormatter.h"
 #import "SSTimeIntervalFormatter.h"
@@ -63,12 +64,13 @@
     SSSplit *lastSplit = [[current roomSplits] lastObject];
     [lastRoomSplitView setObjectValue:[lastSplit duration]];
 
-    SSSplit *currentRoomReference = [_mainController currentSplitReference];
+    SSRunComparison *comparision = [_mainController runComparison];
+    SSSplit *currentRoomReference = [comparision currentSplitReference];
     [roomReferenceTimeView setObjectValue:[currentRoomReference duration]];
-    [totalTimeDeltaView setObjectValue:[_mainController deltaToStartOfCurrentRoom]];
-    [lastRoomSplitDeltaView setObjectValue:[_mainController deltaForPreviousSplit]];
+    [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
+    [lastRoomSplitDeltaView setObjectValue:[comparision deltaForPreviousSplit]];
 
-    NSNumber *lastMatchedSplitNumber = [_mainController lastMatchedSplitNumber];
+    NSNumber *lastMatchedSplitNumber = [comparision lastMatchedSplitNumber];
     SSRun *reference = [_mainController referenceRun];
     NSString *referenceFractionString = [NSString stringWithFormat:@"%@ / %lu", lastMatchedSplitNumber, [[reference roomSplits] count]];
     [referenceFractionView setStringValue:referenceFractionString];
