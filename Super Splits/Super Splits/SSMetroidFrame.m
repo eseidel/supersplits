@@ -20,6 +20,8 @@
 
 @end
 
+// FIXME: This is likely wrong.  SNES interlaced size should be 512 x 448 according to:
+// http://en.wikipedia.org/wiki/SNES
 const CGRect unitGameRect = { 0, 0, 512, 450};
 const CGFloat statusLineVerticalOffset = 386;
 
@@ -77,7 +79,8 @@ const CGFloat statusLineVerticalOffset = 386;
         const CGFloat horizontalPadding = 30.0; // Twitch.tv aspect ratio is different from SNES.
         return CGRectMake(horizontalPadding, vlcControlsHeight + verticalPadding, 320 - 2 * horizontalPadding, 290 - titleBarHeight - vlcControlsHeight - 2 * verticalPadding);
     }
-    return CGRectZero;
+    //NSLog(@"WARNING: Don't know where the game rect is in a %lu x %lu image.  Assuming entire image!", CGImageGetWidth(_image), CGImageGetHeight(_image));
+    return CGRectMake(0, 0, CGImageGetWidth(_image), CGImageGetHeight(_image));
 }
 
 -(CGRect)_findMainRect
@@ -195,7 +198,7 @@ const CGFloat statusLineVerticalOffset = 386;
 -(BOOL)isSupportedImage:(CGImageRef)frame
 {
     CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
-    if (info != kCGImageAlphaNoneSkipFirst) {
+    if (info != kCGImageAlphaNoneSkipFirst && info != kCGImageAlphaFirst) {
         static BOOL haveLogged = NO;
         if (!haveLogged) {
             NSLog(@"Wrong alpha info?  Target window is likely off-screen? (got: %d, expected: %d)", info, kCGImageAlphaNoneSkipFirst);
