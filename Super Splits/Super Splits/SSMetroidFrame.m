@@ -16,7 +16,7 @@
 -(CGRect)_findMiniMap;
 -(CGRect)_findEnergyText;
 
--(size_t)countPixelsInRect:(CGRect)rect aboveColor:(const uint8[4])lower belowColor:(const uint8[4])upper;
+-(size_t)_countPixelsInRect:(CGRect)rect aboveRGB:(const uint8[3])lowRGB belowRGB:(const uint8[3])highRGB;
 
 @end
 
@@ -38,9 +38,10 @@ const CGFloat statusLineVerticalOffset = 386;
         }
         CGImageRetain(image);
         _pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image));
-        if (!_pixelData)
+        if (!_pixelData) {
+            NSLog(@"Failed to get pixel data from image!");
             return nil;
-
+        }
         _gameRectInImage = [self _findGameRect];
         if (CGRectEqualToRect(_gameRectInImage, CGRectZero)) {
             NSLog(@"Failed to find game rect!");
@@ -102,7 +103,7 @@ const CGFloat statusLineVerticalOffset = 386;
     return CGRectApplyAffineTransform(textRect, _fromGameRectToImage);
 }
 
--(size_t)countPixelsInRect:(CGRect)rect aboveColor:(const uint8[4])lowPixel belowColor:(const uint8[4])highPixel;
+-(size_t)_countPixelsInRect:(CGRect)rect aboveRGB:(const uint8[3])lowRGB belowRGB:(const uint8[3])highRGB;
 {
     const uint8 *pixels = CFDataGetBytePtr(_pixelData);
 
@@ -111,22 +112,25 @@ const CGFloat statusLineVerticalOffset = 386;
     size_t bytesPerPixel = bitsPerPixel / 8;
     assert(bytesPerPixel == 4); // This function assumes 4-byte pixels.
     size_t bytesPerRow = CGImageGetBytesPerRow(_image);
-    
+
     // FIXME: It appears this assertion fails if you resize the window?
     assert(bytesPerPixel * CGImageGetWidth(_image) == bytesPerRow);
-    
-    size_t matchingPixelCount = 0;
-    
+
+    // This matches kCGImageAlphaNoneSkipFirst on little endian.
+    // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
+    uint8 lowPixel[4] = { lowRGB[0], lowRGB[1], lowRGB[2], 0 };
+    uint8 highPixel[4] = { highRGB[0], highRGB[1], highRGB[2], 255 };
+
     // Careful to flip from CG coordinates to offsets into the pixel buffer.
     size_t minX = rect.origin.x;
     size_t minY = height - CGRectGetMaxY(rect);
     size_t maxX = CGRectGetMaxX(rect);
     size_t maxY = height - rect.origin.y;
 
+    size_t matchingPixelCount = 0;
     for (size_t y = minY; y < maxY; y++) {
         for (size_t x = minX; x < maxX; x++) {
             const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
-            // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
             if (pixel[0] >= lowPixel[0] && pixel[0] <= highPixel[0]
                 && pixel[1] >= lowPixel[1] && pixel[1] <= highPixel[1]
                 && pixel[2] >= lowPixel[2] && pixel[2] <= highPixel[2]
@@ -142,7 +146,7 @@ const CGFloat statusLineVerticalOffset = 386;
 -(NSImage *)subimageForRect:(CGRect)rect
 {
     // We're using a less-efficent pixel-copying method in order to
-    // match how countPixelsInRect works. 
+    // match how _countPixelsInRect works.
     const uint8 *pixels = CFDataGetBytePtr(_pixelData);
     
     size_t height = CGImageGetHeight(_image);
@@ -210,9 +214,9 @@ const CGFloat statusLineVerticalOffset = 386;
         return NO;  // We don't know, so assume not.
     }
 
-    const uint8 lowPixel[4] = {180, 180, 180, 0};
-    const uint8 highPixel[4] =  {255, 255, 255, 255};
-    size_t whitePixelCount = [self countPixelsInRect:energyTextRect aboveColor:lowPixel belowColor:highPixel];
+    const uint8 lowRGB[3] = {180, 180, 180};
+    const uint8 highRGB[3] =  {255, 255, 255};
+    size_t whitePixelCount = [self _countPixelsInRect:energyTextRect aboveRGB:lowRGB belowRGB:highRGB];
 
     // The Energy text is white, but few of the pixels are actually fully white.
     // If more than 15% of our pixels white, assume it's the energy text.
@@ -225,10 +229,10 @@ const CGFloat statusLineVerticalOffset = 386;
 
 -(BOOL)isMostlyBlack
 {
-    const uint8 lowPixel[4] = {0, 0, 0, 0};
-    const uint8 highPixel[4] =  {5, 5, 5, 255};
+    const uint8 lowRGB[3] = {0, 0, 0};
+    const uint8 highRGB[3] =  {5, 5, 5};
     CGRect mainRect = [self _findMainRect];
-    size_t blackPixelCount = [self countPixelsInRect:mainRect aboveColor:lowPixel belowColor:highPixel];
+    size_t blackPixelCount = [self _countPixelsInRect:mainRect aboveRGB:lowRGB belowRGB:highRGB];
 
     const float percentBlackTransitionThreshold = 0.87f;
     size_t totalPixelCount = mainRect.size.height * mainRect.size.width;
@@ -254,11 +258,11 @@ const CGFloat statusLineVerticalOffset = 386;
 -(BOOL)isItemScreen
 {
     // The pink is about 194, 90, 142, using +/-20 for now.
-    const uint8 lowPixel[4] = {120, 70, 170, 0};
-    const uint8 highPixel[4] =  {160, 110, 210, 255};
+    const uint8 lowRGB[3] = {120, 70, 170};
+    const uint8 highRGB[3] =  {160, 110, 210};
 
     CGRect itemRect = [self _findLowerItemTextRect];
-    size_t pinkPixelCount = [self countPixelsInRect:itemRect aboveColor:lowPixel belowColor:highPixel];
+    size_t pinkPixelCount = [self _countPixelsInRect:itemRect aboveRGB:lowRGB belowRGB:highRGB];
     // FIXME: 3% is a very poor indicator, we need to handle antialiasing better!
     const float percentPinkItemThreshold = 0.03f;
     size_t totalPixelCount = itemRect.size.height * itemRect.size.width;
@@ -266,16 +270,16 @@ const CGFloat statusLineVerticalOffset = 386;
         return YES;
 
     itemRect = [self _findUpperItemTextRect];
-    pinkPixelCount = [self countPixelsInRect:itemRect aboveColor:lowPixel belowColor:highPixel];
+    pinkPixelCount = [self _countPixelsInRect:itemRect aboveRGB:lowRGB belowRGB:highRGB];
     totalPixelCount = itemRect.size.height * itemRect.size.width;
     return pinkPixelCount > (size_t)((float)totalPixelCount * percentPinkItemThreshold);
 }
 
 -(NSString *)miniMapString
 {
-    const uint8 lowPixel[4] = {0, 0, 0, 0};
+    const uint8 lowRGB[3] = {0, 0, 0};
     // We're very flexible about what we call "black" to avoid false positives from antialiasing.
-    const uint8 highPixel[4] =  {25, 25, 25, 255};
+    const uint8 highRGB[3] =  {25, 25, 25};
 
     NSMutableString *mapString = [NSMutableString string];
     
@@ -287,7 +291,7 @@ const CGFloat statusLineVerticalOffset = 386;
             CGRect rect = { mapRect.origin.x + mapSquare.width * x,
                             mapRect.origin.y + mapSquare.height * y,
                             mapSquare.width, mapSquare.height };
-            size_t blackPixelCount = [self countPixelsInRect:rect aboveColor:lowPixel belowColor:highPixel];
+            size_t blackPixelCount = [self _countPixelsInRect:rect aboveRGB:lowRGB belowRGB:highRGB];
 
             // 30% black is enough to signify an empty square.
             // At small frame sizes the border dominates the square, and 40% is slightly too agressive.
