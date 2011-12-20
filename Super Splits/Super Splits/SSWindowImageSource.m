@@ -16,6 +16,7 @@
 -(id)init
 {
     if (self = [super init]) {
+        // FIXME: When should we unbind: this?
         [self bind:@"speedMultiplier"
           toObject:[NSUserDefaultsController sharedUserDefaultsController]
        withKeyPath:[@"values." stringByAppendingString:kSpeedMultiplierDefaultName]
