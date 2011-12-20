@@ -25,6 +25,7 @@
     QTMovie *movie = [QTMovie movieWithURL:url error:nil];
     [movie gotoBeginning];
     QTTime duration = [movie duration];
+    QTTime currentTime = [movie currentTime];
 
     NSDictionary *imageAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                      QTMovieFrameImageTypeCGImageRef, QTMovieFrameImageType
@@ -34,7 +35,6 @@
     
     SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
     while (true) {
-        QTTime currentTime = [movie currentTime];
         if (QTTimeCompare(currentTime, duration) != NSOrderedAscending)
             break;
 
@@ -49,16 +49,15 @@
                 NSLog(@"Error getting frame at %@ in %@: %@", QTStringFromTime(currentTime), [url lastPathComponent], error);
                 break;
             }
-            
+
             SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
             if (!frame) {
                 NSLog(@"Error processing frame at %@ in %@", QTStringFromTime(currentTime), [url lastPathComponent]);
                 break;
             }
             [runBuilder updateWithFrame:frame atOffset:offset];
-            [movie setCurrentTime:QTTimeIncrement(currentTime, stepSize)];
         }
-
+        currentTime = QTTimeIncrement(currentTime, stepSize);
     }
     return [runBuilder run];
 }
