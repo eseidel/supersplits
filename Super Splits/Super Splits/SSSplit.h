@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface SSSplit : NSObject
-{
-    NSNumber *_duration;
-    NSString *_entryMapState;
-    NSString *_exitMapState;
-}
 
 @property (retain) NSString *entryMapState;
 @property (retain) NSString *exitMapState;
