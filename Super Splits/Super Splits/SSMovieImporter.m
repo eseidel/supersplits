@@ -30,7 +30,7 @@
                                      QTMovieFrameImageTypeCGImageRef, QTMovieFrameImageType
                                      , nil];
     NSError *error = nil;
-    QTTime stepSize = QTMakeTimeWithTimeInterval(1.0);
+    QTTime stepSize = QTMakeTimeWithTimeInterval(10.0); // FIXME: This should be much shorter!
     
     SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
     while (true) {
@@ -42,20 +42,23 @@
         BOOL success = QTGetTimeInterval(currentTime, &offset);
         assert(success);
 
-        CGImageRef image = [movie frameImageAtTime:currentTime withAttributes:imageAttributes error:&error];
-        if (!image || error) {
-            NSLog(@"Error getting frame at %@ in %@: %@", QTStringFromTime(currentTime), [url lastPathComponent], error);
-            break;
+        // We use @autoreleasepool here to force the compiler to release the CGImageRef after each loop.
+        @autoreleasepool {
+            CGImageRef image = [movie frameImageAtTime:currentTime withAttributes:imageAttributes error:&error];
+            if (!image || error) {
+                NSLog(@"Error getting frame at %@ in %@: %@", QTStringFromTime(currentTime), [url lastPathComponent], error);
+                break;
+            }
+            
+            SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
+            if (!frame) {
+                NSLog(@"Error processing frame at %@ in %@", QTStringFromTime(currentTime), [url lastPathComponent]);
+                break;
+            }
+            [runBuilder updateWithFrame:frame atOffset:offset];
+            [movie setCurrentTime:QTTimeIncrement(currentTime, stepSize)];
         }
 
-        SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
-        if (!frame) {
-            NSLog(@"Error processing frame at %@ in %@", QTStringFromTime(currentTime), [url lastPathComponent]);
-            break;
-        }
-        [runBuilder updateWithFrame:frame atOffset:offset];
-        [movie setCurrentTime:QTTimeIncrement(currentTime, stepSize)];
-        CGImageRelease(image); // FIXME: This is likely wrong, but seems to stop our unbounded heap growth. :)
     }
     return [runBuilder run];
 }
