@@ -12,13 +12,11 @@
 #import "SSDebugWindowController.h"
 #import "SSHistoryWindowController.h"
 #import "SSMainController.h"
+#import "SSMovieImporter.h"
 #import "SSRun.h"
 #import "SSRunBuilder.h"
 #import "SSTimerWindowController.h"
 #import "SSUserDefaults.h"
-
-#import <QTKit/QTKit.h>
-#import "SSMovieImageSource.h"
 
 #define START_STOP_HOT_KEY_ID 'stss'
 #define RESET_HOT_KEY_ID 'strt'
@@ -162,15 +160,14 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 - (IBAction)importFromMovie:(id)sender
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    [openPanel setAllowedFileTypes:[QTMovie movieFileTypes:QTIncludeAllTypes]];
+    [openPanel setAllowedFileTypes:[SSMovieImporter movieFileTypes]];
     NSInteger openChoice = [openPanel runModal];
     if (openChoice != NSFileHandlingPanelOKButton)
         return;
-    
-//    SSMovieImageSource *imageSource = [[SSMovieImageSource alloc] init];
-//    imageSource.delegate = 
-    // FIXME: We need to break RunController out of MainController and make it
-    // not rely on realtime before this can work.
+
+    SSMovieImporter *importer = [[SSMovieImporter alloc] init];
+    SSRun *run = [importer scanRunFromMovieURL:[openPanel URL]];
+    NSLog(@"Found %lu splits in run", [[run roomSplits] count]);
 }
 
 /**

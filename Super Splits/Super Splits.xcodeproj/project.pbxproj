@@ -41,6 +41,7 @@
 		A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB551149DE69400D6370F /* SSMovieImageSource.m */; };
 		A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89EB555149DE94600D6370F /* QTKit.framework */; };
 		A89EB566149FAABC00D6370F /* SSRunComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB565149FAABC00D6370F /* SSRunComparison.m */; };
+		A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB56914A0013400D6370F /* SSMovieImporter.m */; };
 		B929E80E14908626009EB322 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B929E80D14908626009EB322 /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,8 +115,10 @@
 		A89EB550149DE69400D6370F /* SSMovieImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImageSource.h; sourceTree = "<group>"; };
 		A89EB551149DE69400D6370F /* SSMovieImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImageSource.m; sourceTree = "<group>"; };
 		A89EB555149DE94600D6370F /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
-		A89EB564149FAABC00D6370F /* SSRunComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SSRunComparison.h; sourceTree = "<group>"; };
+		A89EB564149FAABC00D6370F /* SSRunComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunComparison.h; sourceTree = "<group>"; };
 		A89EB565149FAABC00D6370F /* SSRunComparison.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunComparison.m; sourceTree = "<group>"; };
+		A89EB56814A0013300D6370F /* SSMovieImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImporter.h; sourceTree = "<group>"; };
+		A89EB56914A0013400D6370F /* SSMovieImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImporter.m; sourceTree = "<group>"; };
 		B929E80D14908626009EB322 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -192,10 +195,12 @@
 				A839FAA3149404C30003B4B1 /* SSMetroidFrame.m */,
 				A89EB550149DE69400D6370F /* SSMovieImageSource.h */,
 				A89EB551149DE69400D6370F /* SSMovieImageSource.m */,
-				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
-				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
+				A89EB56814A0013300D6370F /* SSMovieImporter.h */,
+				A89EB56914A0013400D6370F /* SSMovieImporter.m */,
 				A89EB564149FAABC00D6370F /* SSRunComparison.h */,
 				A89EB565149FAABC00D6370F /* SSRunComparison.m */,
+				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
+				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 				A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */,
 				A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */,
 				A89EB566149FAABC00D6370F /* SSRunComparison.m in Sources */,
+				A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
