@@ -28,10 +28,11 @@
     QTTime currentTime = [movie currentTime];
 
     NSDictionary *imageAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     QTMovieFrameImageTypeCGImageRef, QTMovieFrameImageType
-                                     , nil];
+                                     QTMovieFrameImageTypeCGImageRef, QTMovieFrameImageType,
+                                     [NSNumber numberWithBool:YES], QTMovieFrameImageSessionMode,
+                                     nil];
     NSError *error = nil;
-    QTTime stepSize = QTMakeTimeWithTimeInterval(10.0); // FIXME: This should be much shorter!
+    QTTime stepSize = QTMakeTimeWithTimeInterval(1.0); // FIXME: This should be much shorter!
     
     SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
     while (true) {
