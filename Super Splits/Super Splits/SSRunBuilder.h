@@ -25,9 +25,10 @@ typedef enum {
 
     NSTimeInterval _offset;
     NSTimeInterval _startOffset;
-
-    NSTimeInterval _roomStart;
     NSTimeInterval _stateStart;
+
+    // FIXME: These could be held on a "currentSplit" object instead.
+    NSTimeInterval _roomStart;
     NSString *_roomEntryMapState;
 
     SSRunState _state;

@@ -154,27 +154,33 @@
     return self;
 }
 
+-(void)_saveSplitFromLastRoom
+{
+    assert(_stateStart);
+    NSNumber *roomTime = [self roomTime];
+    double roomTimeDouble = [roomTime doubleValue];
+    // FIXME: Does this check belong here instead of in setState?
+    if (roomTimeDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
+        NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomTimeDouble);
+        return;
+    }
+
+    SSSplit *split = [[SSSplit alloc] init];
+    split.duration = roomTime;
+    split.entryMapState = _roomEntryMapState;
+    // We're careful in SSMainController to set the current state before setting the new
+    // map state, so we can use _mapState here as the exit map state.
+    split.exitMapState = _mapState;
+
+    [[_run roomSplits] addObject:split];
+    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTimeDouble, split.entryMapState, split.exitMapState, [self _stateTime]);
+    [_run autosave];
+}
+
 -(void)_startRoom
 {
-    if (_stateStart) {
-        NSNumber *roomTime = [self roomTime];
-        double roomTimeDouble = [roomTime doubleValue];
-        // FIXME: Does this check belong here instead of in setState?
-        if (roomTimeDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
-            NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomTimeDouble);
-        } else {
-            SSSplit *split = [[SSSplit alloc] init];
-            split.duration = roomTime;
-            split.entryMapState = _roomEntryMapState;
-            // We're careful in SSMainController to set the current state before setting the new
-            // map state, so we can use _mapState here as the exit map state.
-            split.exitMapState = _mapState;
-
-            [[_run roomSplits] addObject:split];
-            NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTimeDouble, split.entryMapState, split.exitMapState, [self _stateTime]);
-            [_run autosave];
-        }
-    }
+    if (_stateStart)
+        [self _saveSplitFromLastRoom];
 
     // Super Metroid doesn't update the minimap until *after* the door animation completes.
     // Our room transition detection currently thinks the door animation ends slightly
