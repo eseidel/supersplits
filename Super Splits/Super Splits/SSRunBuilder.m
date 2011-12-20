@@ -133,9 +133,8 @@
             // If it's been more than a second, assume that we already have
             // the right minimap for this room, even if its the same as the last.
             NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", _mapState);
-            _roomEntryMapState = _mapState;
-        }
-        return;
+        } else
+            return;
     }
 
     //NSLog(@"Map: %@ -> %@", _mapState, mapState);
