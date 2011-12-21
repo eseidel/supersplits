@@ -20,9 +20,9 @@
 
 @property (readonly) BOOL polling;
 @property (retain) NSDate *start;
-@property (nonatomic) double speedMultiplier;
+@property double speedMultiplier;
 
--(BOOL)startPollingWithInterval:(NSTimeInterval)interval;
+-(BOOL)startPolling;
 -(void)stopPolling;
 
 -(CGWindowID)findSNESWindowId;

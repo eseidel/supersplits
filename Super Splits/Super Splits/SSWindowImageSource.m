@@ -25,7 +25,8 @@
     return self;
 }
 
--(BOOL)startPollingWithInterval:(NSTimeInterval)interval
+
+-(BOOL)startPolling
 {
     assert(!_timer);
     _windowID = [self findSNESWindowId];
@@ -33,6 +34,10 @@
         NSLog(@"Failed to find window! Not starting.");
         return NO;
     }
+
+    // FIXME: Should this use a max?
+    double scansPerSecond = 10.0 * _speedMultiplier;
+    NSTimeInterval interval = (1.0 / scansPerSecond);
 
     _timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                               target:self
