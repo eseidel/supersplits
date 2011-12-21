@@ -10,7 +10,9 @@
 
 @implementation SSSplit
 
-@synthesize entryMapState=_entryMapState, exitMapState=_exitMapState, duration=_duration;
+@synthesize entryMapState=_entryMapState, exitMapState=_exitMapState,
+            entryFrame=_entryFrame, exitFrame=_exitFrame,
+            duration=_duration;
 
 -(id)initWithString:(NSString *)archiveString
 {
