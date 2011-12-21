@@ -22,6 +22,7 @@
 @property (readonly) BOOL isMostlyBlack;
 @property (readonly) NSString *miniMapString;
 @property (readonly, retain) NSImage *debugImage;
+@property (readonly, retain) NSImage *originalImage;
 
 -(id)initWithCGImage:(CGImageRef)image;
 

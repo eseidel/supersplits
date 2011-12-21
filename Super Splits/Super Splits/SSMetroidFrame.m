@@ -27,7 +27,7 @@ const CGFloat statusLineVerticalOffset = 386;
 
 @implementation SSMetroidFrame
 
-@synthesize debugImage=_debugImage;
+@synthesize debugImage=_debugImage, originalImage=_originalImage;
 
 -(id)initWithCGImage:(CGImageRef)image
 {
@@ -308,6 +308,16 @@ const CGFloat statusLineVerticalOffset = 386;
             [mapString appendString:@", "];
     }
     return mapString;
+}
+
+-(NSImage *)originalImage
+{
+    if (_originalImage)
+        return _originalImage;
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:_image];
+    _originalImage = [[NSImage alloc] init];
+    [_originalImage addRepresentation:bitmapRep];
+    return _originalImage;
 }
 
 -(NSImage *)debugImage

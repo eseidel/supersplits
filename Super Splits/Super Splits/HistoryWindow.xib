@@ -415,7 +415,7 @@
 																		<string key="NSFrame">{{289, 219}, {159, 22}}</string>
 																		<reference key="NSSuperview" ref="490581371"/>
 																		<reference key="NSWindow"/>
-																		<reference key="NSNextKeyView" ref="977776182"/>
+																		<reference key="NSNextKeyView" ref="978334920"/>
 																		<string key="NSReuseIdentifierKey">_NS:903</string>
 																		<bool key="NSEnabled">YES</bool>
 																		<object class="NSTextFieldCell" key="NSCell" id="428452411">
@@ -475,7 +475,7 @@
 																			<reference key="NSTextColor" ref="331774773"/>
 																		</object>
 																	</object>
-																	<object class="NSImageView" id="977776182">
+																	<object class="NSImageView" id="978334920">
 																		<reference key="NSNextResponder" ref="490581371"/>
 																		<int key="NSvFlags">274</int>
 																		<object class="NSMutableSet" key="NSDragTypes">
@@ -496,7 +496,7 @@
 																		<reference key="NSNextKeyView" ref="935209379"/>
 																		<string key="NSReuseIdentifierKey">_NS:2141</string>
 																		<bool key="NSEnabled">YES</bool>
-																		<object class="NSImageCell" key="NSCell" id="958660484">
+																		<object class="NSImageCell" key="NSCell" id="363020106">
 																			<int key="NSCellFlags">130560</int>
 																			<int key="NSCellFlags2">33554432</int>
 																			<string key="NSCellIdentifier">_NS:2141</string>
@@ -942,19 +942,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.exitFrame.debugImage</string>
+						<string key="label">value: selection.exitFrame.originalImage</string>
 						<reference key="source" ref="935209379"/>
 						<reference key="destination" ref="999694298"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="935209379"/>
 							<reference key="NSDestination" ref="999694298"/>
-							<string key="NSLabel">value: selection.exitFrame.debugImage</string>
+							<string key="NSLabel">value: selection.exitFrame.originalImage</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.exitFrame.debugImage</string>
+							<string key="NSKeyPath">selection.exitFrame.originalImage</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">188</int>
+					<int key="connectionID">189</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1054,19 +1054,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.entryFrame.debugImage</string>
-						<reference key="source" ref="977776182"/>
+						<string key="label">value: selection.entryFrame.originalImage</string>
+						<reference key="source" ref="978334920"/>
 						<reference key="destination" ref="999694298"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="977776182"/>
+							<reference key="NSSource" ref="978334920"/>
 							<reference key="NSDestination" ref="999694298"/>
-							<string key="NSLabel">value: selection.entryFrame.debugImage</string>
+							<string key="NSLabel">value: selection.entryFrame.originalImage</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.entryFrame.debugImage</string>
+							<string key="NSKeyPath">selection.entryFrame.originalImage</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">187</int>
+					<int key="connectionID">190</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1255,7 +1255,7 @@
 							<reference ref="115140310"/>
 							<reference ref="587057001"/>
 							<reference ref="755120525"/>
-							<reference ref="977776182"/>
+							<reference ref="978334920"/>
 						</object>
 						<reference key="parent" ref="721639727"/>
 					</object>
@@ -1477,17 +1477,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">183</int>
-						<reference key="object" ref="977776182"/>
+						<reference key="object" ref="978334920"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="958660484"/>
+							<reference ref="363020106"/>
 						</object>
 						<reference key="parent" ref="490581371"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">184</int>
-						<reference key="object" ref="958660484"/>
-						<reference key="parent" ref="977776182"/>
+						<reference key="object" ref="363020106"/>
+						<reference key="parent" ref="978334920"/>
 					</object>
 				</object>
 			</object>
@@ -1624,7 +1624,7 @@
 				<reference key="dict.values" ref="1002"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">188</int>
+			<int key="maxID">190</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
