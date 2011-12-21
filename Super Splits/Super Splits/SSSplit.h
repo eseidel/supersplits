@@ -19,6 +19,8 @@
 @property (retain) SSMetroidFrame *entryFrame;
 @property (retain) SSMetroidFrame *exitFrame;
 
+@property (retain) NSString *roomName;
+
 -(id)initWithString:(NSString *)archiveString;
 -(NSString *)stringForArchiving;
 

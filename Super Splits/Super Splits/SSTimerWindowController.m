@@ -69,6 +69,7 @@
     [roomReferenceTimeView setObjectValue:[currentRoomReference duration]];
     [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
     [lastRoomSplitDeltaView setObjectValue:[comparision deltaForPreviousSplit]];
+    [roomNameView setObjectValue:[currentRoomReference roomName]];
 
     NSNumber *lastMatchedSplitNumber = [comparision lastMatchedSplitNumber];
     SSRun *reference = [_mainController referenceRun];
