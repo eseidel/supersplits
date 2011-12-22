@@ -14,6 +14,18 @@
             entryFrame=_entryFrame, exitFrame=_exitFrame,
             duration=_duration, roomName=_roomName;
 
+static inline NSString *nilToEmptyString(NSString *string)
+{
+    return string ? string : @"";
+}
+
+static inline NSString *nullOrEmptyToNil(NSString *string)
+{
+    if ([string isEqualToString:@"(null)"] || [string length] == 0)
+        return nil;
+    return string;
+}
+
 -(id)initWithString:(NSString *)archiveString
 {
     if (self = [super init]) {
@@ -21,18 +33,23 @@
         NSArray *components = [archiveString componentsSeparatedByString:@":"];
         _duration = [NSNumber numberWithDouble:[[components objectAtIndex:0] doubleValue]];
         if ([components count] >= 3) {
-            _entryMapState = [components objectAtIndex:1];
-            _exitMapState = [components objectAtIndex:2];
+            _entryMapState = nullOrEmptyToNil([components objectAtIndex:1]);
+            _exitMapState = nullOrEmptyToNil([components objectAtIndex:2]);
         }
         if ([components count] >= 4)
-            _roomName = [components objectAtIndex:3];
+            _roomName = nullOrEmptyToNil([components objectAtIndex:3]);
     }
     return self;
 }
 
 -(NSString *)stringForArchiving
 {
-    return [NSString stringWithFormat:@"%.2f:%@:%@:%@", [_duration doubleValue], _entryMapState, _exitMapState, _roomName, nil];
+    return [NSString stringWithFormat:@"%.2f:%@:%@:%@",
+            [_duration doubleValue],
+            nilToEmptyString(_entryMapState),
+            nilToEmptyString(_exitMapState),
+            nilToEmptyString(_roomName),
+            nil];
 }
 
 @end
