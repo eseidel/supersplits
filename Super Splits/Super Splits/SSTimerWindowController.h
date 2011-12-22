@@ -26,6 +26,7 @@
     IBOutlet NSTextField *referenceFractionView;
     IBOutlet NSTextField *splitCountView;
     IBOutlet NSTextField *roomNameView;
+    IBOutlet NSTextField *speedMultiplierView;
 }
 
 @property(retain) SSMainController *mainController;

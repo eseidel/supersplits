@@ -15,6 +15,7 @@
 #import "SSSplit.h"
 #import "SSTimeDeltaFormatter.h"
 #import "SSTimeIntervalFormatter.h"
+#import "SSWindowImageSource.h"
 
 @implementation SSTimerWindowController
 
@@ -76,6 +77,14 @@
     NSString *referenceFractionString = [NSString stringWithFormat:@"%@ / %lu", lastMatchedSplitNumber, [[reference roomSplits] count]];
     [referenceFractionView setStringValue:referenceFractionString];
     [splitCountView setIntegerValue:[[current roomSplits] count] + 1];
+
+    if (_mainController.imageSource.speedMultiplier == 1.0)
+        [speedMultiplierView setHidden:YES];
+    else {
+        [speedMultiplierView setHidden:NO];
+        NSString *multiplier = [NSString stringWithFormat:@"%dx", (int)_mainController.imageSource.speedMultiplier, nil];
+        [speedMultiplierView setStringValue:multiplier];
+    }
 
     if (![_mainController running]) {
         [timerState setStringValue:@"paused"];
