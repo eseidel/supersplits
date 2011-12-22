@@ -175,8 +175,9 @@
     // We're careful in SSMainController to set the current state before setting the new
     // map state, so we can use _mapState here as the exit map state.
     split.exitMapState = _mapState;
-    split.entryFrame = _roomEntryFrame;
-    split.exitFrame = _frame;
+    // FIXME: Saving the frames takes up gobs of memory!  Disabled for now.
+//    split.entryFrame = _roomEntryFrame;
+//    split.exitFrame = _frame;
 
     [[_run roomSplits] addObject:split];
     NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTimeDouble, split.entryMapState, split.exitMapState, [self _stateTime]);
