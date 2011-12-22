@@ -11,6 +11,14 @@
 #import "SSRunBuilder.h"
 #import "SSSplit.h"
 
+@interface SSRunComparison (PrivateMethods)
+
+-(NSInteger)_currentSplitIndex;
+-(NSInteger)_previousSplitIndex;
+-(SSSplit *)_previousSplit;
+
+@end
+
 @implementation SSRunComparison
 
 @synthesize runBuilder=_runBuilder, referenceRun=_referenceRun;
@@ -32,7 +40,7 @@
 {
     if (_lastSearchedSplitIndex == kInvalidSplitIndex)
         return NO;
-    return _lastSearchedSplitIndex >= [[[_runBuilder run] roomSplits] count];
+    return _lastSearchedSplitIndex >= [self _currentSplitIndex];
 }
 
 -(void)roomChanged
@@ -40,6 +48,13 @@
     // We must have added a split, move our reference indexes back one.
     _previousReferenceSplitIndex = _currentReferenceSplitIndex;
     _currentReferenceSplitIndex = kInvalidSplitIndex;
+
+    // FIXME: This doesn't really belong here, but currently room names
+    // are held off the reference splits and this is the only class
+    // that knows the mapping between current and refernece splits.
+    SSSplit *previousSplitReference = [self previousSplitReference];
+    if (previousSplitReference)
+        [self _previousSplit].roomName = previousSplitReference.roomName;
 }
 
 -(void)updateReferenceCursors
@@ -58,7 +73,7 @@
     // just set the mapState so use that for now.
     NSString *mapState = _runBuilder.mapState;
     _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:_lastMatchedReferenceSplitIndex withEntryMap:mapState scanLimit:scanLimit];
-    _lastSearchedSplitIndex = [[[_runBuilder run] roomSplits] count];
+    _lastSearchedSplitIndex = [self _currentSplitIndex];
     if (_currentReferenceSplitIndex == kInvalidSplitIndex)
         return;
     _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
@@ -98,21 +113,34 @@
     } else
         return nil;
 
-    NSNumber *timeAfterLastRoom = [[_runBuilder run] timeAfterSplitAtIndex:([[[_runBuilder run] roomSplits] count] - 1)];
+    NSNumber *timeAfterLastRoom = [[_runBuilder run] timeAfterSplitAtIndex:[self _previousSplitIndex]];
     NSTimeInterval deltaAfterLastRoom = [timeAfterLastRoom doubleValue] - [referenceTimeAfterLastRoom doubleValue];
     return [NSNumber numberWithDouble:deltaAfterLastRoom];
+}
+
+-(NSInteger)_currentSplitIndex
+{
+    return [[[_runBuilder run] roomSplits] count];
+}
+
+-(NSInteger)_previousSplitIndex
+{
+    return [self _currentSplitIndex] - 1;
+}
+
+-(SSSplit *)_previousSplit
+{
+    return [[[_runBuilder run] roomSplits] lastObject];
 }
 
 -(NSNumber *)deltaForPreviousSplit
 {
     if (_previousReferenceSplitIndex == kInvalidSplitIndex)
         return nil;
-    
+
     NSNumber *previousSplitReferenceDuration = [[self previousSplitReference] duration];
-    SSRun *run = [_runBuilder run];
-    SSSplit *previousSplit = [[run roomSplits] lastObject];
-    NSNumber *previousSplitDuration = [previousSplit duration];
-    
+    NSNumber *previousSplitDuration = [[self _previousSplit] duration];
+
     NSTimeInterval deltaForPreviousSplit = [previousSplitDuration doubleValue] - [previousSplitReferenceDuration doubleValue];
     return [NSNumber numberWithDouble:deltaForPreviousSplit];
 }
