@@ -25,6 +25,8 @@ extern const NSUInteger kInvalidSplitIndex;
 +(NSArray *)runFileTypes;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
+-(id)initWithData:(NSData *)data;
+-(NSData *)writeToData;
 -(void)writeToURL:(NSURL *)url;
 
 -(void)autosave;

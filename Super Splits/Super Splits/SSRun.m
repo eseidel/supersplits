@@ -48,21 +48,42 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 -(id)initWithContentsOfURL:(NSURL *)url
 {
-    if (self = [super init]) {
-        NSString *splitsString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-        splitsString = [splitsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if (!splitsString)
-            return nil;
-        _url = url;
-        NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
-        // This is the hacky-way to do a "map" in cocoa.
-        _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
-        for (NSString *splitString in splitStrings)
-            [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
-        // Not saving or reading events yet.
-        NSLog(@"Loaded %lu splits from path: %@", [_roomSplits count], [url path]);
-    }
+    self = [self initWithData:[NSData dataWithContentsOfURL:url]];
+    if (!self)
+        return nil;
+    _url = url;
+    NSLog(@"Loaded %lu splits from path: %@", [_roomSplits count], [url path]);
     return self;
+}
+
+-(id)initWithData:(NSData *)data
+{
+    self = [super init];
+    if (!self)
+        return nil;
+
+    NSString *splitsString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    splitsString = [splitsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!splitsString)
+        return nil;
+
+    NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
+    // This is the hacky-way to do a "map" in cocoa.
+    _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
+    for (NSString *splitString in splitStrings)
+        [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
+    // Not saving or reading events yet.
+
+    return self;
+}
+
+-(NSData *)writeToData
+{
+    NSMutableString *splitsString = [[NSMutableString alloc] init];
+    for (SSSplit *split in _roomSplits) {
+        [splitsString appendFormat:@"%@\n", [split stringForArchiving]];
+    }
+    return [splitsString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 -(NSString *)filename
@@ -72,15 +93,11 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 -(void)writeToURL:(NSURL *)url
 {
-    NSMutableString *splitsString = [[NSMutableString alloc] init];
-    for (SSSplit *split in _roomSplits) {
-        [splitsString appendFormat:@"%@\n", [split stringForArchiving]];
-    }
-    // Not saving events yet.
+    NSData *data = [self writeToData];
     NSError *error = nil;
-    [splitsString writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    [data writeToURL:url options:NSDataWritingAtomic error:&error];
     if (error)
-        NSLog(@"Error saving: %@", error);
+        NSLog(@"Error (%@) writing to url: %@", error, url);
     if (!_url)
         _url = url;
 }
