@@ -13,6 +13,8 @@
 		A816D850149A029A00EBA19B /* SSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D84F149A029A00EBA19B /* SSUserDefaults.m */; };
 		A816D862149C414700EBA19B /* SSRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D861149C414700EBA19B /* SSRun.m */; };
 		A816D866149D71FD00EBA19B /* SSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D865149D71FD00EBA19B /* SSEvent.m */; };
+		A821B30914A83BDA00F3BE73 /* SSRunDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = A821B30714A83BDA00F3BE73 /* SSRunDocument.m */; };
+		A821B30A14A83BDA00F3BE73 /* SSRunDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */; };
 		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
 		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
@@ -68,6 +70,9 @@
 		A816D861149C414700EBA19B /* SSRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRun.m; sourceTree = "<group>"; };
 		A816D864149D71FC00EBA19B /* SSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSEvent.h; sourceTree = "<group>"; };
 		A816D865149D71FD00EBA19B /* SSEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSEvent.m; sourceTree = "<group>"; };
+		A821B30614A83BDA00F3BE73 /* SSRunDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunDocument.h; sourceTree = "<group>"; };
+		A821B30714A83BDA00F3BE73 /* SSRunDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunDocument.m; sourceTree = "<group>"; };
+		A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSRunDocument.xib; sourceTree = "<group>"; };
 		A82F31D9148F694E00DDEBF2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
@@ -159,6 +164,8 @@
 				A816D84D149A028000EBA19B /* SSUserDefaults.h */,
 				A816D84F149A029A00EBA19B /* SSUserDefaults.m */,
 				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
+				A821B30614A83BDA00F3BE73 /* SSRunDocument.h */,
+				A821B30714A83BDA00F3BE73 /* SSRunDocument.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -176,6 +183,7 @@
 				A839FA97149364600003B4B1 /* SSTimeDeltaFormatter.m */,
 				A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */,
 				A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */,
+				A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 				A887054B14901946002482E8 /* icon.icns in Resources */,
 				A82F31FE1490953500DDEBF2 /* DebugWindow.xib in Resources */,
 				A82F32491490BBC300DDEBF2 /* HistoryWindow.xib in Resources */,
+				A821B30A14A83BDA00F3BE73 /* SSRunDocument.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +447,7 @@
 				A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */,
 				A89EB566149FAABC00D6370F /* SSRunComparison.m in Sources */,
 				A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */,
+				A821B30914A83BDA00F3BE73 /* SSRunDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
