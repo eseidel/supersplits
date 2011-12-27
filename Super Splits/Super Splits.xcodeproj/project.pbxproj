@@ -11,6 +11,7 @@
 		A815281D14A944A800F9D4A0 /* ImportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A815281C14A944A800F9D4A0 /* ImportWindow.xib */; };
 		A815282114A9469F00F9D4A0 /* SSImportWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282014A9469F00F9D4A0 /* SSImportWindowController.m */; };
 		A815282814A951CD00F9D4A0 /* SSMovieImportOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */; };
+		A815283614A9942000F9D4A0 /* SSRunBuilderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */; };
 		A816D84014983DF900EBA19B /* SSSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D83F14983DF900EBA19B /* SSSplit.m */; };
 		A816D8471499D2F700EBA19B /* SSBlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D8461499D2F600EBA19B /* SSBlackView.m */; };
 		A816D850149A029A00EBA19B /* SSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D84F149A029A00EBA19B /* SSUserDefaults.m */; };
@@ -38,7 +39,6 @@
 		A83C4046148F0B8D00308FD4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */; };
 		A83C4047148F0B8D00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
 		A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C404D148F0B8D00308FD4 /* InfoPlist.strings */; };
-		A83C4052148F0B8D00308FD4 /* Super_SplitsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */; };
 		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
 		A83C4079148F688400308FD4 /* SSTimerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4078148F688300308FD4 /* SSTimerWindowController.m */; };
 		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
@@ -67,6 +67,8 @@
 		A815282014A9469F00F9D4A0 /* SSImportWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImportWindowController.m; sourceTree = "<group>"; };
 		A815282614A951CD00F9D4A0 /* SSMovieImportOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImportOperation.h; sourceTree = "<group>"; };
 		A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImportOperation.m; sourceTree = "<group>"; };
+		A815283314A993A700F9D4A0 /* SSRunBuilderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunBuilderTest.h; sourceTree = "<group>"; };
+		A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunBuilderTest.m; sourceTree = "<group>"; };
 		A816D83E14983DF900EBA19B /* SSSplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplit.h; sourceTree = "<group>"; };
 		A816D83F14983DF900EBA19B /* SSSplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplit.m; sourceTree = "<group>"; };
 		A816D8451499D2F600EBA19B /* SSBlackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSBlackView.h; sourceTree = "<group>"; };
@@ -115,8 +117,6 @@
 		A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		A83C404C148F0B8D00308FD4 /* Super SplitsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Super SplitsTests-Info.plist"; sourceTree = "<group>"; };
 		A83C404E148F0B8D00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A83C4050148F0B8D00308FD4 /* Super_SplitsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Super_SplitsTests.h; sourceTree = "<group>"; };
-		A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Super_SplitsTests.m; sourceTree = "<group>"; };
 		A83C405F148F30FA00308FD4 /* SSMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMainController.h; sourceTree = "<group>"; };
 		A83C4060148F311200308FD4 /* SSMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMainController.m; sourceTree = "<group>"; };
 		A83C4077148F688300308FD4 /* SSTimerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimerWindowController.h; sourceTree = "<group>"; };
@@ -312,9 +312,9 @@
 		A83C404A148F0B8D00308FD4 /* Super SplitsTests */ = {
 			isa = PBXGroup;
 			children = (
-				A83C4050148F0B8D00308FD4 /* Super_SplitsTests.h */,
-				A83C4051148F0B8D00308FD4 /* Super_SplitsTests.m */,
 				A83C404B148F0B8D00308FD4 /* Supporting Files */,
+				A815283314A993A700F9D4A0 /* SSRunBuilderTest.h */,
+				A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */,
 			);
 			path = "Super SplitsTests";
 			sourceTree = "<group>";
@@ -473,7 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A83C4052148F0B8D00308FD4 /* Super_SplitsTests.m in Sources */,
+				A815283614A9942000F9D4A0 /* SSRunBuilderTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
