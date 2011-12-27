@@ -1,6 +1,5 @@
 - Wait-to-start behavior is somewhat non-discoverable.
-- Start should offset by +3s (only on start?  Only when first room is siris?)
-- Need room names!
+- Start should offset by +3s (only on start?  Only when first room is Ceres?)
 - detect Snes9x freeze load screen?
 - events should use absolute offsets, instead of durations.
 - show expected time left
@@ -14,7 +13,7 @@ Confused Timer:
 Extra Draygon rooms problem:
 - increase room threshold (what is the shortest room transition in the game?)
 - ignore room transitions from BOSS -> BOSS (trouble with first room after boss?)
-- look for doors in room transition (trouble with siris?)
+- look for doors in room transition (trouble with Ceres?)
 
 Movie import:
 - Run the import on a background thread (NSOperation?  How to report progress?)
