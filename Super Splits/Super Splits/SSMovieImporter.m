@@ -23,7 +23,7 @@
 
 @implementation SSMovieImporter
 
-@synthesize progress=_progress;
+@synthesize progress=_progress, lastFrame=_lastFrame;
 
 +(NSArray *)movieFileTypes
 {
@@ -34,10 +34,11 @@
 {
     AVAsset *myAsset = [AVAsset assetWithURL:url];
     _imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
-//    _imageGenerator.requestedTimeToleranceBefore = kCMTimeZero;
-//    _imageGenerator.requestedTimeToleranceAfter = kCMTimeZero;
+    Float64 frameStepSeconds = 1.0;
 
-    Float64 frameStepSeconds = .5;
+    _imageGenerator.requestedTimeToleranceBefore = CMTimeMakeWithSeconds(frameStepSeconds / 2.0, 600);
+    _imageGenerator.requestedTimeToleranceAfter = CMTimeMakeWithSeconds(frameStepSeconds / 2.0, 600);
+
     Float64 durationSeconds = CMTimeGetSeconds([myAsset duration]);
     NSUInteger frameCount = durationSeconds / frameStepSeconds;
     NSMutableArray *times = [NSMutableArray arrayWithCapacity:frameCount];
@@ -50,15 +51,26 @@
 
     const NSInteger updateProgessEveryNFrames = 10;
     __block NSInteger framesRecieved = 0;
+    __block CMTime lastActualTime = kCMTimeInvalid;
 
     AVAssetImageGeneratorCompletionHandler completionHandler = ^(CMTime requestedTime,
                                                                  CGImageRef image,
                                                                  CMTime actualTime,
                                                                  AVAssetImageGeneratorResult result,
                                                                  NSError *error) {
-        // FIXME: We may need code to avoid duplicate updates when actualTime
-        // does not change from last actualTime.
+        if (result == AVAssetImageGeneratorFailed) {
+            NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
+            NSLog(@"Failed with error: %@ at: %@", [error localizedDescription], actualTimeString);
+        }
+
         if (result == AVAssetImageGeneratorSucceeded) {
+            if (CMTimeCompare(lastActualTime, actualTime) == 0) {
+                NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
+                NSLog(@"Warning: Ignoring duplicate frame for time: %@", actualTimeString);
+                return;
+            }
+            lastActualTime = actualTime;
+
             SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
             if (!frame) {
                 NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
@@ -66,16 +78,13 @@
                 return;
             }
             [runBuilder updateWithFrame:frame atOffset:CMTimeGetSeconds(actualTime)];
+    //        [self performSelectorOnMainThread:@selector(setLastFrame:) withObject:frame waitUntilDone:NO];
         }
-
-        if (result == AVAssetImageGeneratorFailed)
-            NSLog(@"Failed with error: %@", [error localizedDescription]);
 
         framesRecieved++;
         if (framesRecieved % updateProgessEveryNFrames == 0) {
             Float64 currentSeconds = CMTimeGetSeconds(actualTime);
             Float64 percentComplete = currentSeconds / durationSeconds;
-            //NSLog(@"Updating %0.2f of %0.2f (%0.2f)", currentSeconds, durationSeconds, percentComplete);
             NSNumber *progress = [NSNumber numberWithDouble:percentComplete * 100];
             [self performSelectorOnMainThread:@selector(setProgress:) withObject:progress waitUntilDone:NO];
         }
@@ -92,6 +101,7 @@
     NSWindow *window = [_importWindowController window];
     window.title = [NSString stringWithFormat:@"Importing '%@'", [url lastPathComponent]];
     [window makeKeyAndOrderFront:self];
+    _scanStart = [NSDate date];
 }
 
 -(void)cancelImport
@@ -101,6 +111,7 @@
 
 -(void)_importFinished:(SSRun *)run
 {
+    NSLog(@"Scan completed in %0.2fs", -[_scanStart timeIntervalSinceNow]);
     [[_importWindowController window] close];
     NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
     NSError *error = nil;

@@ -8,18 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-@class SSRun;
 @class SSImportWindowController;
 @class AVAssetImageGenerator;
+@class SSMetroidFrame;
 
 @interface SSMovieImporter : NSObject
 {
     AVAssetImageGenerator *_imageGenerator;
     SSImportWindowController *_importWindowController;
+    NSDate *_scanStart;
 }
 
 // FIXME: Unclear if we want to support importing more than one file at once.
 @property (retain) NSNumber *progress;
+@property (retain) SSMetroidFrame *lastFrame;
 
 +(NSArray *)movieFileTypes;
 
