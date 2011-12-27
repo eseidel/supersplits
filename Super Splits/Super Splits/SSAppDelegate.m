@@ -50,7 +50,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 {
     [self _registerDefaults];
 
-    _timerWindowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"MainWindow"];
+    _timerWindowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"TimerWindow"];
     _mainController = [[SSMainController alloc] init];
     _timerWindowController.mainController = _mainController;
     _coreDataController = [[SSCoreDataController alloc] init];

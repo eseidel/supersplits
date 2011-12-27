@@ -19,7 +19,7 @@
 		A816D866149D71FD00EBA19B /* SSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D865149D71FD00EBA19B /* SSEvent.m */; };
 		A821B30914A83BDA00F3BE73 /* SSRunDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = A821B30714A83BDA00F3BE73 /* SSRunDocument.m */; };
 		A821B30A14A83BDA00F3BE73 /* SSRunDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */; };
-		A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* MainWindow.xib */; };
+		A82F31DA148F694E00DDEBF2 /* TimerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
 		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
 		A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31F81490948C00DDEBF2 /* SSDebugWindowController.m */; };
@@ -82,7 +82,7 @@
 		A821B30614A83BDA00F3BE73 /* SSRunDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunDocument.h; sourceTree = "<group>"; };
 		A821B30714A83BDA00F3BE73 /* SSRunDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunDocument.m; sourceTree = "<group>"; };
 		A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSRunDocument.xib; sourceTree = "<group>"; };
-		A82F31D9148F694E00DDEBF2 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
 		A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSWindowImageSource.h; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
 				A815281C14A944A800F9D4A0 /* ImportWindow.xib */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
-				A82F31D9148F694E00DDEBF2 /* MainWindow.xib */,
+				A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */,
 				A816D8451499D2F600EBA19B /* SSBlackView.h */,
 				A816D8461499D2F600EBA19B /* SSBlackView.m */,
 				A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */,
@@ -402,7 +402,7 @@
 				A83C4032148F0B8C00308FD4 /* InfoPlist.strings in Resources */,
 				A83C4038148F0B8C00308FD4 /* Credits.rtf in Resources */,
 				A83C403E148F0B8D00308FD4 /* MainMenu.xib in Resources */,
-				A82F31DA148F694E00DDEBF2 /* MainWindow.xib in Resources */,
+				A82F31DA148F694E00DDEBF2 /* TimerWindow.xib in Resources */,
 				A887054B14901946002482E8 /* icon.icns in Resources */,
 				A82F31FE1490953500DDEBF2 /* DebugWindow.xib in Resources */,
 				A82F32491490BBC300DDEBF2 /* HistoryWindow.xib in Resources */,
