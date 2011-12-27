@@ -11,66 +11,106 @@
 #import "SSRunBuilder.h"
 #import "SSRunDocument.h"
 
-#import <QTKit/QTKit.h>
-#import "SSMovieImportOperation.h"
+#import <AVFoundation/AVFoundation.h>
 #import "SSImportWindowController.h"
+
+@interface SSMovieImporter (PrivateMethods)
+
+-(void)_importFinished:(SSRun *)run;
+
+@end
+
 
 @implementation SSMovieImporter
 
-@synthesize importOperation=_importOperation, progress=_progress;
-
--(id)init
-{
-    if (self = [super init]) {
-        _importQueue = [NSOperationQueue new];
-        // FIXME: Unclear if setMaxConcurrentOperationCount is needed here.
-        [_importQueue setMaxConcurrentOperationCount:1];
-    }
-    return self;
-}
+@synthesize progress=_progress;
 
 +(NSArray *)movieFileTypes
 {
-    return [QTMovie movieFileTypes:QTIncludeAllTypes];
+    return [AVURLAsset audiovisualTypes];
 }
 
 -(void)scanRunFromMovieURL:(NSURL *)url
 {
-    NSError *error = nil;
-    QTMovie *movie = [QTMovie movieWithURL:url error:&error];
-    if (error) {
-        NSLog(@"Error creating QTMovie: %@ from: %@", error, url);
-        return;
+    AVAsset *myAsset = [AVAsset assetWithURL:url];
+    _imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
+//    _imageGenerator.requestedTimeToleranceBefore = kCMTimeZero;
+//    _imageGenerator.requestedTimeToleranceAfter = kCMTimeZero;
+
+    Float64 frameStepSeconds = .5;
+    Float64 durationSeconds = CMTimeGetSeconds([myAsset duration]);
+    NSUInteger frameCount = durationSeconds / frameStepSeconds;
+    NSMutableArray *times = [NSMutableArray arrayWithCapacity:frameCount];
+    for (NSUInteger i = 0; i < frameCount; i++) {
+        CMTime time = CMTimeMakeWithSeconds(i * frameStepSeconds, 600);
+        [times addObject:[NSValue valueWithCMTime:time]];
     }
 
-    BOOL success = [movie detachFromCurrentThread];
-    if (!success) {
-        NSLog(@"Failed to detatch QTMovie: %@ from current thread", url);
-        return;
-    }
+    SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
 
-    _importOperation = [[SSMovieImportOperation alloc] initWithMovie:movie importer:self];
-    __weak SSMovieImportOperation *weakOperation = _importOperation;
-    __weak SSImportWindowController *weakWindowController = _importWindowController;
-    _importOperation.completionBlock = ^(void) {
-        [[weakWindowController window] close];
-        if (!weakOperation || weakOperation.isCancelled)
-            return;
-        NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
-        NSError *error = nil;
-        SSRunDocument *document = [documentController openUntitledDocumentAndDisplay:YES error:&error];
-        if (error) {
-            NSLog(@"Error creating run document after import: %@", error);
-            return;
+    const NSInteger updateProgessEveryNFrames = 10;
+    __block NSInteger framesRecieved = 0;
+
+    AVAssetImageGeneratorCompletionHandler completionHandler = ^(CMTime requestedTime,
+                                                                 CGImageRef image,
+                                                                 CMTime actualTime,
+                                                                 AVAssetImageGeneratorResult result,
+                                                                 NSError *error) {
+        // FIXME: We may need code to avoid duplicate updates when actualTime
+        // does not change from last actualTime.
+        if (result == AVAssetImageGeneratorSucceeded) {
+            SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
+            if (!frame) {
+                NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
+                NSLog(@"Error processing frame at %@", actualTimeString);
+                return;
+            }
+            [runBuilder updateWithFrame:frame atOffset:CMTimeGetSeconds(actualTime)];
         }
-        document.run = weakOperation.completedRun;
+
+        if (result == AVAssetImageGeneratorFailed)
+            NSLog(@"Failed with error: %@", [error localizedDescription]);
+        // NOTE: This canceled is called for every requested image!
+        if (result == AVAssetImageGeneratorCancelled)
+            NSLog(@"Canceled");
+
+        framesRecieved++;
+        if (framesRecieved % updateProgessEveryNFrames == 0) {
+            Float64 currentSeconds = CMTimeGetSeconds(actualTime);
+            Float64 percentComplete = currentSeconds / durationSeconds;
+            //NSLog(@"Updating %0.2f of %0.2f (%0.2f)", currentSeconds, durationSeconds, percentComplete);
+            NSNumber *progress = [NSNumber numberWithDouble:percentComplete * 100];
+            [self performSelectorOnMainThread:@selector(setProgress:) withObject:progress waitUntilDone:NO];
+        }
+        if (framesRecieved == frameCount) {
+            [self performSelectorOnMainThread:@selector(_importFinished:) withObject:runBuilder.run waitUntilDone:NO];
+        }
     };
-    [_importQueue addOperation:_importOperation];
+
+    [_imageGenerator generateCGImagesAsynchronouslyForTimes:times completionHandler:completionHandler];
 
     _importWindowController = [[SSImportWindowController alloc] initWithWindowNibName:@"ImportWindow"];
     _importWindowController.movieImporter = self;
     // FIXME: Should this be a modal window?
     [[_importWindowController window] makeKeyAndOrderFront:self];
+}
+
+-(void)cancelImport
+{
+    [_imageGenerator cancelAllCGImageGeneration];
+}
+
+-(void)_importFinished:(SSRun *)run
+{
+    [[_importWindowController window] close];
+    NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
+    NSError *error = nil;
+    SSRunDocument *document = [documentController openUntitledDocumentAndDisplay:YES error:&error];
+    if (error) {
+        NSLog(@"Error creating run document after import: %@", error);
+        return;
+    }
+    document.run = run;
 }
 
 @end

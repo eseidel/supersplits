@@ -8,7 +8,6 @@
 
 #import "SSImportWindowController.h"
 #import "SSMovieImporter.h"
-#import "SSMovieImportOperation.h"
 
 @implementation SSImportWindowController
 
@@ -34,7 +33,7 @@
 -(IBAction)cancelImport:(id)sender
 {
     NSLog(@"Canceling import");
-    [_movieImporter.importOperation cancel];
+    [_movieImporter cancelImport];
     [self.window close];
 }
 
