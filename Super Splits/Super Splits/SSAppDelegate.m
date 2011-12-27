@@ -115,6 +115,11 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     [[_historyWindowController window] makeKeyAndOrderFront:self];
 }
 
+- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
+{
+    return NO;
+}
+
 /**
  Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
  */
@@ -165,10 +170,8 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     if (openChoice != NSFileHandlingPanelOKButton)
         return;
 
-    NSDate *start = [NSDate date];
     SSMovieImporter *importer = [[SSMovieImporter alloc] init];
-    SSRun *run = [importer scanRunFromMovieURL:[openPanel URL]];
-    NSLog(@"Found %lu splits in run (%f s)", [[run roomSplits] count], -[start timeIntervalSinceNow]);
+    [importer scanRunFromMovieURL:[openPanel URL]];
 }
 
 /**

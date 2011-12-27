@@ -9,58 +9,66 @@
 #import "SSMovieImporter.h"
 #import "SSMetroidFrame.h"
 #import "SSRunBuilder.h"
+#import "SSRunDocument.h"
 
 #import <QTKit/QTKit.h>
-#import "SSMovieImageSource.h"
+#import "SSMovieImportOperation.h"
+#import "SSImportWindowController.h"
 
 @implementation SSMovieImporter
+
+@synthesize importOperation=_importOperation, progress=_progress;
+
+-(id)init
+{
+    if (self = [super init]) {
+        _importQueue = [NSOperationQueue new];
+        // FIXME: Unclear if setMaxConcurrentOperationCount is needed here.
+        [_importQueue setMaxConcurrentOperationCount:1];
+    }
+    return self;
+}
 
 +(NSArray *)movieFileTypes
 {
     return [QTMovie movieFileTypes:QTIncludeAllTypes];
 }
 
--(SSRun *)scanRunFromMovieURL:(NSURL *)url
+-(void)scanRunFromMovieURL:(NSURL *)url
 {
-    QTMovie *movie = [QTMovie movieWithURL:url error:nil];
-    [movie gotoBeginning];
-    QTTime duration = [movie duration];
-    QTTime currentTime = [movie currentTime];
-
-    NSDictionary *imageAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     QTMovieFrameImageTypeCGImageRef, QTMovieFrameImageType,
-                                     [NSNumber numberWithBool:YES], QTMovieFrameImageSessionMode,
-                                     nil];
     NSError *error = nil;
-    QTTime stepSize = QTMakeTimeWithTimeInterval(1.0); // FIXME: This should be much shorter!
-    
-    SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
-    while (true) {
-        if (QTTimeCompare(currentTime, duration) != NSOrderedAscending)
-            break;
-
-        NSTimeInterval offset;
-        BOOL success = QTGetTimeInterval(currentTime, &offset);
-        assert(success);
-
-        // We use @autoreleasepool here to force the compiler to release the CGImageRef after each loop.
-        @autoreleasepool {
-            CGImageRef image = [movie frameImageAtTime:currentTime withAttributes:imageAttributes error:&error];
-            if (!image || error) {
-                NSLog(@"Error getting frame at %@ in %@: %@", QTStringFromTime(currentTime), [url lastPathComponent], error);
-                break;
-            }
-
-            SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
-            if (!frame) {
-                NSLog(@"Error processing frame at %@ in %@", QTStringFromTime(currentTime), [url lastPathComponent]);
-                break;
-            }
-            [runBuilder updateWithFrame:frame atOffset:offset];
-        }
-        currentTime = QTTimeIncrement(currentTime, stepSize);
+    QTMovie *movie = [QTMovie movieWithURL:url error:&error];
+    if (error) {
+        NSLog(@"Error creating QTMovie: %@ from: %@", error, url);
+        return;
     }
-    return [runBuilder run];
+
+    BOOL success = [movie detachFromCurrentThread];
+    if (!success) {
+        NSLog(@"Failed to detatch QTMovie: %@ from current thread", url);
+        return;
+    }
+
+    _importOperation = [[SSMovieImportOperation alloc] initWithMovie:movie importer:self];
+    _importOperation.completionBlock = ^(void) {
+        [[_importWindowController window] close];
+        if (_importOperation.isCancelled)
+            return;
+        NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
+        NSError *error = nil;
+        SSRunDocument *document = [documentController openUntitledDocumentAndDisplay:YES error:&error];
+        if (error) {
+            NSLog(@"Error creating run document after import: %@", error);
+            return;
+        }
+        document.run = _importOperation.completedRun;
+    };
+    [_importQueue addOperation:_importOperation];
+
+    _importWindowController = [[SSImportWindowController alloc] initWithWindowNibName:@"ImportWindow"];
+    _importWindowController.movieImporter = self;
+    // FIXME: Should this be a modal window?
+    [[_importWindowController window] makeKeyAndOrderFront:self];
 }
 
 @end

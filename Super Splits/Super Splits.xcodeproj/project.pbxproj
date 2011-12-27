@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A8070E831492FEDE00167ABD /* SSRunBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8070E821492FEDE00167ABD /* SSRunBuilder.m */; };
+		A815281D14A944A800F9D4A0 /* ImportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A815281C14A944A800F9D4A0 /* ImportWindow.xib */; };
+		A815282114A9469F00F9D4A0 /* SSImportWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282014A9469F00F9D4A0 /* SSImportWindowController.m */; };
+		A815282814A951CD00F9D4A0 /* SSMovieImportOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */; };
 		A816D84014983DF900EBA19B /* SSSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D83F14983DF900EBA19B /* SSSplit.m */; };
 		A816D8471499D2F700EBA19B /* SSBlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D8461499D2F600EBA19B /* SSBlackView.m */; };
 		A816D850149A029A00EBA19B /* SSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D84F149A029A00EBA19B /* SSUserDefaults.m */; };
@@ -40,7 +43,6 @@
 		A83C4079148F688400308FD4 /* SSTimerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4078148F688300308FD4 /* SSTimerWindowController.m */; };
 		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
 		A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB54D149DE64200D6370F /* SSImageSource.m */; };
-		A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB551149DE69400D6370F /* SSMovieImageSource.m */; };
 		A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89EB555149DE94600D6370F /* QTKit.framework */; };
 		A89EB566149FAABC00D6370F /* SSRunComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB565149FAABC00D6370F /* SSRunComparison.m */; };
 		A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB56914A0013400D6370F /* SSMovieImporter.m */; };
@@ -60,6 +62,11 @@
 /* Begin PBXFileReference section */
 		A8070E811492FEDE00167ABD /* SSRunBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunBuilder.h; sourceTree = "<group>"; };
 		A8070E821492FEDE00167ABD /* SSRunBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunBuilder.m; sourceTree = "<group>"; };
+		A815281C14A944A800F9D4A0 /* ImportWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportWindow.xib; sourceTree = "<group>"; };
+		A815281F14A9469F00F9D4A0 /* SSImportWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImportWindowController.h; sourceTree = "<group>"; };
+		A815282014A9469F00F9D4A0 /* SSImportWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImportWindowController.m; sourceTree = "<group>"; };
+		A815282614A951CD00F9D4A0 /* SSMovieImportOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImportOperation.h; sourceTree = "<group>"; };
+		A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImportOperation.m; sourceTree = "<group>"; };
 		A816D83E14983DF900EBA19B /* SSSplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplit.h; sourceTree = "<group>"; };
 		A816D83F14983DF900EBA19B /* SSSplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplit.m; sourceTree = "<group>"; };
 		A816D8451499D2F600EBA19B /* SSBlackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSBlackView.h; sourceTree = "<group>"; };
@@ -117,8 +124,6 @@
 		A887054A14901946002482E8 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A89EB54C149DE64200D6370F /* SSImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImageSource.h; sourceTree = "<group>"; };
 		A89EB54D149DE64200D6370F /* SSImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImageSource.m; sourceTree = "<group>"; };
-		A89EB550149DE69400D6370F /* SSMovieImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImageSource.h; sourceTree = "<group>"; };
-		A89EB551149DE69400D6370F /* SSMovieImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImageSource.m; sourceTree = "<group>"; };
 		A89EB555149DE94600D6370F /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		A89EB564149FAABC00D6370F /* SSRunComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunComparison.h; sourceTree = "<group>"; };
 		A89EB565149FAABC00D6370F /* SSRunComparison.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunComparison.m; sourceTree = "<group>"; };
@@ -150,6 +155,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A815283214A962C400F9D4A0 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				A839FA96149364600003B4B1 /* SSTimeDeltaFormatter.h */,
+				A839FA97149364600003B4B1 /* SSTimeDeltaFormatter.m */,
+				A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */,
+				A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */,
+			);
+			name = Formatters;
+			sourceTree = "<group>";
+		};
 		A82F31FA149094A700DDEBF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,15 +191,13 @@
 			children = (
 				A82F31FD1490953500DDEBF2 /* DebugWindow.xib */,
 				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
+				A815281C14A944A800F9D4A0 /* ImportWindow.xib */,
 				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
 				A82F31D9148F694E00DDEBF2 /* MainWindow.xib */,
 				A816D8451499D2F600EBA19B /* SSBlackView.h */,
 				A816D8461499D2F600EBA19B /* SSBlackView.m */,
-				A839FA96149364600003B4B1 /* SSTimeDeltaFormatter.h */,
-				A839FA97149364600003B4B1 /* SSTimeDeltaFormatter.m */,
-				A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */,
-				A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */,
 				A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */,
+				A815283214A962C400F9D4A0 /* Formatters */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -201,14 +215,14 @@
 				A83C4060148F311200308FD4 /* SSMainController.m */,
 				A839FAA2149404C30003B4B1 /* SSMetroidFrame.h */,
 				A839FAA3149404C30003B4B1 /* SSMetroidFrame.m */,
-				A89EB550149DE69400D6370F /* SSMovieImageSource.h */,
-				A89EB551149DE69400D6370F /* SSMovieImageSource.m */,
 				A89EB56814A0013300D6370F /* SSMovieImporter.h */,
 				A89EB56914A0013400D6370F /* SSMovieImporter.m */,
 				A89EB564149FAABC00D6370F /* SSRunComparison.h */,
 				A89EB565149FAABC00D6370F /* SSRunComparison.m */,
 				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
 				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
+				A815282614A951CD00F9D4A0 /* SSMovieImportOperation.h */,
+				A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -222,6 +236,8 @@
 				A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */,
 				A83C4077148F688300308FD4 /* SSTimerWindowController.h */,
 				A83C4078148F688300308FD4 /* SSTimerWindowController.m */,
+				A815281F14A9469F00F9D4A0 /* SSImportWindowController.h */,
+				A815282014A9469F00F9D4A0 /* SSImportWindowController.m */,
 			);
 			name = "Window Controllers";
 			sourceTree = "<group>";
@@ -358,7 +374,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = Google;
+				ORGANIZATIONNAME = "Eric Seidel";
 			};
 			buildConfigurationList = A83C401D148F0B8C00308FD4 /* Build configuration list for PBXProject "Super Splits" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -391,6 +407,7 @@
 				A82F31FE1490953500DDEBF2 /* DebugWindow.xib in Resources */,
 				A82F32491490BBC300DDEBF2 /* HistoryWindow.xib in Resources */,
 				A821B30A14A83BDA00F3BE73 /* SSRunDocument.xib in Resources */,
+				A815281D14A944A800F9D4A0 /* ImportWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,10 +461,11 @@
 				A816D862149C414700EBA19B /* SSRun.m in Sources */,
 				A816D866149D71FD00EBA19B /* SSEvent.m in Sources */,
 				A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */,
-				A89EB552149DE69400D6370F /* SSMovieImageSource.m in Sources */,
 				A89EB566149FAABC00D6370F /* SSRunComparison.m in Sources */,
 				A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */,
 				A821B30914A83BDA00F3BE73 /* SSRunDocument.m in Sources */,
+				A815282114A9469F00F9D4A0 /* SSImportWindowController.m in Sources */,
+				A815282814A951CD00F9D4A0 /* SSMovieImportOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
