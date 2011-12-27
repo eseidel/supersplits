@@ -3,7 +3,7 @@
 - detect Snes9x freeze load screen?
 - events should use absolute offsets, instead of durations.
 - show expected time left
-- don't show room names during cutscenes (maybe combine state/room-name view)
+- the last split is never saved for the run
 
 Confused Timer:
 - the reference room getting ahead is super-bad

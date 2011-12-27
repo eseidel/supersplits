@@ -71,7 +71,16 @@
     [roomReferenceTimeView setObjectValue:[currentRoomReference valueForKey:@"duration"]];
     [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
     [lastRoomSplitDeltaView setObjectValue:[comparision deltaForPreviousSplit]];
+
+    BOOL showRoomName = [_mainController running] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0; 
+    [roomNameView setHidden:!showRoomName];
+    [timerState setHidden:showRoomName];
     [roomNameView setObjectValue:[currentRoomReference roomName]];
+    if (![_mainController running]) {
+        [timerState setStringValue:@"paused"];
+    } else {
+        [timerState setStringValue:[runBuilder stateAsString]];
+    }
 
     NSNumber *lastMatchedSplitNumber = [comparision lastMatchedSplitNumber];
     SSRun *reference = [_mainController referenceRun];
@@ -85,12 +94,6 @@
         [speedMultiplierView setHidden:NO];
         NSString *multiplier = [NSString stringWithFormat:@"%dx", (int)_mainController.imageSource.speedMultiplier, nil];
         [speedMultiplierView setStringValue:multiplier];
-    }
-
-    if (![_mainController running]) {
-        [timerState setStringValue:@"paused"];
-    } else {
-        [timerState setStringValue:[runBuilder stateAsString]];
     }
 }
 
