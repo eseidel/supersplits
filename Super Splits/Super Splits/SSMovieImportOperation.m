@@ -90,9 +90,10 @@
         }
         currentTime = QTTimeIncrement(currentTime, stepSize);
         framesUntilProgressUpdate--;
-        if (framesUntilProgressUpdate) {
+        if (framesUntilProgressUpdate <= 0) {
             NSNumber *progress = [self percentTime:currentTime ofTotalTime:duration];
             [_importer performSelectorOnMainThread:@selector(setProgress:) withObject:progress waitUntilDone:NO];
+            framesUntilProgressUpdate = updateProgessEveryNFrames;
         }
     }
 
