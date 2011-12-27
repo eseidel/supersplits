@@ -29,6 +29,7 @@
 -(SSSplit *)currentSplitReference;
 -(SSSplit *)previousSplitReference;
 
+// FIXME: These should be NSTimeIntervals.
 -(NSNumber *)deltaToStartOfCurrentRoom;
 -(NSNumber *)deltaForPreviousSplit;
 

@@ -23,7 +23,7 @@ typedef enum {
 
 @property SSEventType type;
 @property (readonly) NSString *typeName;
-@property (retain) NSNumber *offset;
+@property NSTimeInterval offset;
 @property (retain) NSImage *image;
 
 @end

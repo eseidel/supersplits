@@ -109,7 +109,7 @@ const NSUInteger kInvalidSplitIndex = -1;
     NSTimeInterval accumulatedTime = 0;
     for (size_t x = 0; x <= splitIndex; x++) {
         SSSplit *split = [_roomSplits objectAtIndex:x];
-        accumulatedTime += [[split duration] doubleValue];
+        accumulatedTime += [split duration];
     }
     return [NSNumber numberWithDouble:accumulatedTime];
 }

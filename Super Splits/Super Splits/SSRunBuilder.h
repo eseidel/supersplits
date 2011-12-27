@@ -47,8 +47,8 @@ typedef enum {
 @property (retain, nonatomic) NSString *mapState;
 @property (readonly) NSString *roomEntryMapState;
 
--(NSNumber *)roomTime;
--(NSNumber *)totalTime;
+-(NSTimeInterval)roomTime;
+-(NSTimeInterval)totalTime;
 
 -(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset;
 

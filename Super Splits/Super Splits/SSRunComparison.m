@@ -138,10 +138,10 @@
     if (_previousReferenceSplitIndex == kInvalidSplitIndex)
         return nil;
 
-    NSNumber *previousSplitReferenceDuration = [[self previousSplitReference] duration];
-    NSNumber *previousSplitDuration = [[self _previousSplit] duration];
+    NSTimeInterval previousSplitReferenceDuration = [[self previousSplitReference] duration];
+    NSTimeInterval previousSplitDuration = [[self _previousSplit] duration];
 
-    NSTimeInterval deltaForPreviousSplit = [previousSplitDuration doubleValue] - [previousSplitReferenceDuration doubleValue];
+    NSTimeInterval deltaForPreviousSplit = previousSplitDuration - previousSplitReferenceDuration;
     return [NSNumber numberWithDouble:deltaForPreviousSplit];
 }
 

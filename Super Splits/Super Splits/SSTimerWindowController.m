@@ -60,14 +60,15 @@
     SSRunBuilder *runBuilder = [_mainController runBuilder];
     SSRun *current = [runBuilder run];
 
-    [totalTimeView setObjectValue:[runBuilder totalTime]];
-    [roomTimeView setObjectValue:[runBuilder roomTime]];
+    // FIXME: This should all be done with KVO, once SSRunBuilder is KVO compliant.
+    [totalTimeView setObjectValue:[runBuilder valueForKey:@"totalTime"]];
+    [roomTimeView setObjectValue:[runBuilder valueForKey:@"roomTime"]];
     SSSplit *lastSplit = [[current roomSplits] lastObject];
-    [lastRoomSplitView setObjectValue:[lastSplit duration]];
+    [lastRoomSplitView setObjectValue:[lastSplit valueForKey:@"duration"]];
 
     SSRunComparison *comparision = [_mainController runComparison];
     SSSplit *currentRoomReference = [comparision currentSplitReference];
-    [roomReferenceTimeView setObjectValue:[currentRoomReference duration]];
+    [roomReferenceTimeView setObjectValue:[currentRoomReference valueForKey:@"duration"]];
     [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
     [lastRoomSplitDeltaView setObjectValue:[comparision deltaForPreviousSplit]];
     [roomNameView setObjectValue:[currentRoomReference roomName]];

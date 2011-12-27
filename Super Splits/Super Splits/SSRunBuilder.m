@@ -68,7 +68,7 @@
         default:
             event.type = InvalidEvent;
     }
-    event.offset = [NSNumber numberWithDouble:_offset];
+    event.offset = _offset;
     return event;
 }
 
@@ -134,7 +134,7 @@
 {
     // FIXME: Should we do this with KVO instead of a manual setter?
     if ([_mapState isEqualToString:mapState]) {
-        if (!_roomEntryMapState && [[self roomTime] doubleValue] > 1.0) {
+        if (!_roomEntryMapState && [self roomTime] > 1.0) {
             // If it's been more than a second, assume that we already have
             // the right minimap for this room, even if its the same as the last.
             NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", _mapState);
@@ -161,11 +161,10 @@
 -(void)_saveSplitFromLastRoom
 {
     assert(_stateStart);
-    NSNumber *roomTime = [self roomTime];
-    double roomTimeDouble = [roomTime doubleValue];
+    NSTimeInterval roomTime = [self roomTime];
     // FIXME: Does this check belong here instead of in setState?
-    if (roomTimeDouble < 1.0) { // FIXME: Is this too short for the shortest real room?
-        NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomTimeDouble);
+    if (roomTime < 1.0) { // FIXME: Is this too short for the shortest real room?
+        NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomTime);
         return;
     }
 
@@ -180,7 +179,7 @@
 //    split.exitFrame = _frame;
 
     [[_run roomSplits] addObject:split];
-    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTimeDouble, split.entryMapState, split.exitMapState, [self _stateTime]);
+    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTime, split.entryMapState, split.exitMapState, [self _stateTime]);
     [_run autosave];
 }
 
@@ -200,24 +199,23 @@
     _roomStart = _offset;
 }
 
--(NSNumber *)roomTime
+-(NSTimeInterval)roomTime
 {
     if (_state == UnknownState)
-        return nil;
+        return 0;
 
-    NSTimeInterval roomTime;
     if (_state != RoomState)
-        roomTime = _stateStart - _roomStart;
-    else
-        roomTime = _offset - _roomStart;
-    return [NSNumber numberWithDouble:roomTime];
+        return _stateStart - _roomStart;
+
+    return _offset - _roomStart;
 }
 
--(NSNumber *)totalTime
+-(NSTimeInterval)totalTime
 {
     if (_state == UnknownState)
-        return nil;
-    return [NSNumber numberWithDouble:_offset - _startOffset];
+        return 0;
+
+    return _offset - _startOffset;
 }
 
 -(NSTimeInterval)_stateTime

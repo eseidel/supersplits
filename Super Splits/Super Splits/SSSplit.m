@@ -31,7 +31,7 @@ static inline NSString *nullOrEmptyToNil(NSString *string)
     if (self = [super init]) {
         // Currently this means that ':' is an invalid character for room names.
         NSArray *components = [archiveString componentsSeparatedByString:@":"];
-        _duration = [NSNumber numberWithDouble:[[components objectAtIndex:0] doubleValue]];
+        _duration = [[components objectAtIndex:0] doubleValue];
         if ([components count] >= 3) {
             _entryMapState = nullOrEmptyToNil([components objectAtIndex:1]);
             _exitMapState = nullOrEmptyToNil([components objectAtIndex:2]);
@@ -45,7 +45,7 @@ static inline NSString *nullOrEmptyToNil(NSString *string)
 -(NSString *)stringForArchiving
 {
     return [NSString stringWithFormat:@"%.2f:%@:%@:%@",
-            [_duration doubleValue],
+            _duration,
             nilToEmptyString(_entryMapState),
             nilToEmptyString(_exitMapState),
             nilToEmptyString(_roomName),

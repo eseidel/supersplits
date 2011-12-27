@@ -14,7 +14,7 @@
 
 @property (retain) NSString *entryMapState;
 @property (retain) NSString *exitMapState;
-@property (retain) NSNumber *duration;
+@property NSTimeInterval duration;
 
 @property (retain) SSMetroidFrame *entryFrame;
 @property (retain) SSMetroidFrame *exitFrame;
