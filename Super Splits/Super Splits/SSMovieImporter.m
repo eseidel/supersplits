@@ -50,9 +50,11 @@
     }
 
     _importOperation = [[SSMovieImportOperation alloc] initWithMovie:movie importer:self];
+    __weak SSMovieImportOperation *weakOperation = _importOperation;
+    __weak SSImportWindowController *weakWindowController = _importWindowController;
     _importOperation.completionBlock = ^(void) {
-        [[_importWindowController window] close];
-        if (_importOperation.isCancelled)
+        [[weakWindowController window] close];
+        if (!weakOperation || weakOperation.isCancelled)
             return;
         NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
         NSError *error = nil;
@@ -61,7 +63,7 @@
             NSLog(@"Error creating run document after import: %@", error);
             return;
         }
-        document.run = _importOperation.completedRun;
+        document.run = weakOperation.completedRun;
     };
     [_importQueue addOperation:_importOperation];
 
