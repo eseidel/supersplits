@@ -66,6 +66,8 @@ const CGFloat statusLineVerticalOffset = 386;
     CGImageRelease(_image);
 }
 
+// FIXME: This logic does not belong in SSMetroidFrame, but rather should be set
+// on the frame during initialization.
 -(CGRect)_findGameRect
 {
     const CGFloat titleBarHeight = 22.0; // 22px tall in lion.
@@ -78,8 +80,12 @@ const CGFloat statusLineVerticalOffset = 386;
         const CGFloat verticalPadding = 7.0;
         const CGFloat horizontalPadding = 30.0; // Twitch.tv aspect ratio is different from SNES.
         return CGRectMake(horizontalPadding, vlcControlsHeight + verticalPadding, 320 - 2 * horizontalPadding, 290 - titleBarHeight - vlcControlsHeight - 2 * verticalPadding);
+    } else if (CGImageGetWidth(_image) == 320 && CGImageGetHeight(_image) == 240) {
+        const CGFloat verticalPadding = 6.0;
+        const CGFloat horizontalPadding = 17.0;
+        return CGRectMake(horizontalPadding, verticalPadding, 320 - 2 * horizontalPadding, 240 - 2 * verticalPadding);
     }
-    //NSLog(@"WARNING: Don't know where the game rect is in a %lu x %lu image.  Assuming entire image!", CGImageGetWidth(_image), CGImageGetHeight(_image));
+//    NSLog(@"WARNING: Don't know where the game rect is in a %lu x %lu image.  Assuming entire image!", CGImageGetWidth(_image), CGImageGetHeight(_image));
     return CGRectMake(0, 0, CGImageGetWidth(_image), CGImageGetHeight(_image));
 }
 
@@ -106,6 +112,25 @@ const CGFloat statusLineVerticalOffset = 386;
     return CGRectApplyAffineTransform(textRect, _fromGameRectToImage);
 }
 
+void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapInfo);
+void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapInfo)
+{
+    if (bitmapInfo & kCGBitmapByteOrder32Big) {
+        // ABRG
+        pixel[0] = alpha;
+        pixel[1] = rgb[2];
+        pixel[2] = rgb[1];
+        pixel[3] = rgb[0];
+    } else if (bitmapInfo & kCGBitmapByteOrder32Little) {
+        // RGBA
+        pixel[0] = rgb[0];
+        pixel[1] = rgb[1];
+        pixel[2] = rgb[2];
+        pixel[3] = alpha;
+    } else
+        assert(0);
+}
+
 -(size_t)_countPixelsInRect:(CGRect)rect aboveRGB:(const uint8[3])lowRGB belowRGB:(const uint8[3])highRGB;
 {
     const uint8 *pixels = CFDataGetBytePtr(_pixelData);
@@ -119,10 +144,10 @@ const CGFloat statusLineVerticalOffset = 386;
     // FIXME: It appears this assertion fails if you resize the window?
     assert(bytesPerPixel * CGImageGetWidth(_image) == bytesPerRow);
 
-    // This matches kCGImageAlphaNoneSkipFirst on little endian.
-    // kCGImageAlphaNoneSkipFirst means skip the highest order byte, aka pixel[3] on little endian.
-    uint8 lowPixel[4] = { lowRGB[0], lowRGB[1], lowRGB[2], 0 };
-    uint8 highPixel[4] = { highRGB[0], highRGB[1], highRGB[2], 255 };
+    CGBitmapInfo info = CGImageGetBitmapInfo(_image);
+    uint8 lowPixel[4], highPixel[4];
+    fillPixel(lowRGB, 0, lowPixel, info);
+    fillPixel(highRGB, 255, highPixel, info);
 
     // Careful to flip from CG coordinates to offsets into the pixel buffer.
     size_t minX = rect.origin.x;
@@ -134,6 +159,7 @@ const CGFloat statusLineVerticalOffset = 386;
     for (size_t y = minY; y < maxY; y++) {
         for (size_t x = minX; x < maxX; x++) {
             const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
+            //NSLog(@"%lu, %lu : %d, %d, %d, %d against %d, %d, %d, %d", x, y, pixel[0], pixel[1], pixel[2], pixel[3], highPixel[0], highPixel[1], highPixel[2], highPixel[3]);
             if (pixel[0] >= lowPixel[0] && pixel[0] <= highPixel[0]
                 && pixel[1] >= lowPixel[1] && pixel[1] <= highPixel[1]
                 && pixel[2] >= lowPixel[2] && pixel[2] <= highPixel[2]
@@ -197,11 +223,20 @@ const CGFloat statusLineVerticalOffset = 386;
 
 -(BOOL)isSupportedImage:(CGImageRef)frame
 {
-    CGImageAlphaInfo info = CGImageGetAlphaInfo(frame);
-    if (info != kCGImageAlphaNoneSkipFirst && info != kCGImageAlphaFirst) {
+    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(frame);
+    if (alphaInfo != kCGImageAlphaNoneSkipFirst) {
         static BOOL haveLogged = NO;
         if (!haveLogged) {
-            NSLog(@"Wrong alpha info?  Target window is likely off-screen? (got: %d, expected: %d)", info, kCGImageAlphaNoneSkipFirst);
+            NSLog(@"Wrong alpha info?  Target window is likely off-screen? (got: %d, expected: %d)", alphaInfo, kCGImageAlphaNoneSkipFirst);
+            haveLogged = YES;
+        }
+        return NO;
+    }
+    CGBitmapInfo info = CGImageGetBitmapInfo(frame);
+    if (!(info & kCGBitmapByteOrder32Big) && !(info & kCGBitmapByteOrder32Little)) {
+        static BOOL haveLogged = NO;
+        if (!haveLogged) {
+            NSLog(@"Wrong pixel layout? (got: %d, order: %d)", info, info & kCGBitmapByteOrderMask);
             haveLogged = YES;
         }
         return NO;
