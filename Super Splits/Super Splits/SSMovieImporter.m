@@ -70,9 +70,6 @@
 
         if (result == AVAssetImageGeneratorFailed)
             NSLog(@"Failed with error: %@", [error localizedDescription]);
-        // NOTE: This canceled is called for every requested image!
-        if (result == AVAssetImageGeneratorCancelled)
-            NSLog(@"Canceled");
 
         framesRecieved++;
         if (framesRecieved % updateProgessEveryNFrames == 0) {
@@ -92,7 +89,9 @@
     _importWindowController = [[SSImportWindowController alloc] initWithWindowNibName:@"ImportWindow"];
     _importWindowController.movieImporter = self;
     // FIXME: Should this be a modal window?
-    [[_importWindowController window] makeKeyAndOrderFront:self];
+    NSWindow *window = [_importWindowController window];
+    window.title = [NSString stringWithFormat:@"Importing '%@'", [url lastPathComponent]];
+    [window makeKeyAndOrderFront:self];
 }
 
 -(void)cancelImport
