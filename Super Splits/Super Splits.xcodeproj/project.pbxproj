@@ -166,6 +166,19 @@
 			name = Formatters;
 			sourceTree = "<group>";
 		};
+		A815283714A99B4800F9D4A0 /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				A82F31FD1490953500DDEBF2 /* DebugWindow.xib */,
+				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
+				A815281C14A944A800F9D4A0 /* ImportWindow.xib */,
+				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
+				A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */,
+				A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */,
+			);
+			name = XIBs;
+			sourceTree = "<group>";
+		};
 		A82F31FA149094A700DDEBF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,14 +202,9 @@
 		A82F31FB149094CC00DDEBF2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A82F31FD1490953500DDEBF2 /* DebugWindow.xib */,
-				A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */,
-				A815281C14A944A800F9D4A0 /* ImportWindow.xib */,
-				A83C403C148F0B8D00308FD4 /* MainMenu.xib */,
-				A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */,
+				A815283714A99B4800F9D4A0 /* XIBs */,
 				A816D8451499D2F600EBA19B /* SSBlackView.h */,
 				A816D8461499D2F600EBA19B /* SSBlackView.m */,
-				A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */,
 				A815283214A962C400F9D4A0 /* Formatters */,
 			);
 			name = View;
