@@ -29,7 +29,6 @@ typedef enum {
 
     // FIXME: These could be held on a "currentSplit" object instead.
     NSTimeInterval _roomStart;
-    NSString *_roomEntryMapState;
     SSMetroidFrame *_roomEntryFrame;
 
     SSRunState _state;
@@ -45,7 +44,7 @@ typedef enum {
 @property (readonly) NSString *stateAsString;
 
 @property (retain, nonatomic) NSString *mapState;
-@property (readonly) NSString *roomEntryMapState;
+@property (readonly, assign) NSString *roomEntryMapState;
 
 -(NSTimeInterval)roomTime;
 -(NSTimeInterval)totalTime;

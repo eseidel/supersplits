@@ -15,6 +15,8 @@
 
 @interface SSRunBuilder (PrivateMethods)
 
+@property (readwrite, retain) NSString *roomEntryMapState;
+
 -(void)_startRoom;
 -(void)_recordLastRoom;
 -(NSTimeInterval)_stateTime;
@@ -146,7 +148,7 @@
     _mapState = mapState;
     if (!_roomEntryMapState) {
         //NSLog(@"Entry Map State: %@, %.2fs after door", _mapState, [[self roomTime] doubleValue]);
-        _roomEntryMapState = _mapState;
+        self.roomEntryMapState = _mapState;
     }
 }
 
