@@ -34,10 +34,10 @@
 {
     AVAsset *myAsset = [AVAsset assetWithURL:url];
     _imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
-    Float64 frameStepSeconds = 1.0;
+    Float64 frameStepSeconds = .5;
 
-    _imageGenerator.requestedTimeToleranceBefore = CMTimeMakeWithSeconds(frameStepSeconds / 2.0, 600);
-    _imageGenerator.requestedTimeToleranceAfter = CMTimeMakeWithSeconds(frameStepSeconds / 2.0, 600);
+    _imageGenerator.requestedTimeToleranceBefore = CMTimeMakeWithSeconds(frameStepSeconds, 600);
+    _imageGenerator.requestedTimeToleranceAfter = CMTimeMakeWithSeconds(frameStepSeconds, 600);
 
     Float64 durationSeconds = CMTimeGetSeconds([myAsset duration]);
     NSUInteger frameCount = durationSeconds / frameStepSeconds;
