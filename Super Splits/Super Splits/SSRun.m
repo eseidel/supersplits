@@ -68,7 +68,6 @@ const NSUInteger kInvalidSplitIndex = -1;
         return nil;
 
     NSArray *splitStrings = [splitsString componentsSeparatedByString:@"\n"];
-    // This is the hacky-way to do a "map" in cocoa.
     _roomSplits = [NSMutableArray arrayWithCapacity:[splitStrings count]];
     for (NSString *splitString in splitStrings)
         [_roomSplits addObject:[[SSSplit alloc] initWithString:splitString]];
