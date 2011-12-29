@@ -15,9 +15,6 @@ Extra Draygon rooms problem:
 - ignore room transitions from BOSS -> BOSS (trouble with first room after boss?)
 - look for doors in room transition (trouble with Ceres?)
 
-Movie import:
-- Run the import on a background thread (NSOperation?  How to report progress?)
-
 Future thoughts:
 
 One way to represent a run is as a series of events.
