@@ -44,7 +44,7 @@ typedef enum {
 @property (readonly) NSString *stateAsString;
 
 @property (retain, nonatomic) NSString *mapState;
-@property (readonly, assign) NSString *roomEntryMapState;
+@property (readonly, retain) NSString *roomEntryMapState;
 
 -(NSTimeInterval)roomTime;
 -(NSTimeInterval)totalTime;
