@@ -28,6 +28,8 @@
     // This is to avoid seeing -0.0 in red.
     if ([obj doubleValue] > 0.1)
         [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:NSMakeRange(0, [string length])];
+    if ([obj doubleValue] < -0.1)
+        [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor greenColor] range:NSMakeRange(0, [string length])];
     return attrString;
 }
 
