@@ -70,23 +70,46 @@ const CGFloat statusLineVerticalOffset = 386;
 // on the frame during initialization.
 -(CGRect)_findGameRect
 {
+    // From http://en.wikipedia.org/wiki/SNES
+    // Images may be output at 256 or 512 pixels horizontal resolution and
+    // 224, 239, 448, or 478 pixels vertically. Vertical resolutions of 224
+    // or 239 are usually output in progressive scan, while 448 and 478
+    // resolutions are interlaced.
+
+    size_t width = CGImageGetWidth(_image);
+    size_t height = CGImageGetHeight(_image);
     const CGFloat titleBarHeight = 22.0; // 22px tall in lion.
-    // FIXME: This is a big hack and only works for the default emulator size.
-    if (CGImageGetWidth(_image) == 512 && CGImageGetHeight(_image) == 500) {
+    const CGFloat vlcControlsHeight = 29.0;
+
+    // FIXME: This is a big hack and only works for these fixed sizes!
+    if (width == 512 && height == 500) {
+        // Default Snes9x emulator size
         const CGFloat verticalPadding = 14.0; // Snes9x default window size pads 14px black on the top/bottom.
-        return CGRectMake(0, verticalPadding, 512, 500 - 2 * verticalPadding - titleBarHeight);
-    } else if (CGImageGetWidth(_image) == 320 && CGImageGetHeight(_image) == 290) {
-        const CGFloat vlcControlsHeight = 29.0;
+        return CGRectMake(0, verticalPadding, width, height - 2 * verticalPadding - titleBarHeight);
+    } else if (width == 320 && height == 290) {
+        // Spike's pre-SS runs? from twitch.tv
         const CGFloat verticalPadding = 7.0;
         const CGFloat horizontalPadding = 30.0; // Twitch.tv aspect ratio is different from SNES.
-        return CGRectMake(horizontalPadding, vlcControlsHeight + verticalPadding, 320 - 2 * horizontalPadding, 290 - titleBarHeight - vlcControlsHeight - 2 * verticalPadding);
-    } else if (CGImageGetWidth(_image) == 320 && CGImageGetHeight(_image) == 240) {
+        return CGRectMake(horizontalPadding, vlcControlsHeight + verticalPadding, width - 2 * horizontalPadding, height - titleBarHeight - vlcControlsHeight - 2 * verticalPadding);
+    } else if (width == 320 && height == 240) {
+        // :32 run in movie import.
         const CGFloat verticalPadding = 6.0;
         const CGFloat horizontalPadding = 17.0;
-        return CGRectMake(horizontalPadding, verticalPadding, 320 - 2 * horizontalPadding, 240 - 2 * verticalPadding);
+        return CGRectMake(horizontalPadding, verticalPadding, width - 2 * horizontalPadding, height - 2 * verticalPadding);
+    } else if (width == 640 && height == 530) {
+        // dbx's "highlight" run in VLC
+        const CGFloat topOffset = 4;
+        const CGFloat bottomOffset = 30;
+        const CGFloat leftOffset = 14;
+        const CGFloat rightOffset = 129;
+        return CGRectMake(leftOffset, vlcControlsHeight + bottomOffset, width - rightOffset, height - topOffset - bottomOffset - vlcControlsHeight - titleBarHeight);
     }
-//    NSLog(@"WARNING: Don't know where the game rect is in a %lu x %lu image.  Assuming entire image!", CGImageGetWidth(_image), CGImageGetHeight(_image));
-    return CGRectMake(0, 0, CGImageGetWidth(_image), CGImageGetHeight(_image));
+    static BOOL haveLogged = NO;
+    if (!haveLogged) {
+        NSLog(@"WARNING: Don't know where the game rect is in a %lu x %lu image.  Assuming entire image!", width, height);
+        haveLogged = YES;
+    }
+    return CGRectMake(0, 0, width, height);
 }
 
 -(CGRect)_findMainRect
