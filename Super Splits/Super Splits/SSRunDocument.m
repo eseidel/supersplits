@@ -8,6 +8,7 @@
 
 #import "SSRunDocument.h"
 #import "SSRun.h"
+#import "SSSplitMatcher.h"
 
 @implementation SSRunDocument
 
@@ -28,6 +29,22 @@
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"SSRunDocument";
+}
+
+-(NSURL *)referenceRunURL
+{
+    return [SSRun defaultURLForRunWithName:@"reference"];
+}
+
+- (SSRun *)referenceRun
+{
+    return [[SSRun alloc] initWithContentsOfURL:[self referenceRunURL]];
+}
+
+- (NSArray *)matchedSplits
+{
+    SSSplitMatcher *matcher = [[SSSplitMatcher alloc] init];
+    return [matcher matchSplitsFromRun:self.run withReferenceRun:self.referenceRun];
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController

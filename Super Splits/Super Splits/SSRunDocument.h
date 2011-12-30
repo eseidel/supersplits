@@ -13,5 +13,6 @@
 @interface SSRunDocument : NSDocument
 
 @property (retain) SSRun *run;
+@property (readonly) NSArray *matchedSplits;
 
 @end
