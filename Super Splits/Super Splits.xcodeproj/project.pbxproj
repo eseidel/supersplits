@@ -10,7 +10,6 @@
 		A8070E831492FEDE00167ABD /* SSRunBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8070E821492FEDE00167ABD /* SSRunBuilder.m */; };
 		A815281D14A944A800F9D4A0 /* ImportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A815281C14A944A800F9D4A0 /* ImportWindow.xib */; };
 		A815282114A9469F00F9D4A0 /* SSImportWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282014A9469F00F9D4A0 /* SSImportWindowController.m */; };
-		A815282814A951CD00F9D4A0 /* SSMovieImportOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */; };
 		A815283614A9942000F9D4A0 /* SSRunBuilderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */; };
 		A816D84014983DF900EBA19B /* SSSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D83F14983DF900EBA19B /* SSSplit.m */; };
 		A816D8471499D2F700EBA19B /* SSBlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D8461499D2F600EBA19B /* SSBlackView.m */; };
@@ -41,6 +40,10 @@
 		A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C404D148F0B8D00308FD4 /* InfoPlist.strings */; };
 		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
 		A83C4079148F688400308FD4 /* SSTimerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4078148F688300308FD4 /* SSTimerWindowController.m */; };
+		A88581F714AD971800B94063 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88581F614AD971800B94063 /* AVFoundation.framework */; };
+		A88581F914AD972400B94063 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88581F814AD972400B94063 /* CoreMedia.framework */; };
+		A885820214AD978A00B94063 /* SSMatchedSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A88581FF14AD978A00B94063 /* SSMatchedSplit.m */; };
+		A885820314AD978A00B94063 /* SSSplitMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A885820114AD978A00B94063 /* SSSplitMatcher.m */; };
 		A887054B14901946002482E8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A887054A14901946002482E8 /* icon.icns */; };
 		A89EB54E149DE64200D6370F /* SSImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB54D149DE64200D6370F /* SSImageSource.m */; };
 		A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89EB555149DE94600D6370F /* QTKit.framework */; };
@@ -65,8 +68,6 @@
 		A815281C14A944A800F9D4A0 /* ImportWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportWindow.xib; sourceTree = "<group>"; };
 		A815281F14A9469F00F9D4A0 /* SSImportWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImportWindowController.h; sourceTree = "<group>"; };
 		A815282014A9469F00F9D4A0 /* SSImportWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImportWindowController.m; sourceTree = "<group>"; };
-		A815282614A951CD00F9D4A0 /* SSMovieImportOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImportOperation.h; sourceTree = "<group>"; };
-		A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImportOperation.m; sourceTree = "<group>"; };
 		A815283314A993A700F9D4A0 /* SSRunBuilderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunBuilderTest.h; sourceTree = "<group>"; };
 		A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunBuilderTest.m; sourceTree = "<group>"; };
 		A816D83E14983DF900EBA19B /* SSSplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplit.h; sourceTree = "<group>"; };
@@ -121,6 +122,12 @@
 		A83C4060148F311200308FD4 /* SSMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMainController.m; sourceTree = "<group>"; };
 		A83C4077148F688300308FD4 /* SSTimerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimerWindowController.h; sourceTree = "<group>"; };
 		A83C4078148F688300308FD4 /* SSTimerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimerWindowController.m; sourceTree = "<group>"; };
+		A88581F614AD971800B94063 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = ../../../../System/Library/Frameworks/AVFoundation.framework; sourceTree = "<group>"; };
+		A88581F814AD972400B94063 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = ../../../../System/Library/Frameworks/CoreMedia.framework; sourceTree = "<group>"; };
+		A88581FE14AD978A00B94063 /* SSMatchedSplit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMatchedSplit.h; sourceTree = "<group>"; };
+		A88581FF14AD978A00B94063 /* SSMatchedSplit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMatchedSplit.m; sourceTree = "<group>"; };
+		A885820014AD978A00B94063 /* SSSplitMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplitMatcher.h; sourceTree = "<group>"; };
+		A885820114AD978A00B94063 /* SSSplitMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplitMatcher.m; sourceTree = "<group>"; };
 		A887054A14901946002482E8 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A89EB54C149DE64200D6370F /* SSImageSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSImageSource.h; sourceTree = "<group>"; };
 		A89EB54D149DE64200D6370F /* SSImageSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSImageSource.m; sourceTree = "<group>"; };
@@ -140,6 +147,8 @@
 				A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */,
 				B929E80E14908626009EB322 /* Carbon.framework in Frameworks */,
 				A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */,
+				A88581F714AD971800B94063 /* AVFoundation.framework in Frameworks */,
+				A88581F914AD972400B94063 /* CoreMedia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,17 +193,19 @@
 			children = (
 				A816D864149D71FC00EBA19B /* SSEvent.h */,
 				A816D865149D71FD00EBA19B /* SSEvent.m */,
+				A88581FE14AD978A00B94063 /* SSMatchedSplit.h */,
+				A88581FF14AD978A00B94063 /* SSMatchedSplit.m */,
 				A816D860149C414700EBA19B /* SSRun.h */,
 				A816D861149C414700EBA19B /* SSRun.m */,
 				A8070E811492FEDE00167ABD /* SSRunBuilder.h */,
 				A8070E821492FEDE00167ABD /* SSRunBuilder.m */,
+				A821B30614A83BDA00F3BE73 /* SSRunDocument.h */,
+				A821B30714A83BDA00F3BE73 /* SSRunDocument.m */,
 				A816D83E14983DF900EBA19B /* SSSplit.h */,
 				A816D83F14983DF900EBA19B /* SSSplit.m */,
 				A816D84D149A028000EBA19B /* SSUserDefaults.h */,
 				A816D84F149A029A00EBA19B /* SSUserDefaults.m */,
 				A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */,
-				A821B30614A83BDA00F3BE73 /* SSRunDocument.h */,
-				A821B30714A83BDA00F3BE73 /* SSRunDocument.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -227,10 +238,10 @@
 				A89EB56914A0013400D6370F /* SSMovieImporter.m */,
 				A89EB564149FAABC00D6370F /* SSRunComparison.h */,
 				A89EB565149FAABC00D6370F /* SSRunComparison.m */,
+				A885820014AD978A00B94063 /* SSSplitMatcher.h */,
+				A885820114AD978A00B94063 /* SSSplitMatcher.m */,
 				A82F31EC1490820900DDEBF2 /* SSWindowImageSource.h */,
 				A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */,
-				A815282614A951CD00F9D4A0 /* SSMovieImportOperation.h */,
-				A815282714A951CD00F9D4A0 /* SSMovieImportOperation.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -273,11 +284,13 @@
 		A83C4026148F0B8C00308FD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A89EB555149DE94600D6370F /* QTKit.framework */,
-				A83C4027148F0B8C00308FD4 /* Cocoa.framework */,
+				A88581F614AD971800B94063 /* AVFoundation.framework */,
 				B929E80D14908626009EB322 /* Carbon.framework */,
-				A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */,
+				A83C4027148F0B8C00308FD4 /* Cocoa.framework */,
+				A88581F814AD972400B94063 /* CoreMedia.framework */,
 				A83C4029148F0B8C00308FD4 /* Other Frameworks */,
+				A89EB555149DE94600D6370F /* QTKit.framework */,
+				A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -473,7 +486,8 @@
 				A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */,
 				A821B30914A83BDA00F3BE73 /* SSRunDocument.m in Sources */,
 				A815282114A9469F00F9D4A0 /* SSImportWindowController.m in Sources */,
-				A815282814A951CD00F9D4A0 /* SSMovieImportOperation.m in Sources */,
+				A885820214AD978A00B94063 /* SSMatchedSplit.m in Sources */,
+				A885820314AD978A00B94063 /* SSSplitMatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
