@@ -29,6 +29,7 @@
         _previousReferenceSplitIndex = kInvalidSplitIndex;
         _currentReferenceSplitIndex = kInvalidSplitIndex;
         _lastMatchedReferenceSplitIndex = kInvalidSplitIndex;
+        _lastMatchedSplitIndex = kInvalidSplitIndex;
         _lastSearchedSplitIndex = kInvalidSplitIndex;
     }
     return self;
@@ -66,12 +67,29 @@
     // This should probably use _run._roomEntryMapState, but we know we
     // just set the mapState so use that for now.
     NSString *mapState = _runBuilder.mapState;
-    // First we look for a reference split near the current room index.
-    _currentReferenceSplitIndex = [_referenceRun indexOfSplitNear:[self _currentSplitIndex]
-                                                     withEntryMap:mapState
-                                                        scanLimit:6];
-    // FIXME: We might also look for a split near the last known match
-    // if the current room lookup fails.
+
+    // Look for a split where we would expect one, given the last known offset.
+    if (_lastMatchedReferenceSplitIndex != kInvalidSplitIndex && _lastMatchedSplitIndex != kInvalidSplitIndex) {
+        // Start our search at the offset we would anticipate this current
+        // room to be, assuming no backtracking.
+        NSInteger splitsSinceLastMatch = [self _currentSplitIndex] - _lastMatchedSplitIndex;
+        assert(splitsSinceLastMatch > 0);
+        NSUInteger startIndex = _lastMatchedReferenceSplitIndex + splitsSinceLastMatch;
+        _currentReferenceSplitIndex = [_referenceRun indexOfSplitNear:startIndex
+                                                         withEntryMap:mapState
+                                                            scanLimit:3];
+    }
+
+    // If that failed, look for a reference split near the current room index.
+    if (_currentReferenceSplitIndex == kInvalidSplitIndex) {
+        // FIXME: We should adjust from [self _currentSplitIndex] for times when we know we backtracked?
+        // Note: This will fail to find a room if we backtracked more than 3 times.
+        // FIXME: We should search wider as we get more confused.
+        _currentReferenceSplitIndex = [_referenceRun indexOfSplitNear:[self _currentSplitIndex]
+                                                         withEntryMap:mapState
+                                                            scanLimit:6];
+    }
+
     _lastSearchedSplitIndex = [self _currentSplitIndex];
     if (_currentReferenceSplitIndex == kInvalidSplitIndex)
         return;
@@ -81,6 +99,7 @@
         if (_currentReferenceSplitIndex == _lastMatchedReferenceSplitIndex)
             NSLog(@"WARNING: Found split (%lu) is the same as last found split (%lu)!", _currentReferenceSplitIndex, _lastMatchedReferenceSplitIndex);
     }
+    _lastMatchedSplitIndex = [self _currentSplitIndex];
     _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
 }
 

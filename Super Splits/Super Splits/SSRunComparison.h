@@ -19,6 +19,7 @@
     NSUInteger _currentReferenceSplitIndex; // Reference for current room.
     NSUInteger _previousReferenceSplitIndex; // Reference for the previous room.
     NSUInteger _lastMatchedReferenceSplitIndex; // Last room we successfully matched a reference for.
+    NSUInteger _lastMatchedSplitIndex;
     NSUInteger _lastSearchedSplitIndex;
 }
 
