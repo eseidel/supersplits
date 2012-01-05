@@ -33,5 +33,6 @@ extern const NSUInteger kInvalidSplitIndex;
 
 -(NSNumber *)timeAfterSplitAtIndex:(NSUInteger)splitIndex;
 -(NSUInteger)indexOfFirstSplitAfter:(NSUInteger)splitIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit;
+-(NSUInteger)indexOfSplitNear:(NSUInteger)startIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit;
 
 @end

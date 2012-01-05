@@ -63,19 +63,24 @@
     if (![[_referenceRun roomSplits] count])
         return;
 
-    // This number controls how many splits in the reference room we would ever
-    // skip when looking for a room.  If our room detection was perfect, we could
-    // set this to inifinity and be fine, but since our room detection is crude
-    // and there are thus duplicate mapstates during the run, we use a small value.
-    const NSUInteger scanLimit = 6;
-
     // This should probably use _run._roomEntryMapState, but we know we
     // just set the mapState so use that for now.
     NSString *mapState = _runBuilder.mapState;
-    _currentReferenceSplitIndex = [_referenceRun indexOfFirstSplitAfter:_lastMatchedReferenceSplitIndex withEntryMap:mapState scanLimit:scanLimit];
+    // First we look for a reference split near the current room index.
+    _currentReferenceSplitIndex = [_referenceRun indexOfSplitNear:[self _currentSplitIndex]
+                                                     withEntryMap:mapState
+                                                        scanLimit:6];
+    // FIXME: We might also look for a split near the last known match
+    // if the current room lookup fails.
     _lastSearchedSplitIndex = [self _currentSplitIndex];
     if (_currentReferenceSplitIndex == kInvalidSplitIndex)
         return;
+    if (_lastMatchedReferenceSplitIndex != kInvalidSplitIndex) {
+        if (_currentReferenceSplitIndex < _lastMatchedReferenceSplitIndex)
+            NSLog(@"WARNING: Backtracking? Found split (%lu) is earlier than last found split (%lu)?", _currentReferenceSplitIndex, _lastMatchedReferenceSplitIndex);
+        if (_currentReferenceSplitIndex == _lastMatchedReferenceSplitIndex)
+            NSLog(@"WARNING: Found split (%lu) is the same as last found split (%lu)!", _currentReferenceSplitIndex, _lastMatchedReferenceSplitIndex);
+    }
     _lastMatchedReferenceSplitIndex = _currentReferenceSplitIndex;
 }
 

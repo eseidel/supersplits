@@ -131,7 +131,26 @@ const NSUInteger kInvalidSplitIndex = -1;
         }
         //NSLog(@"%@ does not match %@", split.entryMapState, mapState);
     }
-    NSLog(@"ERROR: Split scanning limit (%lu) reached, failed to find: %@ after %lu", scanLimit, mapState, startIndex);
+    NSLog(@"ERROR: Scan limit (%lu) reached, failed to find: %@ after %lu", scanLimit, mapState, startIndex);
+    return kInvalidSplitIndex;
+}
+
+-(NSUInteger)indexOfSplitNear:(NSUInteger)startIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit
+{
+    NSIndexSet *matchingSplitIndexes = [_roomSplits indexesOfObjectsPassingTest:
+        ^(id obj, NSUInteger index, BOOL *stop) {
+            return [((SSSplit *)obj).entryMapState isEqualToString:mapState];
+        }];
+
+    NSUInteger foundIndex = [matchingSplitIndexes indexGreaterThanOrEqualToIndex:startIndex];
+    if (foundIndex != NSNotFound && foundIndex - startIndex < scanLimit)
+        return foundIndex;
+
+    foundIndex = [matchingSplitIndexes indexLessThanIndex:startIndex];
+    if (foundIndex != NSNotFound && startIndex - foundIndex < scanLimit)
+        return foundIndex;
+
+    NSLog(@"ERROR: Scan limit reached, failed to find: %@ within %lu of %lu", mapState, scanLimit, startIndex);
     return kInvalidSplitIndex;
 }
 
