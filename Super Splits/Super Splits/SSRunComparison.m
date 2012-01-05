@@ -81,6 +81,8 @@
     }
 
     // If that failed, look for a reference split near the current room index.
+    // This corrects for times when we're really confused, but our run isn't that different from the reference run.
+    // We might consider only using this search once we've failed to find a room for N rooms.
     if (_currentReferenceSplitIndex == kInvalidSplitIndex) {
         // FIXME: We should adjust from [self _currentSplitIndex] for times when we know we backtracked?
         // Note: This will fail to find a room if we backtracked more than 3 times.
