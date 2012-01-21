@@ -64,9 +64,7 @@
     if (![[_referenceRun roomSplits] count])
         return;
 
-    // This should probably use _run._roomEntryMapState, but we know we
-    // just set the mapState so use that for now.
-    NSString *mapState = _runBuilder.mapState;
+    NSString *mapState = _runBuilder.currentSplit.entryMapState;
 
     // Look for a split where we would expect one, given the last known offset.
     if (_lastMatchedReferenceSplitIndex != kInvalidSplitIndex && _lastMatchedSplitIndex != kInvalidSplitIndex) {

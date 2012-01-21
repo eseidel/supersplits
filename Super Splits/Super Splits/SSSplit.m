@@ -11,7 +11,7 @@
 @implementation SSSplit
 
 @synthesize entryMapState=_entryMapState, exitMapState=_exitMapState,
-            entryFrame=_entryFrame, exitFrame=_exitFrame,
+            entryFrame=_entryFrame, exitFrame=_exitFrame, offset=_offset,
             duration=_duration, roomName=_roomName;
 
 static inline NSString *nilToEmptyString(NSString *string)

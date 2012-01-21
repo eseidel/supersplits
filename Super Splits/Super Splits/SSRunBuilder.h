@@ -10,6 +10,7 @@
 
 @class SSMetroidFrame;
 @class SSRun;
+@class SSSplit;
 
 typedef enum {
     UnknownState = 0,
@@ -27,9 +28,6 @@ typedef enum {
     NSTimeInterval _startOffset;
     NSTimeInterval _stateStart;
 
-    // FIXME: These could be held on a "currentSplit" object instead.
-    NSTimeInterval _roomStart;
-
     SSRunState _state;
     NSString *_mapState;
 }
@@ -41,8 +39,7 @@ typedef enum {
 @property (nonatomic) SSRunState state;
 @property (readonly) NSString *stateAsString;
 
-@property (retain, nonatomic) NSString *mapState;
-@property (readonly, retain) NSString *roomEntryMapState;
+@property (retain) SSSplit *currentSplit;
 
 -(NSTimeInterval)roomTime;
 -(NSTimeInterval)totalTime;

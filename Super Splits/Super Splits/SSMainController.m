@@ -78,7 +78,7 @@
     if (previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count])
         [_runComparison roomChanged];
     // Only update the reference cursors once we have a map for this room.
-    if ([_runBuilder roomEntryMapState] && ![_runComparison haveSearchedForCurrentSplit])
+    if (_runBuilder.currentSplit.entryMapState && ![_runComparison haveSearchedForCurrentSplit])
         [_runComparison updateReferenceCursors];
 }
 

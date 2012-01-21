@@ -19,13 +19,13 @@
 -(void)_recordLastRoom;
 -(NSTimeInterval)_stateTime;
 
+-(void)_updateMapStateFromFrame:(SSMetroidFrame *)frame;
+
 @end
 
 @implementation SSRunBuilder
 
-@synthesize run=_run, state=_state, offset=_offset,
-            mapState=_mapState, roomEntryMapState=_roomEntryMapState;
-
+@synthesize run=_run, state=_state, offset=_offset, currentSplit=_currentSplit;
 
 -(NSString *)stringForState:(SSRunState)state
 {
@@ -72,6 +72,24 @@
     return event;
 }
 
+-(void)_updateMapStateFromFrame:(SSMetroidFrame *)frame
+{
+    NSString *lastMapState = _mapState;
+    _mapState = frame.miniMapString;
+    if (_currentSplit.entryMapState)
+        return;
+
+    BOOL mapWaitTimeout = [self roomTime] > 1.0;
+    if ([lastMapState isEqualToString:_mapState] && !mapWaitTimeout)
+        return;
+
+    // If it's been more than a second, assume that we already have
+    // the right minimap for this room, even if its the same as the last.
+    if (mapWaitTimeout)
+        NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", lastMapState);
+    _currentSplit.entryMapState = _mapState;
+}
+
 -(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset
 {
     self.offset = offset;
@@ -84,8 +102,7 @@
         self.state = ItemScreenState;
     } else {
         self.state = RoomState;
-        // Important to set that we're in a room before we update the current map state.
-        self.mapState = frame.miniMapString;
+        [self _updateMapStateFromFrame:frame];
     }
 }
 
@@ -126,26 +143,6 @@
     _state = newState;
 }
 
--(void)setMapState:(NSString *)mapState
-{
-    // FIXME: Should we do this with KVO instead of a manual setter?
-    if ([_mapState isEqualToString:mapState]) {
-        if (!_roomEntryMapState && [self roomTime] > 1.0) {
-            // If it's been more than a second, assume that we already have
-            // the right minimap for this room, even if its the same as the last.
-            NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", _mapState);
-        } else
-            return;
-    }
-
-    //NSLog(@"Map: %@ -> %@", _mapState, mapState);
-    _mapState = mapState;
-    if (!_roomEntryMapState) {
-        //NSLog(@"Entry Map State: %@, %.2fs after door", _mapState, [[self roomTime] doubleValue]);
-        _roomEntryMapState = _mapState;
-    }
-}
-
 -(id)init
 {
     if (self = [super init]) {
@@ -164,15 +161,16 @@
         return;
     }
 
-    SSSplit *split = [[SSSplit alloc] init];
-    split.duration = roomTime;
-    split.entryMapState = _roomEntryMapState;
-    // We're careful in SSMainController to set the current state before setting the new
-    // map state, so we can use _mapState here as the exit map state.
-    split.exitMapState = _mapState;
+    _currentSplit.duration = roomTime;
+    _currentSplit.exitMapState = _mapState;
+    if (!_currentSplit.entryMapState)
+        _currentSplit.entryMapState = _mapState;
 
-    [[_run roomSplits] addObject:split];
-    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTime, split.entryMapState, split.exitMapState, [self _stateTime]);
+    // We could turn this assert into an if, to allow "reopening" rooms?
+    assert(![[_run roomSplits] containsObject:_currentSplit]);
+    [[_run roomSplits] addObject:_currentSplit];
+    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTime, _currentSplit.entryMapState, _currentSplit.exitMapState, [self _stateTime]);
+    // We don't currently nil _currentSplit, but perhaps we should?
     [_run autosave];
 }
 
@@ -183,12 +181,12 @@
 
     // Super Metroid doesn't update the minimap until *after* the door animation completes.
     // Our room transition detection currently thinks the door animation ends slightly
-    // before it does.  So instead of setting _roomEntryMapState = _mapState here, we
-    // set it to nil and update it if/when the map ever changes inside this room.
+    // before it does.  So instead of setting _currentSplit.entryMapState = _mapState here,
+    // we update it only if/when the map ever changes inside this room.
     // If the map never changes, then when we record the room we'll use the ending
     // state for the previous room.
-    _roomEntryMapState = nil;
-    _roomStart = _offset;
+    _currentSplit = [[SSSplit alloc] init];
+    _currentSplit.offset = _offset;
 }
 
 -(NSTimeInterval)roomTime
@@ -197,9 +195,9 @@
         return 0;
 
     if (_state != RoomState)
-        return _stateStart - _roomStart;
+        return _stateStart - _currentSplit.offset;
 
-    return _offset - _roomStart;
+    return _offset - _currentSplit.offset;
 }
 
 -(NSTimeInterval)totalTime
