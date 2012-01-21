@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9762323314CAAC8C00E60074 /* SSSplitMatcherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9762323214CAAC8B00E60074 /* SSSplitMatcherTest.m */; };
 		A8070E831492FEDE00167ABD /* SSRunBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8070E821492FEDE00167ABD /* SSRunBuilder.m */; };
 		A815281D14A944A800F9D4A0 /* ImportWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A815281C14A944A800F9D4A0 /* ImportWindow.xib */; };
 		A815282114A9469F00F9D4A0 /* SSImportWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A815282014A9469F00F9D4A0 /* SSImportWindowController.m */; };
@@ -62,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9762323114CAAC8B00E60074 /* SSSplitMatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplitMatcherTest.h; sourceTree = "<group>"; };
+		9762323214CAAC8B00E60074 /* SSSplitMatcherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplitMatcherTest.m; sourceTree = "<group>"; };
 		A8070E811492FEDE00167ABD /* SSRunBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunBuilder.h; sourceTree = "<group>"; };
 		A8070E821492FEDE00167ABD /* SSRunBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunBuilder.m; sourceTree = "<group>"; };
 		A815281C14A944A800F9D4A0 /* ImportWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportWindow.xib; sourceTree = "<group>"; };
@@ -331,6 +334,8 @@
 				A83C404B148F0B8D00308FD4 /* Supporting Files */,
 				A815283314A993A700F9D4A0 /* SSRunBuilderTest.h */,
 				A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */,
+				9762323114CAAC8B00E60074 /* SSSplitMatcherTest.h */,
+				9762323214CAAC8B00E60074 /* SSSplitMatcherTest.m */,
 			);
 			path = "Super SplitsTests";
 			sourceTree = "<group>";
@@ -490,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A815283614A9942000F9D4A0 /* SSRunBuilderTest.m in Sources */,
+				9762323314CAAC8C00E60074 /* SSSplitMatcherTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
