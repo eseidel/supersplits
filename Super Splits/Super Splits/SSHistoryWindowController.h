@@ -8,16 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class SSCoreDataController;
 @class SSMainController;
 
 @interface SSHistoryWindowController : NSWindowController
 
-@property (retain) SSCoreDataController *coreDataController;
 // FIXME: This should be the RunController once we move the referenceRun out of MainController.
 @property (retain) SSMainController *mainController;
-
-@property (readonly) NSManagedObjectContext *managedObjectContext;
 
 @property (readonly) NSArray *runs;
 

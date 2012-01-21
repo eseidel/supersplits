@@ -13,7 +13,6 @@
 @class SSDebugWindowController;
 @class SSHistoryWindowController;
 @class SSMainController;
-@class SSCoreDataController;
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
 {
@@ -21,7 +20,6 @@
     SSDebugWindowController *_debugWindowController;
     SSHistoryWindowController *_historyWindowController;
     SSMainController *_mainController;
-    SSCoreDataController *_coreDataController;
 
     IBOutlet NSMenuItem *_startStopMenu;
 	

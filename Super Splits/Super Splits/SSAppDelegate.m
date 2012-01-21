@@ -8,7 +8,6 @@
 
 #import "SSAppDelegate.h"
 
-#import "SSCoreDataController.h"
 #import "SSDebugWindowController.h"
 #import "SSHistoryWindowController.h"
 #import "SSMainController.h"
@@ -53,7 +52,6 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
     _timerWindowController = [[SSTimerWindowController alloc] initWithWindowNibName:@"TimerWindow"];
     _mainController = [[SSMainController alloc] init];
     _timerWindowController.mainController = _mainController;
-    _coreDataController = [[SSCoreDataController alloc] init];
 
 	_hotKeyEventHandler = NewEventHandlerUPP(HotKeyHandler);
 	
@@ -109,7 +107,6 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 {
     if (!_historyWindowController) {
         _historyWindowController = [[SSHistoryWindowController alloc] initWithWindowNibName:@"HistoryWindow"];
-        _historyWindowController.coreDataController = _coreDataController;
         _historyWindowController.mainController = _mainController;
     }
     [[_historyWindowController window] makeKeyAndOrderFront:self];
@@ -118,14 +115,6 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
     return NO;
-}
-
-/**
- Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
- */
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
-{
-    return [[_coreDataController managedObjectContext] undoManager];
 }
 
 - (IBAction)saveAs:(id)sender
@@ -172,27 +161,6 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
     SSMovieImporter *importer = [[SSMovieImporter alloc] init];
     [importer scanRunFromMovieURL:[openPanel URL]];
-}
-
-/**
- Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
- */
-- (IBAction)coreData_saveAction:(id)sender
-{
-    NSError *error = nil;
-    
-    if (![[_coreDataController managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
-    }
-    
-    if (![[_coreDataController managedObjectContext] save:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-    }
-}
-
-- (NSApplicationTerminateReply)coreData_applicationShouldTerminate:(NSApplication *)sender
-{
-    return [_coreDataController applicationShouldTerminate:sender];
 }
 
 @end

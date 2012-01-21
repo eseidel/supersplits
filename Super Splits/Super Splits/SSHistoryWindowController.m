@@ -8,18 +8,12 @@
 
 #import "SSHistoryWindowController.h"
 
-#import "SSCoreDataController.h"
 #import "SSMainController.h"
 #import "SSRunBuilder.h"
 
 @implementation SSHistoryWindowController
 
-@synthesize coreDataController=_coreDataController, mainController=_mainController;
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    return _coreDataController.managedObjectContext;
-}
+@synthesize mainController=_mainController;
 
 - (id)initWithWindow:(NSWindow *)window
 {

@@ -26,7 +26,6 @@
 		A82F32471490B87500DDEBF2 /* Super Splits.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A82F32451490B87500DDEBF2 /* Super Splits.xcdatamodeld */; };
 		A82F32491490BBC300DDEBF2 /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */; };
 		A82F324C1490BF8900DDEBF2 /* SSHistoryWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */; };
-		A82F324F1490C01000DDEBF2 /* SSCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */; };
 		A839FA98149364600003B4B1 /* SSTimeDeltaFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A839FA97149364600003B4B1 /* SSTimeDeltaFormatter.m */; };
 		A839FAA4149404C30003B4B1 /* SSMetroidFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = A839FAA3149404C30003B4B1 /* SSMetroidFrame.m */; };
 		A83C4028148F0B8C00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
@@ -95,8 +94,6 @@
 		A82F32481490BBC300DDEBF2 /* HistoryWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryWindow.xib; sourceTree = "<group>"; };
 		A82F324A1490BF8800DDEBF2 /* SSHistoryWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSHistoryWindowController.h; sourceTree = "<group>"; };
 		A82F324B1490BF8900DDEBF2 /* SSHistoryWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSHistoryWindowController.m; sourceTree = "<group>"; };
-		A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCoreDataController.h; sourceTree = "<group>"; };
-		A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCoreDataController.m; sourceTree = "<group>"; };
 		A839FA96149364600003B4B1 /* SSTimeDeltaFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeDeltaFormatter.h; sourceTree = "<group>"; };
 		A839FA97149364600003B4B1 /* SSTimeDeltaFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeDeltaFormatter.m; sourceTree = "<group>"; };
 		A839FAA2149404C30003B4B1 /* SSMetroidFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMetroidFrame.h; sourceTree = "<group>"; };
@@ -226,8 +223,6 @@
 			children = (
 				A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */,
 				A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */,
-				A82F324D1490C01000DDEBF2 /* SSCoreDataController.h */,
-				A82F324E1490C01000DDEBF2 /* SSCoreDataController.m */,
 				A89EB54C149DE64200D6370F /* SSImageSource.h */,
 				A89EB54D149DE64200D6370F /* SSImageSource.m */,
 				A83C405F148F30FA00308FD4 /* SSMainController.h */,
@@ -472,7 +467,6 @@
 				A82F31F91490948C00DDEBF2 /* SSDebugWindowController.m in Sources */,
 				A82F32471490B87500DDEBF2 /* Super Splits.xcdatamodeld in Sources */,
 				A82F324C1490BF8900DDEBF2 /* SSHistoryWindowController.m in Sources */,
-				A82F324F1490C01000DDEBF2 /* SSCoreDataController.m in Sources */,
 				A8070E831492FEDE00167ABD /* SSRunBuilder.m in Sources */,
 				A839FA98149364600003B4B1 /* SSTimeDeltaFormatter.m in Sources */,
 				A839FAA4149404C30003B4B1 /* SSMetroidFrame.m in Sources */,
