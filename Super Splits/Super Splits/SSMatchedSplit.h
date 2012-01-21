@@ -15,6 +15,7 @@
 @property (retain) SSSplit *split;
 @property NSUInteger splitIndex;
 @property (readonly) NSNumber *splitIndexNumber;
+
 @property (retain) SSSplit *referenceSplit;
 @property NSUInteger referenceSplitIndex;
 @property (readonly) NSNumber *referenceSplitIndexNumber;
