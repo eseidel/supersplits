@@ -75,7 +75,6 @@
 -(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset
 {
     self.offset = offset;
-    _frame = frame;
 
     if (frame.isMissingEnergyText) {
         self.state = BlackScreenState;
@@ -84,9 +83,6 @@
     } else if (frame.isItemScreen) {
         self.state = ItemScreenState;
     } else {
-        if (!_roomEntryFrame)
-            _roomEntryFrame = frame;
-
         self.state = RoomState;
         // Important to set that we're in a room before we update the current map state.
         self.mapState = frame.miniMapString;
@@ -174,9 +170,6 @@
     // We're careful in SSMainController to set the current state before setting the new
     // map state, so we can use _mapState here as the exit map state.
     split.exitMapState = _mapState;
-    // FIXME: Saving the frames takes up gobs of memory!  Disabled for now.
-//    split.entryFrame = _roomEntryFrame;
-//    split.exitFrame = _frame;
 
     [[_run roomSplits] addObject:split];
     NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTime, split.entryMapState, split.exitMapState, [self _stateTime]);
@@ -195,7 +188,6 @@
     // If the map never changes, then when we record the room we'll use the ending
     // state for the previous room.
     _roomEntryMapState = nil;
-    _roomEntryFrame = nil;
     _roomStart = _offset;
 }
 

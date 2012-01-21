@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    InvalidEvent,
+    InvalidEvent = 0,
     RoomEvent,
     DoorEvent,
     MapChangeEvent,
@@ -21,8 +21,11 @@ typedef enum {
 // Events mark the start of states.
 @interface SSEvent : NSObject
 
+-(id)initWithType:(SSEventType)type atOffset:(NSTimeInterval)offset;
+
 @property SSEventType type;
 @property (readonly) NSString *typeName;
+@property (retain) NSString *mapState;
 @property NSTimeInterval offset;
 @property (retain) NSImage *image;
 
