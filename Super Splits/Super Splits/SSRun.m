@@ -7,6 +7,7 @@
 //
 
 #import "SSRun.h"
+#import "SSEvent.h"
 #import "SSSplit.h"
 
 const NSUInteger kInvalidSplitIndex = -1;
@@ -162,12 +163,45 @@ const NSUInteger kInvalidSplitIndex = -1;
     return [NSString stringWithFormat:@"%@ Autosave", dateString];
 }
 
+-(SSEvent *)firstEvent
+{
+    if ([_events count] < 1)
+        return nil;
+    return [_events objectAtIndex:0];
+}
+
+-(SSEvent *)lastEvent
+{
+    return [_events lastObject];
+}
+
+-(SSEvent *)lastRoomEvent
+{
+    for (SSEvent *event in [_events reverseObjectEnumerator])
+        if (event.type == RoomEvent)
+            return event;
+    return nil;
+}
+
+-(SSEvent *)lastMapEvent
+{
+    for (SSEvent *event in [_events reverseObjectEnumerator])
+        if (event.type == RoomEvent || event.type == MapChangeEvent)
+            return event;
+    return nil;
+}
+
+-(SSEvent *)lastSplit
+{
+    return [_roomSplits lastObject];
+}
+
 -(void)autosave
 {
     if (!_url)
         [self writeToURL:[SSRun defaultURLForRunWithName:[self autosaveName]]];
-
-    [self writeToURL:_url];
+    else
+        [self writeToURL:_url];
 }
 
 @end

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class SSEvent;
+@class SSSplit;
+
 extern const NSUInteger kInvalidSplitIndex;
 
 // FIXME: Should this subclass from NSDocument?
@@ -23,6 +26,12 @@ extern const NSUInteger kInvalidSplitIndex;
 
 +(NSURL *)defaultURLForRunWithName:(NSString *)name;
 +(NSArray *)runFileTypes;
+
+-(SSEvent *)firstEvent;
+-(SSEvent *)lastEvent;
+-(SSEvent *)lastRoomEvent;
+-(SSEvent *)lastMapEvent;
+-(SSSplit *)lastSplit;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 -(id)initWithData:(NSData *)data;
