@@ -10,7 +10,16 @@
 
 @implementation SSEvent
 
-@synthesize type=_type, offset=_offset, image=_image;
+@synthesize type=_type, offset=_offset, mapState=_mapState, image=_image;
+
+-(id)initWithType:(SSEventType)type atOffset:(NSTimeInterval)offset
+{
+    if (self = [super init]) {
+        _type = type;
+        _offset = offset;
+    }
+    return self;
+}
 
 -(NSString *)typeName
 {

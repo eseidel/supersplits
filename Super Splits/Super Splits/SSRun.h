@@ -8,7 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class SSEvent;
+@class SSSplit;
+
 extern const NSUInteger kInvalidSplitIndex;
+
+typedef enum {
+    UnknownState = 0,
+    RoomState,
+    RoomTransitionState,
+    BlackScreenState,
+    ItemScreenState,
+} SSRunState;
 
 // FIXME: Should this subclass from NSDocument?
 @interface SSRun : NSObject
@@ -23,6 +34,16 @@ extern const NSUInteger kInvalidSplitIndex;
 
 +(NSURL *)defaultURLForRunWithName:(NSString *)name;
 +(NSArray *)runFileTypes;
+
+@property SSRunState state;
+
+-(NSString *)stringForState:(SSRunState)state;
+
+-(SSEvent *)firstEvent;
+-(SSEvent *)lastEvent;
+-(SSEvent *)lastRoomEvent;
+-(SSEvent *)lastMapEvent;
+-(SSSplit *)lastSplit;
 
 -(id)initWithContentsOfURL:(NSURL *)url;
 -(id)initWithData:(NSData *)data;

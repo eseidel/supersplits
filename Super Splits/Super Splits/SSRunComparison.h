@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @class SSSplit;
+@class SSSplitMatcher;
+@class SSMatchedSplit;
 @class SSRun;
 @class SSRunBuilder;
 
@@ -16,27 +18,18 @@
 // sense on its own object, even if not one that looks exactly like this.
 @interface SSRunComparison : NSObject
 {
-    NSUInteger _currentReferenceSplitIndex; // Reference for current room.
-    NSUInteger _previousReferenceSplitIndex; // Reference for the previous room.
-    NSUInteger _lastMatchedReferenceSplitIndex; // Last room we successfully matched a reference for.
-    NSUInteger _lastMatchedSplitIndex;
-    NSUInteger _lastSearchedSplitIndex;
+    SSSplitMatcher *_splitMatcher;
 }
 
+@property (retain) NSArray *matchedSplits;
 @property (readonly) NSNumber *lastMatchedSplitNumber;
-@property (retain) SSRunBuilder *runBuilder;
+@property (nonatomic, retain) SSRunBuilder *runBuilder;
 @property (retain) SSRun *referenceRun;
 
--(SSSplit *)currentSplitReference;
--(SSSplit *)previousSplitReference;
+-(SSMatchedSplit *)currentMatchedSplit;
+-(SSMatchedSplit *)previousMatchedSplit;
 
 // FIXME: These should be NSTimeIntervals.
 -(NSNumber *)deltaToStartOfCurrentRoom;
--(NSNumber *)deltaForPreviousSplit;
-
-// FIXME: These explicit calls could be replaced by KVO calls on "run".
--(void)roomChanged;
--(void)updateReferenceCursors;
--(BOOL)haveSearchedForCurrentSplit;
 
 @end

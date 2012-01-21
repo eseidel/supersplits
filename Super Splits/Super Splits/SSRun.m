@@ -7,13 +7,31 @@
 //
 
 #import "SSRun.h"
+#import "SSEvent.h"
 #import "SSSplit.h"
 
 const NSUInteger kInvalidSplitIndex = -1;
 
 @implementation SSRun
 
-@synthesize roomSplits=_roomSplits, events=_events, url=_url;
+@synthesize roomSplits=_roomSplits, events=_events, url=_url, state=_state;
+
+-(NSString *)stringForState:(SSRunState)state
+{
+    switch(state) {
+        case RoomState:
+            return @"Room";
+        case RoomTransitionState:
+            return @"Door";
+        case BlackScreenState:
+            return @"Cutscene";
+        case ItemScreenState:
+            return @"Item";
+        case UnknownState:
+            return @"Ready";
+    }
+    return @"Invalid state!";
+}
 
 +(NSArray *)runFileTypes
 {
@@ -162,12 +180,45 @@ const NSUInteger kInvalidSplitIndex = -1;
     return [NSString stringWithFormat:@"%@ Autosave", dateString];
 }
 
+-(SSEvent *)firstEvent
+{
+    if ([_events count] < 1)
+        return nil;
+    return [_events objectAtIndex:0];
+}
+
+-(SSEvent *)lastEvent
+{
+    return [_events lastObject];
+}
+
+-(SSEvent *)lastRoomEvent
+{
+    for (SSEvent *event in [_events reverseObjectEnumerator])
+        if (event.type == RoomEvent)
+            return event;
+    return nil;
+}
+
+-(SSEvent *)lastMapEvent
+{
+    for (SSEvent *event in [_events reverseObjectEnumerator])
+        if (event.type == RoomEvent || event.type == MapChangeEvent)
+            return event;
+    return nil;
+}
+
+-(SSEvent *)lastSplit
+{
+    return [_roomSplits lastObject];
+}
+
 -(void)autosave
 {
     if (!_url)
         [self writeToURL:[SSRun defaultURLForRunWithName:[self autosaveName]]];
-
-    [self writeToURL:_url];
+    else
+        [self writeToURL:_url];
 }
 
 @end

@@ -11,40 +11,15 @@
 @class SSMetroidFrame;
 @class SSRun;
 
-typedef enum {
-    UnknownState = 0,
-    RoomState,
-    RoomTransitionState,
-    BlackScreenState,
-    ItemScreenState,
-} SSRunState;
-
 @interface SSRunBuilder : NSObject
 {
     SSRun *_run;
-
     NSTimeInterval _offset;
-    NSTimeInterval _startOffset;
-    NSTimeInterval _stateStart;
-
-    // FIXME: These could be held on a "currentSplit" object instead.
-    NSTimeInterval _roomStart;
-    SSMetroidFrame *_roomEntryFrame;
-
-    SSRunState _state;
-    NSString *_mapState;
     SSMetroidFrame *_frame;
 }
 
 @property (readonly) SSRun *run;
-
 @property NSTimeInterval offset;
-
-@property (nonatomic) SSRunState state;
-@property (readonly) NSString *stateAsString;
-
-@property (retain, nonatomic) NSString *mapState;
-@property (readonly, retain) NSString *roomEntryMapState;
 
 -(NSTimeInterval)roomTime;
 -(NSTimeInterval)totalTime;

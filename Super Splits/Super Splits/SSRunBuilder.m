@@ -16,139 +16,17 @@
 @interface SSRunBuilder (PrivateMethods)
 
 -(void)_startRoom;
+-(void)_leaveRoom;
 -(void)_recordLastRoom;
 -(NSTimeInterval)_stateTime;
+
+-(void)addEvent:(SSEvent *)event;
 
 @end
 
 @implementation SSRunBuilder
 
-@synthesize run=_run, state=_state, offset=_offset,
-            mapState=_mapState, roomEntryMapState=_roomEntryMapState;
-
-
--(NSString *)stringForState:(SSRunState)state
-{
-    switch(state) {
-        case RoomState:
-            return @"Room";
-        case RoomTransitionState:
-            return @"Door";
-        case BlackScreenState:
-            return @"Cutscene";
-        case ItemScreenState:
-            return @"Item";
-        case UnknownState:
-            return @"Ready";
-    }
-    return @"Invalid state!";
-}
-
--(NSString *)stateAsString
-{
-    return [self stringForState:_state];
-}
-
--(SSEvent *)createEventForNewState:(SSRunState)newState
-{
-    SSEvent *event = [[SSEvent alloc] init];
-    switch (newState) {
-        case RoomState:
-            event.type = RoomEvent;
-            break;
-        case RoomTransitionState:
-            event.type = DoorEvent;
-            break;
-        case BlackScreenState:
-            event.type = CutsceneEvent;
-            break;
-        case ItemScreenState:
-            event.type = ItemEvent;
-            break;
-        default:
-            event.type = InvalidEvent;
-    }
-    event.offset = _offset;
-    return event;
-}
-
--(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset
-{
-    self.offset = offset;
-    _frame = frame;
-
-    if (frame.isMissingEnergyText) {
-        self.state = BlackScreenState;
-    } else if (frame.isMostlyBlack) {
-        self.state = RoomTransitionState;
-    } else if (frame.isItemScreen) {
-        self.state = ItemScreenState;
-    } else {
-        if (!_roomEntryFrame)
-            _roomEntryFrame = frame;
-
-        self.state = RoomState;
-        // Important to set that we're in a room before we update the current map state.
-        self.mapState = frame.miniMapString;
-    }
-}
-
--(void)setState:(SSRunState)newState
-{
-    // FIXME: Should we do this with KVO instead of a manual setter?
-    if (newState == _state)
-        return;
-
-    // Ignore any transition from unknown unless it's to "room".
-    if (_state == UnknownState) {
-        if (newState != RoomState)
-            return;
-        // FIXME: When we detect the first room is actually about 3s after
-        // the conventional start of a speed run.
-        _startOffset = _offset;
-        _run = [[SSRun alloc] init];
-        [self _startRoom];
-    }
-
-    NSTimeInterval stateDuration = [self _stateTime];
-    NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
-
-    if (newState == RoomState) {
-        if (_state == RoomTransitionState) {
-            if (stateDuration < 1.0)
-                NSLog(@"WARNING: Ignoring short (%.2f) door transition? Assuming just a very black room.", stateDuration);
-            else
-                [self _startRoom];
-        }
-        if ((_state == BlackScreenState) && (stateDuration > 2.0)) {
-            // This is used to differentiate between cut-scenes and black screens for pause.
-            [self _startRoom];
-        }
-    }
-    [_run.events addObject:[self createEventForNewState:newState]];
-    _stateStart = _offset;
-    _state = newState;
-}
-
--(void)setMapState:(NSString *)mapState
-{
-    // FIXME: Should we do this with KVO instead of a manual setter?
-    if ([_mapState isEqualToString:mapState]) {
-        if (!_roomEntryMapState && [self roomTime] > 1.0) {
-            // If it's been more than a second, assume that we already have
-            // the right minimap for this room, even if its the same as the last.
-            NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", _mapState);
-        } else
-            return;
-    }
-
-    //NSLog(@"Map: %@ -> %@", _mapState, mapState);
-    _mapState = mapState;
-    if (!_roomEntryMapState) {
-        //NSLog(@"Entry Map State: %@, %.2fs after door", _mapState, [[self roomTime] doubleValue]);
-        _roomEntryMapState = _mapState;
-    }
-}
+@synthesize run=_run, offset=_offset;
 
 -(id)init
 {
@@ -158,69 +36,152 @@
     return self;
 }
 
--(void)_saveSplitFromLastRoom
+-(SSEventType)eventTypeFromFrame:(SSMetroidFrame *)frame
 {
-    assert(_stateStart);
-    NSTimeInterval roomTime = [self roomTime];
-    // FIXME: Does this check belong here instead of in setState?
-    if (roomTime < 1.0) { // FIXME: Is this too short for the shortest real room?
-        NSLog(@"Ignoring short room-split: %.2fs. Cut-scene? Backtracking?", roomTime);
-        return;
+    assert(frame);
+    if (frame.isMissingEnergyText)
+        return CutsceneEvent;
+    else if (frame.isMostlyBlack)
+        return DoorEvent;
+    else if (frame.isItemScreen)
+        return ItemEvent;
+    return RoomEvent;
+}
+
+-(SSEvent *)_eventForFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset
+{
+    SSEventType eventType = [self eventTypeFromFrame:frame];
+    SSEvent *lastEvent = _run.lastEvent;
+
+    // Ignore all events until the first room event.
+    if (lastEvent.type == InvalidEvent && eventType != RoomEvent)
+        return nil;
+
+    // Map change events show up as "room events".
+    if (eventType == RoomEvent && lastEvent.type == RoomEvent) {
+        NSString *mapState = frame.miniMapString;
+        if (mapState != _run.lastMapEvent.mapState) {
+            SSEvent *event = [[SSEvent alloc] initWithType:eventType atOffset:offset];
+            event.mapState = mapState;
+            return event;
+        }
+        return nil;
     }
 
-    SSSplit *split = [[SSSplit alloc] init];
-    split.duration = roomTime;
-    split.entryMapState = _roomEntryMapState;
-    // We're careful in SSMainController to set the current state before setting the new
-    // map state, so we can use _mapState here as the exit map state.
-    split.exitMapState = _mapState;
-    // FIXME: Saving the frames takes up gobs of memory!  Disabled for now.
-//    split.entryFrame = _roomEntryFrame;
-//    split.exitFrame = _frame;
+    // Otherwise only create events when we have a state change.
+    if (eventType == _run.lastEvent.type)
+        return nil;
+    return [[SSEvent alloc] initWithType:eventType atOffset:offset];
+}
 
-    [[_run roomSplits] addObject:split];
-    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTime, split.entryMapState, split.exitMapState, [self _stateTime]);
+-(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset
+{
+    assert(frame);
+    self.offset = offset;
+    _frame = frame;
+
+    SSEvent *event = [self _eventForFrame:frame atOffset:offset];
+    if (event)
+        [self addEvent:event];
+}
+
+-(BOOL)_shouldStartRoom:(SSEvent *)event
+{
+    // FIXME: Do we need code to avoid very short rooms caused by cutscene errors?
+    if (event.type != RoomEvent)
+        return NO;
+    
+    SSEvent *lastEvent = _run.lastEvent;
+    NSTimeInterval stateDuration = [self _stateTime];
+    if (lastEvent.type == DoorEvent && stateDuration < 1.0) {
+        NSLog(@"WARNING: Ignoring short (%.2f) door transition? Assuming just a very black room.", stateDuration);
+        return NO;
+    }
+    // This is used to differentiate between cut-scenes and black screens for pause.
+    if ((lastEvent.type == CutsceneEvent) && (stateDuration < 2.0)) {
+        // FIXME: we could mutate the lastEvent to be a pause event?
+        return NO;
+    }
+    return YES;
+}
+
+-(void)addEvent:(SSEvent *)event
+{
+    NSTimeInterval stateDuration = [self _stateTime];
+    SSEvent *lastEvent = _run.lastEvent;
+    NSLog(@"%@ (%.2fs) -> %@", lastEvent.typeName, stateDuration, event.typeName);
+
+    [_run.events addObject:event];
+
+    SSSplit *currentRoom = [_run lastSplit];
+    switch (event.type) {
+        case RoomEvent:
+            if ([self _shouldStartRoom:event])
+                [self _startRoom];
+            break;
+        case MapChangeEvent:
+            if (!currentRoom.entryMapState)
+                currentRoom.entryMapState = event.mapState;
+            break;
+        case DoorEvent:
+        case CutsceneEvent:
+            [self _leaveRoom];
+            break;
+        // These are currently impossible:
+        case ItemEvent:
+        case PauseEvent:
+        case InvalidEvent:
+            assert(false);
+    }
+}
+
+-(void)_leaveRoom
+{
+    SSSplit *split = [_run lastSplit];
+    split.duration = [self roomTime];
+    NSString *lastMapState = _run.lastMapEvent.mapState;
+    split.exitMapState = lastMapState;
+    // If we never saw a room event during this room, then we assume the
+    // entry is the same is the exit, which is the same as the last room!
+    if (!split.entryMapState)
+        split.entryMapState = lastMapState;
+
+    NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", split.duration, split.entryMapState, split.exitMapState, [self _stateTime]);
     [_run autosave];
 }
 
 -(void)_startRoom
 {
-    if (_stateStart)
-        [self _saveSplitFromLastRoom];
+    SSSplit *split = [[SSSplit alloc] init];
+    [[_run roomSplits] addObject:split];
+}
 
-    // Super Metroid doesn't update the minimap until *after* the door animation completes.
-    // Our room transition detection currently thinks the door animation ends slightly
-    // before it does.  So instead of setting _roomEntryMapState = _mapState here, we
-    // set it to nil and update it if/when the map ever changes inside this room.
-    // If the map never changes, then when we record the room we'll use the ending
-    // state for the previous room.
-    _roomEntryMapState = nil;
-    _roomEntryFrame = nil;
-    _roomStart = _offset;
+-(BOOL)_inRoom
+{
+    SSEvent *lastEvent = _run.lastEvent;
+    return lastEvent && lastEvent.type != DoorEvent && lastEvent.type != CutsceneEvent;
 }
 
 -(NSTimeInterval)roomTime
 {
-    if (_state == UnknownState)
-        return 0;
-
-    if (_state != RoomState)
-        return _stateStart - _roomStart;
-
-    return _offset - _roomStart;
+    if ([self _inRoom])
+        return _offset - _run.lastRoomEvent.offset;
+    return 0;
 }
 
 -(NSTimeInterval)totalTime
 {
-    if (_state == UnknownState)
+    SSEvent * lastEvent = [_run lastEvent];
+    if (lastEvent.type == InvalidEvent)
         return 0;
 
-    return _offset - _startOffset;
+    return _offset - _run.firstEvent.offset;
 }
 
 -(NSTimeInterval)_stateTime
 {
-    return _offset - _stateStart;
+    // FIXME: Not all events represent state changes.
+    return _offset - _run.lastEvent.offset;
 }
 
 @end
