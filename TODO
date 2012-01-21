@@ -7,6 +7,10 @@
 - saving a new reference should reload the reference file.
 - When you stop a run, it probably open the run file?
 
+- Need to separate "state" from "event type".
+Item, Room, Map, Pause? are all "room state" events.
+Cutscene, Door are not?
+
 Confused Timer:
 - the reference room getting ahead is super-bad
 - seems we should only allow the reference room to scan more than 3 on a boss room, or when behind.
