@@ -63,19 +63,20 @@
     // FIXME: This should all be done with KVO, once SSRunBuilder is KVO compliant.
     [totalTimeView setObjectValue:[runBuilder valueForKey:@"totalTime"]];
     [roomTimeView setObjectValue:[runBuilder valueForKey:@"roomTime"]];
-    SSSplit *lastSplit = [[current roomSplits] lastObject];
-    [lastRoomSplitView setObjectValue:[lastSplit valueForKey:@"duration"]];
+    [lastRoomSplitView setObjectValue:[[current lastSplit] valueForKey:@"duration"]];
 
     SSRunComparison *comparision = [_mainController runComparison];
-    SSSplit *currentRoomReference = [comparision currentSplitReference];
+    SSSplit *currentRoomReference = [comparision valueForKeyPath:@"currentMatchedSplit.referenceSplit"];
     [roomReferenceTimeView setObjectValue:[currentRoomReference valueForKey:@"duration"]];
     [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
-    [lastRoomSplitDeltaView setObjectValue:[comparision deltaForPreviousSplit]];
+    [lastRoomSplitDeltaView setObjectValue:[comparision valueForKeyPath:@"previousMatchedSplit.durationDifference"]];
 
-    BOOL showRoomName = [_mainController running] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0; 
+    BOOL showRoomName = [_mainController running] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0;
     [roomNameView setHidden:!showRoomName];
     [timerState setHidden:showRoomName];
     [roomNameView setObjectValue:[currentRoomReference roomName]];
+
+    // FIXME: This could be done with KVO in IB:
     if (![_mainController running]) {
         [timerState setStringValue:@"paused"];
     } else {

@@ -13,12 +13,13 @@
 
 @implementation SSSplitMatcher
 
--(SSMatchedSplit *)_matchSplitAtIndex:(NSUInteger)splitIndex
+-(SSMatchedSplit *)_matchSplit:(SSSplit*)split
+                       atIndex:(NSUInteger)splitIndex
                                 inRun:(SSRun *)run
                   againstReferenceRun:(SSRun *)referenceRun
                      lastMatchedSplit:(SSMatchedSplit *)lastMatchedSplit
 {
-    SSSplit *split = [[run roomSplits] objectAtIndex:splitIndex];
+    // NOTE: Careful, the split may not actually be in the run!
     NSUInteger referenceSplitIndex = kInvalidSplitIndex;
     // Look for a split where we would expect one, given the last known offset.
     if (lastMatchedSplit && lastMatchedSplit.referenceSplitIndex != kInvalidSplitIndex) {
@@ -58,6 +59,9 @@
 - (NSArray *)_fillInGaps:(NSArray *)matchedSplits fromReferenceRun:(SSRun *)referenceRun
 {
     NSUInteger splitsCount = [matchedSplits count];
+    if (splitsCount < 2)
+        return matchedSplits;
+
     for (NSUInteger i = 1; i < splitsCount - 2; i++) {
         SSMatchedSplit *previousSplit = [matchedSplits objectAtIndex:i-1];
         SSMatchedSplit *split = [matchedSplits objectAtIndex:i];
@@ -76,22 +80,27 @@
     return matchedSplits;
 }
 
--(NSArray *)matchSplitsFromRun:(SSRun *)run withReferenceRun:(SSRun *)referenceRun
+-(NSArray *)matchSplits:(NSArray* )splits fromRun:(SSRun *)run withReferenceRun:(SSRun *)referenceRun
 {
     NSInteger splitIndex = 0;
-    NSArray *splits = [run roomSplits];
     NSInteger splitCount = [splits count];
-
+    
     NSMutableArray *matchedSplits = [NSMutableArray array];
     while (splitIndex < splitCount) {
-        SSMatchedSplit *matchedSplit = [self _matchSplitAtIndex:splitIndex
-                                                          inRun:run
-                                            againstReferenceRun:referenceRun
-                                               lastMatchedSplit:[matchedSplits lastObject]];
+        SSMatchedSplit *matchedSplit = [self _matchSplit:[splits objectAtIndex:splitIndex]
+                                                 atIndex:splitIndex
+                                                   inRun:run
+                                     againstReferenceRun:referenceRun
+                                        lastMatchedSplit:[matchedSplits lastObject]];
         [matchedSplits addObject: matchedSplit];
         splitIndex++;
     }
     return [self _fillInGaps:matchedSplits fromReferenceRun:referenceRun];
+}
+
+-(NSArray *)matchSplitsFromRun:(SSRun *)run withReferenceRun:(SSRun *)referenceRun
+{
+    return [self matchSplits:run.roomSplits fromRun:run withReferenceRun:referenceRun];
 }
 
 @end

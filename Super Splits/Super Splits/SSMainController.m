@@ -70,16 +70,16 @@
 
     NSArray *previousSplits = [[_runBuilder run] roomSplits];
     NSUInteger previousSplitCount = [previousSplits count];
+    NSString *prevousEntryMapState = _runBuilder.currentSplit.entryMapState;
 
     [_runBuilder updateWithFrame:_lastFrame atOffset:offset];
 
     // FIXME: This logic could all be done via some KVO between RunComparison and RunBuilder.
     // When the "room number" changes, we invalidate our cached split indicies.
-    if (previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count])
-        [_runComparison roomChanged];
-    // Only update the reference cursors once we have a map for this room.
-    if (_runBuilder.currentSplit.entryMapState && ![_runComparison haveSearchedForCurrentSplit])
-        [_runComparison updateReferenceCursors];
+    BOOL splitsChanged = previousSplits && previousSplitCount != [[[_runBuilder run] roomSplits] count];
+    BOOL mapChanged = prevousEntryMapState != _runBuilder.currentSplit.entryMapState;
+    if (splitsChanged || mapChanged)
+        [_runComparison _updateMatchedSplits];
 }
 
 @end
