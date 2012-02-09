@@ -49,6 +49,8 @@
 		A89EB556149DE94600D6370F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89EB555149DE94600D6370F /* QTKit.framework */; };
 		A89EB566149FAABC00D6370F /* SSRunComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB565149FAABC00D6370F /* SSRunComparison.m */; };
 		A89EB56A14A0013400D6370F /* SSMovieImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = A89EB56914A0013400D6370F /* SSMovieImporter.m */; };
+		A8EE72D114DA1FFC000A590F /* 6Jan2012-reference.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8EE72CD14DA1FF0000A590F /* 6Jan2012-reference.txt */; };
+		A8EE72D214DA2001000A590F /* 6Jan2012.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8EE72CE14DA1FF0000A590F /* 6Jan2012.txt */; };
 		B929E80E14908626009EB322 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B929E80D14908626009EB322 /* Carbon.framework */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +138,8 @@
 		A89EB565149FAABC00D6370F /* SSRunComparison.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunComparison.m; sourceTree = "<group>"; };
 		A89EB56814A0013300D6370F /* SSMovieImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMovieImporter.h; sourceTree = "<group>"; };
 		A89EB56914A0013400D6370F /* SSMovieImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMovieImporter.m; sourceTree = "<group>"; };
+		A8EE72CD14DA1FF0000A590F /* 6Jan2012-reference.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "6Jan2012-reference.txt"; sourceTree = "<group>"; };
+		A8EE72CE14DA1FF0000A590F /* 6Jan2012.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6Jan2012.txt; sourceTree = "<group>"; };
 		B929E80D14908626009EB322 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -331,6 +335,7 @@
 		A83C404A148F0B8D00308FD4 /* Super SplitsTests */ = {
 			isa = PBXGroup;
 			children = (
+				A8EE72CC14DA1FF0000A590F /* runs */,
 				A83C404B148F0B8D00308FD4 /* Supporting Files */,
 				A815283314A993A700F9D4A0 /* SSRunBuilderTest.h */,
 				A815283414A993A700F9D4A0 /* SSRunBuilderTest.m */,
@@ -347,6 +352,15 @@
 				A83C404D148F0B8D00308FD4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A8EE72CC14DA1FF0000A590F /* runs */ = {
+			isa = PBXGroup;
+			children = (
+				A8EE72CD14DA1FF0000A590F /* 6Jan2012-reference.txt */,
+				A8EE72CE14DA1FF0000A590F /* 6Jan2012.txt */,
+			);
+			path = runs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,6 +451,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */,
+				A8EE72D114DA1FFC000A590F /* 6Jan2012-reference.txt in Resources */,
+				A8EE72D214DA2001000A590F /* 6Jan2012.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

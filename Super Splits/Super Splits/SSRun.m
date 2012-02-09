@@ -60,7 +60,7 @@ const NSUInteger kInvalidSplitIndex = -1;
 -(id)initWithData:(NSData *)data
 {
     self = [super init];
-    if (!self)
+    if (!self || !data)
         return nil;
 
     NSString *splitsString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
