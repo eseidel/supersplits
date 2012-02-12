@@ -19,8 +19,6 @@
 -(void)_recordLastRoom;
 -(NSTimeInterval)_stateTime;
 
--(void)_updateMapStateFromFrame:(SSMetroidFrame *)frame;
-
 @end
 
 @implementation SSRunBuilder
@@ -72,10 +70,10 @@
     return event;
 }
 
--(void)_updateMapStateFromFrame:(SSMetroidFrame *)frame
+-(void)_updateMinimapState:(NSString *)newMapState
 {
     NSString *lastMapState = _mapState;
-    _mapState = frame.miniMapString;
+    _mapState = newMapState;
     if (_currentSplit.entryMapState)
         return;
 
@@ -102,7 +100,7 @@
         self.state = ItemScreenState;
     } else {
         self.state = RoomState;
-        [self _updateMapStateFromFrame:frame];
+        [self _updateMinimapState:frame.miniMapString];
     }
 }
 

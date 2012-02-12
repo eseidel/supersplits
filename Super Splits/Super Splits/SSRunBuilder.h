@@ -46,4 +46,7 @@ typedef enum {
 
 -(void)updateWithFrame:(SSMetroidFrame *)frame atOffset:(NSTimeInterval)offset;
 
+// For unit testing.
+-(void)_updateMinimapState:(NSString *)mapState;
+
 @end
