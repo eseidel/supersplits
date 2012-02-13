@@ -18,4 +18,6 @@
 -(NSArray *)matchSplits:(NSArray* )splits fromRun:(SSRun *)run withReferenceRun:(SSRun *)referenceRun;
 -(NSArray *)matchSplitsFromRun:(SSRun *)run withReferenceRun:(SSRun *)referenceRun;
 
+- (NSArray *)fillInGaps:(NSArray *)matchedSplits fromReferenceRun:(SSRun *)referenceRun;
+
 @end

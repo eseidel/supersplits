@@ -44,7 +44,8 @@
 - (NSArray *)matchedSplits
 {
     SSSplitMatcher *matcher = [[SSSplitMatcher alloc] init];
-    return [matcher matchSplitsFromRun:self.run withReferenceRun:self.referenceRun];
+    NSArray *matchedSplits = [matcher matchSplitsFromRun:self.run withReferenceRun:self.referenceRun];
+    return [matcher fillInGaps:matchedSplits fromReferenceRun:self.referenceRun];
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController

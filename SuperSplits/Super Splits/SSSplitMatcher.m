@@ -56,7 +56,7 @@
     return matchedSplit;
 }
 
-- (NSArray *)_fillInGaps:(NSArray *)matchedSplits fromReferenceRun:(SSRun *)referenceRun
+- (NSArray *)fillInGaps:(NSArray *)matchedSplits fromReferenceRun:(SSRun *)referenceRun
 {
     NSUInteger splitsCount = [matchedSplits count];
     if (splitsCount < 2)
@@ -95,7 +95,7 @@
         [matchedSplits addObject: matchedSplit];
         splitIndex++;
     }
-    return [self _fillInGaps:matchedSplits fromReferenceRun:referenceRun];
+    return matchedSplits;
 }
 
 -(NSArray *)matchSplitsFromRun:(SSRun *)run withReferenceRun:(SSRun *)referenceRun
