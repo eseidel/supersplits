@@ -6,6 +6,8 @@
 - the last split is never saved for the run
 - saving a new reference should reload the reference file.
 - When you stop a run, it probably open the run file?
+- Blackout mode
+- Forward-looking franken-run to inform when to abort.
 
 - Need to separate "state" from "event type".
 Item, Room, Map, Pause? are all "room state" events.
