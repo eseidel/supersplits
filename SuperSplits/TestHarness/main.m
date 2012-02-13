@@ -16,7 +16,8 @@ int main (int argc, const char * argv[])
     @autoreleasepool {
         SSTestMain *testMain = [SSTestMain new];
         NSMutableArray *args = [NSMutableArray arrayWithCapacity:argc];
-        for (NSUInteger i = 0; i < argc; i++)
+        // Skip the first argument (the executable name)
+        for (NSUInteger i = 1; i < argc; i++)
             [args addObject:[NSString stringWithUTF8String:argv[i]]];
         return [testMain runWithArgs:args]; 
     }
