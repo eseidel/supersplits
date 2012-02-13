@@ -13,12 +13,16 @@
 
 @implementation SSSplitMatcher
 
--(SSMatchedSplit *)_matchSplit:(SSSplit*)split
-                       atIndex:(NSUInteger)splitIndex
-                                inRun:(SSRun *)run
-                  againstReferenceRun:(SSRun *)referenceRun
-                     lastMatchedSplit:(SSMatchedSplit *)lastMatchedSplit
+-(NSUInteger)_findReferenceIndexForMapState:(NSString *)mapState
+                                    atIndex:(NSUInteger)splitIndex
+                        againstReferenceRun:(SSRun *)referenceRun
+                           lastMatchedSplit:(SSMatchedSplit *)lastMatchedSplit
 {
+    if (!mapState) {
+        // FIXME: We might want to log here, but currently we search for splits
+        // too often and hit this all the time.
+        return kInvalidSplitIndex;
+    }
     // NOTE: Careful, the split may not actually be in the run!
     NSUInteger referenceSplitIndex = kInvalidSplitIndex;
     // Look for a split where we would expect one, given the last known offset.
@@ -29,10 +33,9 @@
         assert(splitsSinceLastMatch > 0);
         NSUInteger startIndex = lastMatchedSplit.referenceSplitIndex + splitsSinceLastMatch;
         referenceSplitIndex = [referenceRun indexOfSplitNear:startIndex
-                                              withEntryMap:split.entryMapState
-                                                 scanLimit:3];
+                                                withEntryMap:mapState
+                                                   scanLimit:3];
     }
-    
     // If that failed, look for a reference split near the current room index.
     // This corrects for times when we're really confused, but our run
     // isn't that different from the reference run.
@@ -42,10 +45,22 @@
         // Note: This will fail to find a room if we backtracked more than 3 times.
         // FIXME: We should search wider as we get more confused.
         referenceSplitIndex = [referenceRun indexOfSplitNear:splitIndex
-                                                withEntryMap:split.entryMapState
+                                                withEntryMap:mapState
                                                    scanLimit:6];
     }
+    return referenceSplitIndex;
+}
 
+-(SSMatchedSplit *)_matchSplit:(SSSplit*)split
+                       atIndex:(NSUInteger)splitIndex
+                                inRun:(SSRun *)run
+                  againstReferenceRun:(SSRun *)referenceRun
+                     lastMatchedSplit:(SSMatchedSplit *)lastMatchedSplit
+{
+    NSUInteger referenceSplitIndex = [self _findReferenceIndexForMapState:split.entryMapState
+                                                               atIndex:splitIndex
+                                                   againstReferenceRun:referenceRun
+                                                      lastMatchedSplit:lastMatchedSplit];
     SSMatchedSplit *matchedSplit = [[SSMatchedSplit alloc] init];
     matchedSplit.splitIndex = splitIndex;
     matchedSplit.split = split;
