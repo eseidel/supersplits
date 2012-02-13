@@ -19,6 +19,16 @@
 		A816D866149D71FD00EBA19B /* SSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D865149D71FD00EBA19B /* SSEvent.m */; };
 		A821B30914A83BDA00F3BE73 /* SSRunDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = A821B30714A83BDA00F3BE73 /* SSRunDocument.m */; };
 		A821B30A14A83BDA00F3BE73 /* SSRunDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */; };
+		A82EF1E414E8922300917122 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A82EF1E314E8922300917122 /* main.m */; };
+		A82EF1E614E8922300917122 /* TestHarness.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = A82EF1E514E8922300917122 /* TestHarness.1 */; };
+		A82EF1ED14E893EA00917122 /* SSTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = A82EF1EB14E893E200917122 /* SSTestMain.m */; };
+		A82EF1EF14E8973C00917122 /* SSRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D861149C414700EBA19B /* SSRun.m */; };
+		A82EF1F014E8974200917122 /* SSRunBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A8070E821492FEDE00167ABD /* SSRunBuilder.m */; };
+		A82EF1F114E8974500917122 /* SSSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D83F14983DF900EBA19B /* SSSplit.m */; };
+		A82EF1F214E8975800917122 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
+		A82EF1F314E897C500917122 /* SSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A816D865149D71FD00EBA19B /* SSEvent.m */; };
+		A82EF1F414E897CB00917122 /* SSSplitMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A885820114AD978A00B94063 /* SSSplitMatcher.m */; };
+		A82EF1F514E897D600917122 /* SSMatchedSplit.m in Sources */ = {isa = PBXBuildFile; fileRef = A88581FF14AD978A00B94063 /* SSMatchedSplit.m */; };
 		A82F31DA148F694E00DDEBF2 /* TimerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */; };
 		A82F31DE148F772100DDEBF2 /* SSTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */; };
 		A82F31EE1490820900DDEBF2 /* SSWindowImageSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A82F31ED1490820900DDEBF2 /* SSWindowImageSource.m */; };
@@ -64,6 +74,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A82EF1DE14E8922200917122 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				A82EF1E614E8922300917122 /* TestHarness.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9762323114CAAC8B00E60074 /* SSSplitMatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSplitMatcherTest.h; sourceTree = "<group>"; };
 		9762323214CAAC8B00E60074 /* SSSplitMatcherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSplitMatcherTest.m; sourceTree = "<group>"; };
@@ -87,6 +110,11 @@
 		A821B30614A83BDA00F3BE73 /* SSRunDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRunDocument.h; sourceTree = "<group>"; };
 		A821B30714A83BDA00F3BE73 /* SSRunDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRunDocument.m; sourceTree = "<group>"; };
 		A821B30814A83BDA00F3BE73 /* SSRunDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSRunDocument.xib; sourceTree = "<group>"; };
+		A82EF1E014E8922200917122 /* TestHarness */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestHarness; sourceTree = BUILT_PRODUCTS_DIR; };
+		A82EF1E314E8922300917122 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A82EF1E514E8922300917122 /* TestHarness.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestHarness.1; sourceTree = "<group>"; };
+		A82EF1EA14E893E200917122 /* SSTestMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTestMain.h; sourceTree = "<group>"; };
+		A82EF1EB14E893E200917122 /* SSTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTestMain.m; sourceTree = "<group>"; };
 		A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerWindow.xib; sourceTree = "<group>"; };
 		A82F31DC148F772100DDEBF2 /* SSTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		A82F31DD148F772100DDEBF2 /* SSTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTimeIntervalFormatter.m; sourceTree = "<group>"; };
@@ -144,6 +172,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A82EF1DD14E8922200917122 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A82EF1F214E8975800917122 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A83C4020148F0B8C00308FD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -190,6 +226,17 @@
 				A82F31D9148F694E00DDEBF2 /* TimerWindow.xib */,
 			);
 			name = XIBs;
+			sourceTree = "<group>";
+		};
+		A82EF1E214E8922200917122 /* TestHarness */ = {
+			isa = PBXGroup;
+			children = (
+				A82EF1E314E8922300917122 /* main.m */,
+				A82EF1E514E8922300917122 /* TestHarness.1 */,
+				A82EF1EA14E893E200917122 /* SSTestMain.h */,
+				A82EF1EB14E893E200917122 /* SSTestMain.m */,
+			);
+			path = TestHarness;
 			sourceTree = "<group>";
 		};
 		A82F31FA149094A700DDEBF2 /* Model */ = {
@@ -268,6 +315,7 @@
 			children = (
 				A83C402D148F0B8C00308FD4 /* Super Splits */,
 				A83C404A148F0B8D00308FD4 /* Super SplitsTests */,
+				A82EF1E214E8922200917122 /* TestHarness */,
 				A83C4026148F0B8C00308FD4 /* Frameworks */,
 				A83C4024148F0B8C00308FD4 /* Products */,
 			);
@@ -279,6 +327,7 @@
 			children = (
 				A83C4023148F0B8C00308FD4 /* Super Splits.app */,
 				A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */,
+				A82EF1E014E8922200917122 /* TestHarness */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -366,6 +415,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A82EF1DF14E8922200917122 /* TestHarness */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A82EF1E714E8922300917122 /* Build configuration list for PBXNativeTarget "TestHarness" */;
+			buildPhases = (
+				A82EF1DC14E8922200917122 /* Sources */,
+				A82EF1DD14E8922200917122 /* Frameworks */,
+				A82EF1DE14E8922200917122 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestHarness;
+			productName = TestHarness;
+			productReference = A82EF1E014E8922200917122 /* TestHarness */;
+			productType = "com.apple.product-type.tool";
+		};
 		A83C4022148F0B8C00308FD4 /* Super Splits */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A83C4055148F0B8D00308FD4 /* Build configuration list for PBXNativeTarget "Super Splits" */;
@@ -425,6 +491,7 @@
 			targets = (
 				A83C4022148F0B8C00308FD4 /* Super Splits */,
 				A83C4043148F0B8D00308FD4 /* Super SplitsTests */,
+				A82EF1DF14E8922200917122 /* TestHarness */,
 			);
 		};
 /* End PBXProject section */
@@ -475,6 +542,21 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A82EF1DC14E8922200917122 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A82EF1E414E8922300917122 /* main.m in Sources */,
+				A82EF1ED14E893EA00917122 /* SSTestMain.m in Sources */,
+				A82EF1EF14E8973C00917122 /* SSRun.m in Sources */,
+				A82EF1F014E8974200917122 /* SSRunBuilder.m in Sources */,
+				A82EF1F114E8974500917122 /* SSSplit.m in Sources */,
+				A82EF1F314E897C500917122 /* SSEvent.m in Sources */,
+				A82EF1F414E897CB00917122 /* SSSplitMatcher.m in Sources */,
+				A82EF1F514E897D600917122 /* SSMatchedSplit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A83C401F148F0B8C00308FD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -561,6 +643,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A82EF1E814E8922300917122 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A82EF1E914E8922300917122 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		A83C4053148F0B8D00308FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -661,6 +757,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A82EF1E714E8922300917122 /* Build configuration list for PBXNativeTarget "TestHarness" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A82EF1E814E8922300917122 /* Debug */,
+				A82EF1E914E8922300917122 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		A83C401D148F0B8C00308FD4 /* Build configuration list for PBXProject "Super Splits" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @interface SSMetroidFrame : NSObject
 {
