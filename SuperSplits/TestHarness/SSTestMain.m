@@ -12,6 +12,8 @@
 #import "SSSplitMatcher.h"
 #import "SSSplit.h"
 #import "SSMatchedSplit.h"
+#import "SSRunComparison.h"
+#import "SSRunBuilder.h"
 
 @implementation SSTestMain
 
@@ -22,6 +24,40 @@
         NSLog(@"Failed to load run: %@", path);
     }
     return run;
+}
+
+- (NSArray *)_matchedSplitsFromIncrementalMatchOfRun:(SSRun *)run withRefernce:(SSRun *)referenceRun
+{
+    SSRunComparison *comparison = [SSRunComparison new];
+    SSRunBuilder *runBuilder = [SSRunBuilder new];
+    comparison.runBuilder = runBuilder;
+    comparison.referenceRun = referenceRun;
+    
+    // Pretend we got the map information .5s after entering the room (common).
+    const float kEntryMapStateOffset = 0.5;
+    
+    // We walk through the run, telling the comparison object about each new room
+    NSUInteger splitCount = run.roomSplits.count;
+    for (NSUInteger splitIndex = 0; splitIndex < splitCount; splitIndex++) {
+        SSSplit *split = [run.roomSplits objectAtIndex:splitIndex];
+        
+        // Pretend we spent 1.5 seconds in the previous door/cutscene, but now enter a room.
+        runBuilder.offset += 1.5;
+        runBuilder.state = RoomState;
+        [comparison _updateMatchedSplits];
+        
+        // Update the map state after an offset.
+        runBuilder.offset += kEntryMapStateOffset;
+        runBuilder.state = RoomState;
+        [runBuilder _updateMinimapState:split.entryMapState];
+        [comparison _updateMatchedSplits];
+        
+        // Record that we spent "duration" in this room, and then transition into a Door state.
+        runBuilder.offset += split.duration - kEntryMapStateOffset;
+        runBuilder.state = RoomTransitionState;
+        [comparison _updateMatchedSplits];
+    }
+    return comparison.matchedSplits;
 }
 
 - (int)runWithArgs:(NSArray *)args
@@ -36,6 +72,7 @@
 
     SSSplitMatcher *matcher = [SSSplitMatcher new];
     NSArray *matchedSplits = [matcher matchSplitsFromRun:run withReferenceRun:reference];
+//    NSArray *matchedSplits = [self _matchedSplitsFromIncrementalMatchOfRun:run withRefernce:reference];
     NSUInteger splitCount = run.roomSplits.count;
     for (NSUInteger splitIndex = 0; splitIndex < splitCount; splitIndex++) {
         SSMatchedSplit *matchedSplit = [matchedSplits objectAtIndex:splitIndex];
