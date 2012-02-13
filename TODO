@@ -12,6 +12,7 @@
 
 REGRESSIONS:
 - Displays -6.2 before the first room completes.
+- Incremental matching is now O(N^2) (doesn't matter, except for lots of logging!)
 
 - Need to separate "state" from "event type".
 Item, Room, Map, Pause? are all "room state" events.
