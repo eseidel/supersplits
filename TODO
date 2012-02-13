@@ -8,6 +8,7 @@
 - When you stop a run, it probably open the run file?
 - Blackout mode
 - Forward-looking franken-run to inform when to abort.
+- Only make Timer window "status level" when emulator/vlc is front-most.
 
 - Need to separate "state" from "event type".
 Item, Room, Map, Pause? are all "room state" events.
