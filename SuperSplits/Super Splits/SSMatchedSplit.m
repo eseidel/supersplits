@@ -30,18 +30,18 @@
     return [NSNumber numberWithDouble:[_split duration] - [_referenceSplit duration]];
 }
 
-- (NSNumber *)splitIndexNumber
+- (NSNumber *)splitNumber
 {
     if (_splitIndex == kInvalidSplitIndex)
         return nil;
-    return [NSNumber numberWithUnsignedInteger:_splitIndex];
+    return [NSNumber numberWithUnsignedInteger:_splitIndex + 1];
 }
 
-- (NSNumber *)referenceSplitIndexNumber
+- (NSNumber *)referenceSplitNumber
 {
     if (_referenceSplitIndex == kInvalidSplitIndex)
         return nil;
-    return [NSNumber numberWithUnsignedInteger:_referenceSplitIndex];
+    return [NSNumber numberWithUnsignedInteger:_referenceSplitIndex + 1];
 }
 
 @end

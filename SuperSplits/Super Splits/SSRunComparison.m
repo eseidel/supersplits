@@ -39,7 +39,7 @@
 {
     for (SSMatchedSplit *matchedSplit in [_matchedSplits reverseObjectEnumerator]) {
         if (matchedSplit.referenceSplit)
-            return matchedSplit.splitIndexNumber;
+            return matchedSplit.splitNumber;
     }
     return nil;
 }
