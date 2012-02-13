@@ -59,9 +59,9 @@
 -(NSNumber *)deltaToStartOfCurrentRoom
 {
     NSNumber *referenceTimeAfterLastRoom = nil;
-    if (self.previousMatchedSplit.referenceSplitIndex != kInvalidSplitIndex)
+    if (self.previousMatchedSplit && self.previousMatchedSplit.referenceSplitIndex != kInvalidSplitIndex)
         referenceTimeAfterLastRoom = [_referenceRun timeAfterSplitAtIndex:self.previousMatchedSplit.referenceSplitIndex];
-    else if (self.currentMatchedSplit.referenceSplitIndex != kInvalidSplitIndex) {
+    else if (self.currentMatchedSplit && self.currentMatchedSplit.referenceSplitIndex != kInvalidSplitIndex) {
         // If we don't have a previous split (the last room was confused)
         // but we do know what this room is, then we compute the time
         // up until this room from the reference.
