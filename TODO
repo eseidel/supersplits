@@ -10,6 +10,9 @@
 - Forward-looking franken-run to inform when to abort.
 - Only make Timer window "status level" when emulator/vlc is front-most.
 
+REGRESSIONS:
+- Displays -6.2 before the first room completes.
+
 - Need to separate "state" from "event type".
 Item, Room, Map, Pause? are all "room state" events.
 Cutscene, Door are not?
