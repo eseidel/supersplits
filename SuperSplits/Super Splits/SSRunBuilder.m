@@ -84,7 +84,7 @@
     // If it's been more than a second, assume that we already have
     // the right minimap for this room, even if its the same as the last.
     if (mapWaitTimeout)
-        NSLog(@"WARNING: No new mapState 1s after door transition, using current %@", lastMapState);
+        NSLog(@"WARNING: No new mapState 1s after door transition, using %@", _mapState);
     _currentSplit.entryMapState = _mapState;
 }
 
