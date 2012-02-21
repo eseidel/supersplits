@@ -154,7 +154,7 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
         assert(0);
 }
 
--(size_t)_countPixelsInRect:(CGRect)rect aboveRGB:(const uint8[3])lowRGB belowRGB:(const uint8[3])highRGB;
+-(size_t)_countPixelsInRect:(CGRect)rect aboveRGB:(const uint8[3])lowRGB belowRGB:(const uint8[3])highRGB sampleSpace:(CGSize)sampleSpace
 {
     const uint8 *pixels = CFDataGetBytePtr(_pixelData);
 
@@ -178,9 +178,17 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
     size_t maxX = CGRectGetMaxX(rect);
     size_t maxY = height - rect.origin.y;
 
+    size_t strideX = 1;
+    size_t strideY = 1;
+    if (sampleSpace.width != 0) {
+        strideX = (maxX - minX) / sampleSpace.width;
+        strideY = (maxY - minY) / sampleSpace.height;
+    }
+    assert(strideX > 0 && strideY > 0);
+
     size_t matchingPixelCount = 0;
-    for (size_t y = minY; y < maxY; y++) {
-        for (size_t x = minX; x < maxX; x++) {
+    for (size_t y = minY; y < maxY; y += strideY) {
+        for (size_t x = minX; x < maxX; x += strideX) {
             const uint8 *pixel = pixels + y * bytesPerRow + x * bytesPerPixel;
             //NSLog(@"%lu, %lu : %d, %d, %d, %d against %d, %d, %d, %d", x, y, pixel[0], pixel[1], pixel[2], pixel[3], highPixel[0], highPixel[1], highPixel[2], highPixel[3]);
             if (pixel[0] >= lowPixel[0] && pixel[0] <= highPixel[0]
@@ -192,6 +200,11 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
     }
 
     return matchingPixelCount;
+}
+
+-(size_t)_countPixelsInRect:(CGRect)rect aboveRGB:(const uint8[3])lowRGB belowRGB:(const uint8[3])highRGB
+{
+    return [self _countPixelsInRect:rect aboveRGB:lowRGB belowRGB:highRGB sampleSpace:CGSizeZero];
 }
 
 // This method is for debugging.
@@ -293,10 +306,10 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
     const uint8 lowRGB[3] = {0, 0, 0};
     const uint8 highRGB[3] =  {5, 5, 5};
     CGRect mainRect = [self _findMainRect];
-    size_t blackPixelCount = [self _countPixelsInRect:mainRect aboveRGB:lowRGB belowRGB:highRGB];
-
+    CGSize sampleSpace = CGSizeMake(31, 31);
+    size_t blackPixelCount = [self _countPixelsInRect:mainRect aboveRGB:lowRGB belowRGB:highRGB sampleSpace:sampleSpace];
     const float percentBlackTransitionThreshold = 0.87f;
-    size_t totalPixelCount = mainRect.size.height * mainRect.size.width;
+    size_t totalPixelCount = sampleSpace.height * sampleSpace.width;
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
