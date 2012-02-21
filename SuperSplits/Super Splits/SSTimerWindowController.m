@@ -37,6 +37,9 @@
     [totalTimeDeltaView setFormatter:deltaFormatter];
     [lastRoomSplitDeltaView setFormatter:deltaFormatter];
 
+    // FIXME: blackout mode may need to be optional.
+    [blinderView setHidden:NO];
+
     [self updateTimerViews];
 }
 
@@ -69,6 +72,12 @@
     SSSplit *currentRoomReference = [comparision valueForKeyPath:@"currentMatchedSplit.referenceSplit"];
     [roomReferenceTimeView setObjectValue:[currentRoomReference valueForKey:@"duration"]];
     [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
+
+    // FIXME: blackout mode may need to be optional.
+    // Only show the split for every 5th room in an effort to reduce data overload.
+    BOOL showTimeDelta = [[current roomSplits] count] % 5 == 0;
+    [totalTimeDeltaView setHidden:!showTimeDelta];
+
     [lastRoomSplitDeltaView setObjectValue:[comparision valueForKeyPath:@"previousMatchedSplit.durationDifference"]];
 
     BOOL showRoomName = [_mainController running] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0;

@@ -16,6 +16,7 @@
 			<string>NSTextFieldCell</string>
 			<string>NSWindowTemplate</string>
 			<string>NSView</string>
+			<string>NSCustomView</string>
 			<string>NSCustomObject</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -356,7 +357,7 @@
 							<string key="NSFrame">{{17, 371}, {129, 28}}</string>
 							<reference key="NSSuperview" ref="658788145"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="899674585"/>
+							<reference key="NSNextKeyView" ref="710536165"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<string key="NSReuseIdentifierKey">_NS:3944</string>
 							<bool key="NSEnabled">YES</bool>
@@ -429,6 +430,16 @@
 									<bytes key="NSRGB">MSAwLjQwMDAwMDAwNiAwLjQwMDAwMDAwNgA</bytes>
 								</object>
 							</object>
+						</object>
+						<object class="NSCustomView" id="710536165">
+							<reference key="NSNextResponder" ref="658788145"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{0, 41}, {163, 322}}</string>
+							<reference key="NSSuperview" ref="658788145"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="899674585"/>
+							<string key="NSReuseIdentifierKey">_NS:1192</string>
+							<string key="NSClassName">SSBlackView</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{163, 478}</string>
@@ -550,6 +561,14 @@
 					</object>
 					<int key="connectionID">76</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">blinderView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="710536165"/>
+					</object>
+					<int key="connectionID">84</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -609,6 +628,7 @@
 							<reference ref="682160501"/>
 							<reference ref="882962817"/>
 							<reference ref="9304995"/>
+							<reference ref="710536165"/>
 						</object>
 						<reference key="parent" ref="887983675"/>
 					</object>
@@ -822,6 +842,14 @@
 						<reference key="object" ref="43461809"/>
 						<reference key="parent" ref="184866382"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">77</int>
+						<reference key="object" ref="710536165"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
+						<reference key="parent" ref="658788145"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -865,6 +893,7 @@
 					<string>73.IBPluginDependency</string>
 					<string>74.IBPluginDependency</string>
 					<string>75.IBPluginDependency</string>
+					<string>77.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -905,6 +934,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -919,7 +949,7 @@
 				<reference key="dict.values" ref="1002"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">76</int>
+			<int key="maxID">84</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -939,6 +969,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>blinderView</string>
 							<string>lastRoomSplitDeltaView</string>
 							<string>lastRoomSplitView</string>
 							<string>referenceFractionView</string>
@@ -953,6 +984,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSView</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -970,6 +1002,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>blinderView</string>
 							<string>lastRoomSplitDeltaView</string>
 							<string>lastRoomSplitView</string>
 							<string>referenceFractionView</string>
@@ -984,6 +1017,10 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">blinderView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">lastRoomSplitDeltaView</string>
 								<string key="candidateClassName">NSTextField</string>
