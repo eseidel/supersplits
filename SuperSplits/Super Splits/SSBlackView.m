@@ -23,7 +23,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     [[NSColor blackColor] set];
-    NSRectFill([self frame]);
+    NSRectFill([self bounds]);
 }
 
 @end
