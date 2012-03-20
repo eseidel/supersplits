@@ -75,7 +75,7 @@
 
     // FIXME: blackout mode may need to be optional.
     // Only show the split for every 5th room in an effort to reduce data overload.
-    BOOL showTimeDelta = [[current roomSplits] count] % 5 == 0;
+    BOOL showTimeDelta = ([[current roomSplits] count] % 5 == 0) || ![_mainController running];
     [totalTimeDeltaView setHidden:!showTimeDelta];
 
     [lastRoomSplitDeltaView setObjectValue:[comparision valueForKeyPath:@"previousMatchedSplit.durationDifference"]];
