@@ -18,16 +18,9 @@
 
     IBOutlet NSTextField *totalTimeView;
     IBOutlet NSTextField *totalTimeDeltaView;
-    IBOutlet NSTextField *roomTimeView;
-    IBOutlet NSTextField *roomReferenceTimeView;
-    IBOutlet NSTextField *lastRoomSplitView;
-    IBOutlet NSTextField *lastRoomSplitDeltaView;
     IBOutlet NSTextField *timerState;
-    IBOutlet NSTextField *referenceFractionView;
-    IBOutlet NSTextField *splitCountView;
     IBOutlet NSTextField *roomNameView;
     IBOutlet NSTextField *speedMultiplierView;
-    IBOutlet NSView *blinderView;
 }
 
 @property(retain) SSMainController *mainController;

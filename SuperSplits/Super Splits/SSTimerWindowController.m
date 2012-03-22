@@ -25,20 +25,14 @@
 {
     [super windowDidLoad];
     
+    // FIXME: This should only apply when the emulator is frontmost.
     [self.window setLevel:NSStatusWindowLevel];
 
     SSTimeIntervalFormatter *intervalFormatter = [[SSTimeIntervalFormatter alloc] init];
     [totalTimeView setFormatter:intervalFormatter];
-    [roomTimeView setFormatter:intervalFormatter];
-    [lastRoomSplitView setFormatter:intervalFormatter];
-    [roomReferenceTimeView setFormatter:intervalFormatter];
 
     SSTimeDeltaFormatter *deltaFormatter = [[SSTimeDeltaFormatter alloc] init];
     [totalTimeDeltaView setFormatter:deltaFormatter];
-    [lastRoomSplitDeltaView setFormatter:deltaFormatter];
-
-    // FIXME: blackout mode may need to be optional.
-    [blinderView setHidden:NO];
 
     [self updateTimerViews];
 }
@@ -65,22 +59,17 @@
 
     // FIXME: This should all be done with KVO, once SSRunBuilder is KVO compliant.
     [totalTimeView setObjectValue:[runBuilder valueForKey:@"totalTime"]];
-    [roomTimeView setObjectValue:[runBuilder valueForKey:@"roomTime"]];
-    [lastRoomSplitView setObjectValue:[[current lastSplit] valueForKey:@"duration"]];
 
     SSRunComparison *comparision = [_mainController runComparison];
-    SSSplit *currentRoomReference = [comparision valueForKeyPath:@"currentMatchedSplit.referenceSplit"];
-    [roomReferenceTimeView setObjectValue:[currentRoomReference valueForKey:@"duration"]];
     [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
 
-    // FIXME: blackout mode may need to be optional.
     // Only show the split for every 5th room in an effort to reduce data overload.
     BOOL showTimeDelta = ([[current roomSplits] count] % 5 == 0) || ![_mainController running];
     [totalTimeDeltaView setHidden:!showTimeDelta];
 
-    [lastRoomSplitDeltaView setObjectValue:[comparision valueForKeyPath:@"previousMatchedSplit.durationDifference"]];
-
+    SSSplit *currentRoomReference = [comparision valueForKeyPath:@"currentMatchedSplit.referenceSplit"];
     BOOL showRoomName = [_mainController running] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0;
+    showRoomName = NO; // Don't show room names until we're more reliable.
     [roomNameView setHidden:!showRoomName];
     [timerState setHidden:showRoomName];
     [roomNameView setObjectValue:[currentRoomReference roomName]];
@@ -91,12 +80,6 @@
     } else {
         [timerState setStringValue:[runBuilder stateAsString]];
     }
-
-    NSNumber *lastMatchedSplitNumber = [comparision lastMatchedSplitNumber];
-    SSRun *reference = [_mainController referenceRun];
-    NSString *referenceFractionString = [NSString stringWithFormat:@"%@ / %lu", lastMatchedSplitNumber, [[reference roomSplits] count]];
-    [referenceFractionView setStringValue:referenceFractionString];
-    [splitCountView setIntegerValue:[[current roomSplits] count] + 1];
 
     if (_mainController.imageSource.speedMultiplier == 1.0)
         [speedMultiplierView setHidden:YES];
