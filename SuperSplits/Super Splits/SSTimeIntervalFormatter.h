@@ -10,6 +10,9 @@
 
 @interface SSTimeIntervalFormatter : NSFormatter
 
+// FIXME: This isn't a very flexible design.
+@property BOOL hideDeciseconds;
+
 - (NSString *)stringForObjectValue:(id)anObject;
 
 @end

@@ -24,11 +24,12 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
+
     // FIXME: This should only apply when the emulator is frontmost.
     [self.window setLevel:NSStatusWindowLevel];
 
     SSTimeIntervalFormatter *intervalFormatter = [[SSTimeIntervalFormatter alloc] init];
+    intervalFormatter.hideDeciseconds = YES;
     [totalTimeView setFormatter:intervalFormatter];
 
     SSTimeDeltaFormatter *deltaFormatter = [[SSTimeDeltaFormatter alloc] init];

@@ -10,6 +10,8 @@
 
 @implementation SSTimeIntervalFormatter
 
+@synthesize hideDeciseconds=_hideDeciseconds;
+
 - (NSString *)stringForObjectValue:(id)anObject
 {
     NSTimeInterval timeInterval = [anObject doubleValue];
@@ -23,11 +25,17 @@
     int deciseconds = abs((timeInterval - trunc(timeInterval)) * 10.0);
     int sign = timeInterval < 0 ? -1 : 1;
 
+    NSString *string = nil;
     if (hours > 0)
-        return [NSString stringWithFormat:@"%d:%02d:%02d.%ds", sign * hours, minutes, seconds, deciseconds];
-    if (minutes > 0)
-        return [NSString stringWithFormat:@"%d:%02d.%ds", sign * minutes, seconds, deciseconds];
-    return [NSString stringWithFormat:@"%d.%ds", sign * seconds, deciseconds];
+        string = [NSString stringWithFormat:@"%d:%02d:%02d.%ds", sign * hours, minutes, seconds, deciseconds];
+    else if (minutes > 0 || _hideDeciseconds)
+        string = [NSString stringWithFormat:@"%d:%02d.%ds", sign * minutes, seconds, deciseconds];
+    else
+        string = [NSString stringWithFormat:@"%d.%ds", sign * seconds, deciseconds];
+    // FIXME: This is a big hack.
+    if (_hideDeciseconds)
+        return [string substringWithRange:NSMakeRange(0, string.length - 3)];
+    return string;
 }
 
 @end
