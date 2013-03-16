@@ -103,6 +103,11 @@ const CGFloat statusLineVerticalOffset = 386;
         const CGFloat leftOffset = 14;
         const CGFloat rightOffset = 129;
         return CGRectMake(leftOffset, vlcControlsHeight + bottomOffset, width - rightOffset, height - topOffset - bottomOffset - vlcControlsHeight - titleBarHeight);
+    } else if (width == 480 && height == 360) {
+        // garrison's world record run from YT
+        const CGFloat verticalPadding = 11.0;
+        const CGFloat horizontalPadding = 17.0;
+        return CGRectMake(horizontalPadding, verticalPadding, width - 2 * horizontalPadding, height - 2 * verticalPadding);
     }
     static BOOL haveLogged = NO;
     if (!haveLogged) {
@@ -304,12 +309,13 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
 -(BOOL)isMostlyBlack
 {
     const uint8 lowRGB[3] = {0, 0, 0};
-    const uint8 highRGB[3] =  {5, 5, 5};
+    const uint8 highRGB[3] =  {30, 30, 30};
     CGRect mainRect = [self _findMainRect];
     CGSize sampleSpace = CGSizeMake(31, 31);
     size_t blackPixelCount = [self _countPixelsInRect:mainRect aboveRGB:lowRGB belowRGB:highRGB sampleSpace:sampleSpace];
     const float percentBlackTransitionThreshold = 0.87f;
     size_t totalPixelCount = sampleSpace.height * sampleSpace.width;
+    //NSLog(@"black: %lu, total: %lu", blackPixelCount, totalPixelCount);
     return blackPixelCount > (size_t)((float)totalPixelCount * percentBlackTransitionThreshold);
 }
 
