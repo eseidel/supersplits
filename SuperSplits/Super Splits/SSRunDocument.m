@@ -48,6 +48,11 @@
     return [matcher fillInGaps:matchedSplits fromReferenceRun:self.referenceRun];
 }
 
++ (NSSet *)keyPathsForValuesAffectingMatchedSplits
+{
+    return [NSSet setWithObjects:@"run", @"referenceRun", nil];
+}
+
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
