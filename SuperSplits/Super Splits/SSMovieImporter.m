@@ -64,6 +64,7 @@
         }
 
         if (result == AVAssetImageGeneratorSucceeded) {
+            framesRecieved++;
             if (CMTimeCompare(lastActualTime, actualTime) == 0) {
                 NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
                 NSLog(@"Warning: Ignoring duplicate frame for time: %@", actualTimeString);
@@ -78,10 +79,9 @@
                 return;
             }
             [runBuilder updateWithFrame:frame atOffset:CMTimeGetSeconds(actualTime)];
-    //        [self performSelectorOnMainThread:@selector(setLastFrame:) withObject:frame waitUntilDone:NO];
+            [self performSelectorOnMainThread:@selector(setLastFrame:) withObject:frame waitUntilDone:NO];
         }
 
-        framesRecieved++;
         if (framesRecieved % updateProgessEveryNFrames == 0) {
             Float64 currentSeconds = CMTimeGetSeconds(actualTime);
             Float64 percentComplete = currentSeconds / durationSeconds;
