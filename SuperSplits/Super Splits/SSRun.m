@@ -13,12 +13,13 @@
 const NSUInteger kInvalidSplitIndex = -1;
 
 @implementation SSRun
-
-@synthesize roomSplits=_roomSplits, events=_events, url=_url;
+{
+    NSDate *_startDate;
+}
 
 +(NSArray *)runFileTypes
 {
-    return [NSArray arrayWithObject:@"txt"];
+    return @[(NSString *)kUTTypePlainText];
 }
 
 +(NSURL *)defaultRunsDirectory
@@ -39,7 +40,8 @@ const NSUInteger kInvalidSplitIndex = -1;
 
 -(id)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _startDate = [NSDate date];
         _roomSplits = [NSMutableArray array];
         _events = [NSMutableArray array];
@@ -108,10 +110,10 @@ const NSUInteger kInvalidSplitIndex = -1;
         return nil;
     NSTimeInterval accumulatedTime = 0;
     for (size_t x = 0; x <= splitIndex; x++) {
-        SSSplit *split = [_roomSplits objectAtIndex:x];
+        SSSplit *split = _roomSplits[x];
         accumulatedTime += [split duration];
     }
-    return [NSNumber numberWithDouble:accumulatedTime];
+    return @(accumulatedTime);
 }
 
 -(NSUInteger)indexOfFirstSplitAfter:(NSUInteger)startIndex withEntryMap:(NSString *)mapState scanLimit:(NSUInteger)scanLimit
@@ -124,7 +126,7 @@ const NSUInteger kInvalidSplitIndex = -1;
         if (splitIndex >= [_roomSplits count])
             break;
         
-        SSSplit *split = [_roomSplits objectAtIndex:splitIndex];
+        SSSplit *split = _roomSplits[splitIndex];
         if ([split.entryMapState isEqualToString:mapState]) {
             if (splitsScanned)
                 NSLog(@"WARNING: Found matching split at offset %lu from expected", splitsScanned);
@@ -132,7 +134,9 @@ const NSUInteger kInvalidSplitIndex = -1;
         }
         //NSLog(@"%@ does not match %@", split.entryMapState, mapState);
     }
+#if DEBUG
     NSLog(@"ERROR: Scan limit (%lu) reached, failed to find: %@ after %lu", scanLimit, mapState, startIndex);
+#endif
     return kInvalidSplitIndex;
 }
 
@@ -151,7 +155,10 @@ const NSUInteger kInvalidSplitIndex = -1;
     if (foundIndex != NSNotFound && startIndex - foundIndex < scanLimit)
         return foundIndex;
 
+#if DEBUG
     NSLog(@"ERROR: Scan limit reached, failed to find: %@ within %lu of %lu", mapState, scanLimit, startIndex);
+#endif
+    
     return kInvalidSplitIndex;
 }
 
@@ -167,7 +174,7 @@ const NSUInteger kInvalidSplitIndex = -1;
 {
     if ([_events count] < 1)
         return nil;
-    return [_events objectAtIndex:0];
+    return _events[0];
 }
 
 -(SSEvent *)lastEvent
@@ -191,7 +198,7 @@ const NSUInteger kInvalidSplitIndex = -1;
     return nil;
 }
 
--(SSEvent *)lastSplit
+-(SSSplit *)lastSplit
 {
     return [_roomSplits lastObject];
 }

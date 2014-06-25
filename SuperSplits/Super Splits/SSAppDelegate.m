@@ -37,11 +37,22 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 }
 
 @implementation SSAppDelegate
+{
+    SSTimerWindowController *_timerWindowController;
+    SSDebugWindowController *_debugWindowController;
+    SSHistoryWindowController *_historyWindowController;
+    SSMainController *_mainController;
+
+	EventHandlerUPP _hotKeyEventHandler;
+
+	EventHotKeyRef _startStopHotKeyRef;
+	EventHotKeyRef _startStopAlternateHotKeyRef;
+	EventHotKeyRef _resetHotKeyRef;
+}
 
 - (void)_registerDefaults
 {
-    NSDictionary *defaultsDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0]
-                                                             forKey:kSpeedMultiplierDefaultName];
+    NSDictionary *defaultsDict = @{kSpeedMultiplierDefaultName: @1.0f};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsDict];
 }
 
@@ -84,7 +95,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (IBAction)togglePause:(id)sender
 {
-    if (![_mainController running]) {
+    if (![_mainController isRunning]) {
         [_mainController startRun];
         [_timerWindowController startUpdating];
     } else {
@@ -119,7 +130,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (IBAction)saveAs:(id)sender
 {
-    if ([_mainController running])
+    if ([_mainController isRunning])
         [_mainController stopRun]; // If we're going to show a modal panel, might as well stop the run._
 
     NSSavePanel *savePanel = [NSSavePanel savePanel];
@@ -133,7 +144,7 @@ static pascal OSStatus HotKeyHandler(EventHandlerCallRef nextHandler, EventRef t
 
 - (IBAction)saveAsReference:(id)sender
 {
-    if ([_mainController running])
+    if ([_mainController isRunning])
         [_mainController stopRun];
 
     [[[_mainController runBuilder] run] writeToURL:[_mainController referenceRunURL]];

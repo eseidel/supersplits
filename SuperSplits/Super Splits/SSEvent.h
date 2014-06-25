@@ -24,9 +24,9 @@ typedef enum {
 -(id)initWithType:(SSEventType)type atOffset:(NSTimeInterval)offset;
 
 @property SSEventType type;
-@property (readonly) NSString *typeName;
-@property (retain) NSString *mapState;
+@property (readonly, nonatomic) NSString *typeName;
+@property (strong) NSString *mapState;
 @property NSTimeInterval offset;
-@property (retain) NSImage *image;
+@property (strong) NSImage *image;
 
 @end

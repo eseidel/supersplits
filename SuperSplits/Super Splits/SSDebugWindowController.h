@@ -12,6 +12,6 @@
 
 @interface SSDebugWindowController : NSWindowController
 
-@property (retain) SSMainController *mainController;
+@property (strong) SSMainController *mainController;
 
 @end

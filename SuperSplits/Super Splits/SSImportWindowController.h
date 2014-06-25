@@ -12,7 +12,7 @@
 
 @interface SSImportWindowController : NSWindowController
 
-@property (retain) SSMovieImporter *movieImporter;
+@property (strong) SSMovieImporter *movieImporter;
 
 -(IBAction)cancelImport:(id)sender;
 

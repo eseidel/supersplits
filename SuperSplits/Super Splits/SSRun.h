@@ -15,14 +15,11 @@ extern const NSUInteger kInvalidSplitIndex;
 
 // FIXME: Should this subclass from NSDocument?
 @interface SSRun : NSObject
-{
-    NSDate *_startDate;
-}
 
-@property (readonly, retain) NSMutableArray *roomSplits;
-@property (readonly, retain) NSMutableArray *events;
-@property (readonly, retain) NSURL *url;
-@property (readonly) NSString *filename;
+@property (readonly, strong) NSMutableArray *roomSplits;
+@property (readonly, strong) NSMutableArray *events;
+@property (readonly, strong) NSURL *url;
+@property (readonly, nonatomic) NSString *filename;
 
 +(NSURL *)defaultURLForRunWithName:(NSString *)name;
 +(NSArray *)runFileTypes;

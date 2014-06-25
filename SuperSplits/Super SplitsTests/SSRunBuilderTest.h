@@ -6,8 +6,8 @@
 //  Copyright (c) 2011 Eric Seidel. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface SSRunBuilderTest : SenTestCase
+@interface SSRunBuilderTest : XCTestCase
 
 @end

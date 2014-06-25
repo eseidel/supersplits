@@ -12,14 +12,14 @@
 
 @interface SSMatchedSplit : NSObject
 
-@property (retain) SSSplit *split;
+@property (strong) SSSplit *split;
 @property NSUInteger splitIndex; // 0-based.
-@property (readonly) NSNumber *splitNumber; // 1-based.
+@property (readonly, nonatomic) NSNumber *splitNumber; // 1-based.
 
-@property (retain) SSSplit *referenceSplit;
+@property (strong) SSSplit *referenceSplit;
 @property NSUInteger referenceSplitIndex; // 0-based.
-@property (readonly) NSNumber *referenceSplitNumber; // 1-based.
+@property (readonly, nonatomic) NSNumber *referenceSplitNumber; // 1-based.
 
-@property (readonly) NSNumber *durationDifference;
+@property (readonly, nonatomic) NSNumber *durationDifference;
 
 @end

@@ -18,8 +18,9 @@
 #import "SSWindowImageSource.h"
 
 @implementation SSTimerWindowController
-
-@synthesize mainController=_mainController;
+{
+    NSTimer *_updateTimer;
+}
 
 - (void)windowDidLoad
 {
@@ -30,17 +31,17 @@
 
     SSTimeIntervalFormatter *intervalFormatter = [[SSTimeIntervalFormatter alloc] init];
     intervalFormatter.hideDeciseconds = YES;
-    [totalTimeView setFormatter:intervalFormatter];
+    [[self totalTimeView] setFormatter:intervalFormatter];
 
     SSTimeDeltaFormatter *deltaFormatter = [[SSTimeDeltaFormatter alloc] init];
-    [totalTimeDeltaView setFormatter:deltaFormatter];
+    [[self totalTimeDeltaView] setFormatter:deltaFormatter];
 
     [self updateTimerViews];
 }
 
 -(void)startUpdating
 {
-    _updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0f / 10.0f)
+    _updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / 10.0)
                                                     target:self
                                                   selector:@selector(updateTimerViews)
                                                   userInfo:self
@@ -59,35 +60,35 @@
     SSRun *current = [runBuilder run];
 
     // FIXME: This should all be done with KVO, once SSRunBuilder is KVO compliant.
-    [totalTimeView setObjectValue:[runBuilder valueForKey:@"totalTime"]];
+    [[self totalTimeView] setObjectValue:[runBuilder valueForKey:@"totalTime"]];
 
     SSRunComparison *comparision = [_mainController runComparison];
-    [totalTimeDeltaView setObjectValue:[comparision deltaToStartOfCurrentRoom]];
+    [[self totalTimeDeltaView] setObjectValue:[comparision deltaToStartOfCurrentRoom]];
 
     // Only show the split for every 5th room in an effort to reduce data overload.
-    BOOL showTimeDelta = ([[current roomSplits] count] % 5 == 0) || ![_mainController running];
-    [totalTimeDeltaView setHidden:!showTimeDelta];
+    BOOL showTimeDelta = ([[current roomSplits] count] % 5 == 0) || ![_mainController isRunning];
+    [[self totalTimeDeltaView] setHidden:!showTimeDelta];
 
     SSSplit *currentRoomReference = [comparision valueForKeyPath:@"currentMatchedSplit.referenceSplit"];
-    BOOL showRoomName = [_mainController running] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0;
+    BOOL showRoomName = [_mainController isRunning] && runBuilder.state == RoomState && [[currentRoomReference roomName] length] > 0;
     showRoomName = NO; // Don't show room names until we're more reliable.
-    [roomNameView setHidden:!showRoomName];
-    [timerState setHidden:showRoomName];
-    [roomNameView setObjectValue:[currentRoomReference roomName]];
+    [[self roomNameView] setHidden:!showRoomName];
+    [[self timerState] setHidden:showRoomName];
+    [[self roomNameView] setObjectValue:[currentRoomReference roomName]];
 
     // FIXME: This could be done with KVO in IB:
-    if (![_mainController running]) {
-        [timerState setStringValue:@"paused"];
+    if (![_mainController isRunning]) {
+        [[self timerState] setStringValue:@"paused"];
     } else {
-        [timerState setStringValue:[runBuilder stateAsString]];
+        [[self timerState] setStringValue:[runBuilder stateAsString]];
     }
 
     if (_mainController.imageSource.speedMultiplier == 1.0)
-        [speedMultiplierView setHidden:YES];
+        [[self speedMultiplierView] setHidden:YES];
     else {
-        [speedMultiplierView setHidden:NO];
+        [[self speedMultiplierView] setHidden:NO];
         NSString *multiplier = [NSString stringWithFormat:@"%dx", (int)_mainController.imageSource.speedMultiplier, nil];
-        [speedMultiplierView setStringValue:multiplier];
+        [[self speedMultiplierView] setStringValue:multiplier];
     }
 }
 

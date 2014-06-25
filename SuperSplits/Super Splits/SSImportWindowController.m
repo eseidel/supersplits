@@ -11,8 +11,6 @@
 
 @implementation SSImportWindowController
 
-@synthesize movieImporter=_movieImporter;
-
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];

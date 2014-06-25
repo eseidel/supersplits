@@ -10,11 +10,10 @@
 
 @implementation SSEvent
 
-@synthesize type=_type, offset=_offset, mapState=_mapState, image=_image;
-
 -(id)initWithType:(SSEventType)type atOffset:(NSTimeInterval)offset
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _type = type;
         _offset = offset;
     }
@@ -23,23 +22,32 @@
 
 -(NSString *)typeName
 {
+    NSString * typeName = @"ERROR";
+    
     switch(_type) {
         case RoomEvent:
-            return @"room";
+            typeName = @"room";
+            break;
         case DoorEvent:
-            return @"door";
+            typeName = @"door";
+            break;
         case CutsceneEvent:
-            return @"cutscene";
+            typeName = @"cutscene";
+            break;
         case ItemEvent:
-            return @"item";
+            typeName = @"item";
+            break;
         case MapChangeEvent:
-            return @"map";
+            typeName = @"map";
+            break;
         case PauseEvent:
-            return @"pause";
+            typeName = @"pause";
+            break;
         case InvalidEvent:
-            return @"invalid";
+            typeName = @"invalid";
+            break;
     }
-    return @"ERROR";
+    return typeName;
 }
 
 @end

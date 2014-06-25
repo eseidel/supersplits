@@ -10,6 +10,4 @@
 
 @implementation SSImageSource
 
-@synthesize delegate=_delegate;
-
 @end

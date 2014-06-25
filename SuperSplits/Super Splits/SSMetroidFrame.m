@@ -8,7 +8,17 @@
 
 #import "SSMetroidFrame.h"
 
-@interface SSMetroidFrame (PrivateMethods)
+@interface SSMetroidFrame ()
+{
+    CGImageRef _image;
+    CFDataRef _pixelData;
+
+    CGRect _gameRectInImage;
+    CGAffineTransform _fromGameRectToImage;
+
+    NSImage *_debugImage;
+    NSImage *_originalImage;
+}
 
 -(BOOL)isSupportedImage:(CGImageRef)frame;
 
@@ -22,16 +32,15 @@
 
 // FIXME: This is likely wrong.  SNES interlaced size should be 512 x 448 according to:
 // http://en.wikipedia.org/wiki/SNES
-const CGRect unitGameRect = { 0, 0, 512, 450};
-const CGFloat statusLineVerticalOffset = 386;
+static const CGRect unitGameRect = { {0, 0}, {512, 450}};
+static const CGFloat statusLineVerticalOffset = 386;
 
 @implementation SSMetroidFrame
 
-@synthesize debugImage=_debugImage, originalImage=_originalImage;
-
 -(id)initWithCGImage:(CGImageRef)image
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _image = image;
         if (![self isSupportedImage:image]) {
             NSLog(@"Unsupported image format!");
@@ -119,7 +128,7 @@ const CGFloat statusLineVerticalOffset = 386;
 
 -(CGRect)_findMainRect
 {
-    CGRect mainRect = { 0, 0, unitGameRect.size.width, statusLineVerticalOffset };
+    CGRect mainRect = { {0, 0}, {unitGameRect.size.width, statusLineVerticalOffset} };
     return CGRectApplyAffineTransform(mainRect, _fromGameRectToImage);
 }
 
@@ -185,7 +194,7 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
 
     size_t strideX = 1;
     size_t strideY = 1;
-    if (sampleSpace.width != 0) {
+    if (sampleSpace.width > 0) {
         strideX = (maxX - minX) / sampleSpace.width;
         strideY = (maxY - minY) / sampleSpace.height;
     }
@@ -368,9 +377,9 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
     CGSize mapSquare = { mapRect.size.width / 5.0, mapRect.size.height / 3.0 };
     for (size_t y = 0; y < 3; y++) {
         for (size_t x = 0; x < 5; x++) {
-            CGRect rect = { mapRect.origin.x + mapSquare.width * x,
-                            mapRect.origin.y + mapSquare.height * y,
-                            mapSquare.width, mapSquare.height };
+            CGRect rect = { {mapRect.origin.x + mapSquare.width * x,
+                mapRect.origin.y + mapSquare.height * y},
+                {mapSquare.width, mapSquare.height} };
             size_t blackPixelCount = [self _countPixelsInRect:rect aboveRGB:lowRGB belowRGB:highRGB];
 
             // 30% black is enough to signify an empty square.
@@ -391,9 +400,7 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
 {
     if (_originalImage)
         return _originalImage;
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:_image];
-    _originalImage = [[NSImage alloc] init];
-    [_originalImage addRepresentation:bitmapRep];
+    _originalImage = [[NSImage alloc] initWithCGImage:_image size:(NSSize){CGImageGetWidth(_image), CGImageGetHeight(_image)}];
     return _originalImage;
 }
 
@@ -402,11 +409,16 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
     if (_debugImage)
         return _debugImage;
 
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:_image];
-    _debugImage = [[NSImage alloc] init];
-    [_debugImage addRepresentation:bitmapRep];
+    const size_t pixelWidth = CGImageGetWidth(_image);
+    const size_t pixelHeight = CGImageGetHeight(_image);
+    
+    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:NULL pixelsWide:pixelWidth pixelsHigh:pixelHeight bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSCalibratedRGBColorSpace bytesPerRow:0 bitsPerPixel:0];
+    
+    NSGraphicsContext *bitmapContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:bitmapRep];
+    
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:bitmapContext];
 
-    [_debugImage lockFocus];
     [[[NSColor blueColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findGameRect]];
 
@@ -424,7 +436,11 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
 
     [[[NSColor yellowColor] colorWithAlphaComponent:.5] setFill];
     [NSBezierPath fillRect:[self _findLowerItemTextRect]];
-    [_debugImage unlockFocus];
+    
+    [NSGraphicsContext restoreGraphicsState];
+    
+    _debugImage = [[NSImage alloc] initWithSize:(NSSize){pixelWidth, pixelHeight}];
+    [_debugImage addRepresentation:bitmapRep];
 
     return _debugImage;
 }

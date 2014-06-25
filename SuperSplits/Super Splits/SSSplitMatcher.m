@@ -66,7 +66,7 @@
     matchedSplit.split = split;
     if (referenceSplitIndex != kInvalidSplitIndex) {
         matchedSplit.referenceSplitIndex = referenceSplitIndex;
-        matchedSplit.referenceSplit = [[referenceRun roomSplits] objectAtIndex:referenceSplitIndex];
+        matchedSplit.referenceSplit = [referenceRun roomSplits][referenceSplitIndex];
     }
     return matchedSplit;
 }
@@ -78,10 +78,10 @@
         return matchedSplits;
 
     for (NSUInteger i = 1; i < splitsCount - 2; i++) {
-        SSMatchedSplit *previousSplit = [matchedSplits objectAtIndex:i-1];
-        SSMatchedSplit *split = [matchedSplits objectAtIndex:i];
-        SSMatchedSplit *nextSplit = [matchedSplits objectAtIndex:i+1];
-        SSMatchedSplit *nextNextSplit = [matchedSplits objectAtIndex:i+2];
+        SSMatchedSplit *previousSplit = matchedSplits[i-1];
+        SSMatchedSplit *split = matchedSplits[i];
+        SSMatchedSplit *nextSplit = matchedSplits[i+1];
+        SSMatchedSplit *nextNextSplit = matchedSplits[i+2];
 
         if (split.referenceSplitIndex - previousSplit.referenceSplitIndex == 1)
             continue;
@@ -89,7 +89,7 @@
         if (nextSplit.referenceSplitIndex - previousSplit.referenceSplitIndex == 2
             || nextNextSplit.referenceSplitIndex - previousSplit.referenceSplitIndex == 3) {
             split.referenceSplitIndex = previousSplit.referenceSplitIndex + 1;
-            split.referenceSplit = [[referenceRun roomSplits] objectAtIndex:split.referenceSplitIndex];
+            split.referenceSplit = [referenceRun roomSplits][split.referenceSplitIndex];
         }
     }
     return matchedSplits;
@@ -102,7 +102,7 @@
     
     NSMutableArray *matchedSplits = [NSMutableArray array];
     while (splitIndex < splitCount) {
-        SSMatchedSplit *matchedSplit = [self _matchSplit:[splits objectAtIndex:splitIndex]
+        SSMatchedSplit *matchedSplit = [self _matchSplit:splits[splitIndex]
                                                  atIndex:splitIndex
                                                    inRun:run
                                      againstReferenceRun:referenceRun

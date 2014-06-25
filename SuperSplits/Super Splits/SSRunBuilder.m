@@ -13,33 +13,48 @@
 #import "SSRun.h"
 #import "SSSplit.h"
 
-@interface SSRunBuilder (PrivateMethods)
+@interface SSRunBuilder ()
+{
+    SSRun *_run;
+
+    NSTimeInterval _offset;
+    NSTimeInterval _startOffset;
+    NSTimeInterval _stateStart;
+
+    SSRunState _state;
+    NSString *_mapState;
+}
 
 -(void)_startRoom;
--(void)_recordLastRoom;
 -(NSTimeInterval)_stateTime;
 
 @end
 
 @implementation SSRunBuilder
 
-@synthesize run=_run, state=_state, offset=_offset, currentSplit=_currentSplit;
-
 -(NSString *)stringForState:(SSRunState)state
 {
+    NSString * stateString = @"Invalid state!";
+    
     switch(state) {
         case RoomState:
-            return @"Room";
+            stateString = @"Room";
+            break;
         case RoomTransitionState:
-            return @"Door";
+            stateString = @"Door";
+            break;
         case BlackScreenState:
-            return @"Cutscene";
+            stateString = @"Cutscene";
+            break;
         case ItemScreenState:
-            return @"Item";
+            stateString = @"Item";
+            break;
         case UnknownState:
-            return @"Ready";
+            stateString = @"Ready";
+            break;
     }
-    return @"Invalid state!";
+    
+    return stateString;
 }
 
 -(NSString *)stateAsString
@@ -63,8 +78,10 @@
         case ItemScreenState:
             event.type = ItemEvent;
             break;
+        case UnknownState:
         default:
             event.type = InvalidEvent;
+            break;
     }
     event.offset = _offset;
     return event;
@@ -122,7 +139,9 @@
     }
 
     NSTimeInterval stateDuration = [self _stateTime];
+#if DEBUG
     NSLog(@"%@ (%.2fs) -> %@", [self stringForState:_state], stateDuration, [self stringForState:newState]);
+#endif
 
     if (newState == RoomState) {
         if (_state == RoomTransitionState) {
@@ -143,7 +162,8 @@
 
 -(id)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _run = [[SSRun alloc] init];
     }
     return self;
@@ -167,7 +187,9 @@
     // We could turn this assert into an if, to allow "reopening" rooms?
     assert(![[_run roomSplits] containsObject:_currentSplit]);
     [[_run roomSplits] addObject:_currentSplit];
+#if DEBUG
     NSLog(@"Saving Split: %.2fs, %@ -> %@, Transition: %.2fs", roomTime, _currentSplit.entryMapState, _currentSplit.exitMapState, [self _stateTime]);
+#endif
     // We don't currently nil _currentSplit, but perhaps we should?
     [_run autosave];
 }

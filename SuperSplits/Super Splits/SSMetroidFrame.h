@@ -9,20 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SSMetroidFrame : NSObject
-{
-    CGImageRef _image;
-    CFDataRef _pixelData;
 
-    CGRect _gameRectInImage;
-    CGAffineTransform _fromGameRectToImage;
-}
-
-@property (readonly) BOOL isMissingEnergyText;
-@property (readonly) BOOL isItemScreen;
-@property (readonly) BOOL isMostlyBlack;
-@property (readonly) NSString *miniMapString;
-@property (readonly, retain) NSImage *debugImage;
-@property (readonly, retain) NSImage *originalImage;
+@property (readonly, nonatomic) BOOL isMissingEnergyText;
+@property (readonly, nonatomic) BOOL isItemScreen;
+@property (readonly, nonatomic) BOOL isMostlyBlack;
+@property (readonly, nonatomic) NSString *miniMapString;
+@property (readonly, strong, nonatomic) NSImage *debugImage;
+@property (readonly, strong, nonatomic) NSImage *originalImage;
 
 -(id)initWithCGImage:(CGImageRef)image;
 

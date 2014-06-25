@@ -12,7 +12,7 @@
 
 @interface SSRunDocument : NSDocument
 
-@property (retain) SSRun *run;
-@property (readonly) NSArray *matchedSplits;
+@property (strong) SSRun *run;
+@property (readonly, nonatomic) NSArray *matchedSplits;
 
 @end

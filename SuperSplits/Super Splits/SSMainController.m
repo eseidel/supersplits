@@ -16,11 +16,10 @@
 
 @implementation SSMainController
 
-@synthesize runBuilder=_runBuilder, imageSource=_imageSource, lastFrame=_lastFrame, referenceRun=_referenceRun, runComparison=_runComparison;
-
 -(id)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _imageSource = [[SSWindowImageSource alloc] init];
         _imageSource.delegate = self;
         _referenceRun = [[SSRun alloc] initWithContentsOfURL:[self referenceRunURL]];
@@ -29,9 +28,9 @@
     return self;
 }
 
--(BOOL)running
+-(BOOL)isRunning
 {
-    return [_imageSource polling];
+    return [_imageSource isPolling];
 }
 
 -(void)startRun
@@ -46,7 +45,7 @@
 
 -(void)resetRun
 {
-    if ([self running])
+    if ([self isRunning])
         [self stopRun];
     _runComparison = [[SSRunComparison alloc] init];
     _runBuilder = [[SSRunBuilder alloc] init];

@@ -44,7 +44,6 @@
 		A83C4038148F0B8C00308FD4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A83C4036148F0B8C00308FD4 /* Credits.rtf */; };
 		A83C403B148F0B8C00308FD4 /* SSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */; };
 		A83C403E148F0B8D00308FD4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A83C403C148F0B8D00308FD4 /* MainMenu.xib */; };
-		A83C4046148F0B8D00308FD4 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */; };
 		A83C4047148F0B8D00308FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83C4027148F0B8C00308FD4 /* Cocoa.framework */; };
 		A83C404F148F0B8D00308FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A83C404D148F0B8D00308FD4 /* InfoPlist.strings */; };
 		A83C4061148F311200308FD4 /* SSMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = A83C4060148F311200308FD4 /* SSMainController.m */; };
@@ -142,8 +141,7 @@
 		A83C4039148F0B8C00308FD4 /* SSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAppDelegate.h; sourceTree = "<group>"; };
 		A83C403A148F0B8C00308FD4 /* SSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAppDelegate.m; sourceTree = "<group>"; };
 		A83C403D148F0B8D00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Super SplitsTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A83C4044148F0B8D00308FD4 /* Super SplitsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Super SplitsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83C404C148F0B8D00308FD4 /* Super SplitsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Super SplitsTests-Info.plist"; sourceTree = "<group>"; };
 		A83C404E148F0B8D00308FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A83C405F148F30FA00308FD4 /* SSMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMainController.h; sourceTree = "<group>"; };
@@ -194,7 +192,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A83C4046148F0B8D00308FD4 /* SenTestingKit.framework in Frameworks */,
 				A83C4047148F0B8D00308FD4 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,7 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				A83C4023148F0B8C00308FD4 /* Super Splits.app */,
-				A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */,
+				A83C4044148F0B8D00308FD4 /* Super SplitsTests.xctest */,
 				A82EF1E014E8922200917122 /* TestHarness */,
 			);
 			name = Products;
@@ -339,7 +336,6 @@
 				A88581F814AD972400B94063 /* CoreMedia.framework */,
 				A83C4029148F0B8C00308FD4 /* Other Frameworks */,
 				A89EB555149DE94600D6370F /* QTKit.framework */,
-				A83C4045148F0B8D00308FD4 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -461,8 +457,8 @@
 			);
 			name = "Super SplitsTests";
 			productName = "Super SplitsTests";
-			productReference = A83C4044148F0B8D00308FD4 /* Super SplitsTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = A83C4044148F0B8D00308FD4 /* Super SplitsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -657,11 +653,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -669,14 +667,45 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Winit-self",
+					"-Wsign-compare",
+					"-Wwrite-strings",
+					"-Wformat-security",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wdisabled-optimization",
+					"-Wunreachable-code",
+					"-Wpointer-arith",
+					"-Wreturn-type",
+					"-Wsequence-point",
+					"-Wswitch",
+					"-Wswitch-default",
+					"-Wswitch-enum",
+					"-Woverlength-strings",
+					"-Wformat=2",
+					"-Wcast-align",
+					"-Wdeclaration-after-statement",
+					"-Wmissing-format-attribute",
+					"-Wmissing-noreturn",
+					"-Wnested-externs",
+					"-Wnewline-eof",
+					"-Wold-style-definition",
+					"-Wredundant-decls",
+					"-Wstrict-prototypes",
+					"-Wundeclared-selector",
+					"-Wno-format-nonliteral",
+				);
 			};
 			name = Debug;
 		};
@@ -684,19 +713,53 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Winit-self",
+					"-Wsign-compare",
+					"-Wwrite-strings",
+					"-Wformat-security",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wdisabled-optimization",
+					"-Wunreachable-code",
+					"-Wpointer-arith",
+					"-Wreturn-type",
+					"-Wsequence-point",
+					"-Wswitch",
+					"-Wswitch-default",
+					"-Wswitch-enum",
+					"-Woverlength-strings",
+					"-Wformat=2",
+					"-Wcast-align",
+					"-Wdeclaration-after-statement",
+					"-Wmissing-format-attribute",
+					"-Wmissing-noreturn",
+					"-Wnested-externs",
+					"-Wnewline-eof",
+					"-Wold-style-definition",
+					"-Wredundant-decls",
+					"-Wstrict-prototypes",
+					"-Wundeclared-selector",
+					"-Wno-format-nonliteral",
+				);
 			};
 			name = Release;
 		};
@@ -726,13 +789,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Super Splits.app/Contents/MacOS/Super Splits";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Super Splits/Super Splits-Prefix.pch";
 				INFOPLIST_FILE = "Super SplitsTests/Super SplitsTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -740,13 +802,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Super Splits.app/Contents/MacOS/Super Splits";
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Super Splits/Super Splits-Prefix.pch";
 				INFOPLIST_FILE = "Super SplitsTests/Super SplitsTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

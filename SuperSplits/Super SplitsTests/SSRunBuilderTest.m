@@ -14,7 +14,7 @@
 - (void)testInit
 {
     SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
-    STAssertEquals(runBuilder.state, UnknownState, @"SSRunBuilder starts at unknown");
+    XCTAssertEqual(runBuilder.state, UnknownState, @"SSRunBuilder starts at unknown");
 }
 
 @end

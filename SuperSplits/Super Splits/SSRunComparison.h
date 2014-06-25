@@ -17,14 +17,11 @@
 // FIXME: This is not a particularly good design, but this logic makes
 // sense on its own object, even if not one that looks exactly like this.
 @interface SSRunComparison : NSObject
-{
-    SSSplitMatcher *_splitMatcher;
-}
 
-@property (retain) NSArray *matchedSplits;
-@property (readonly) NSNumber *lastMatchedSplitNumber;
-@property (nonatomic, retain) SSRunBuilder *runBuilder;
-@property (retain) SSRun *referenceRun;
+@property (strong) NSArray *matchedSplits;
+@property (readonly, nonatomic) NSNumber *lastMatchedSplitNumber;
+@property (nonatomic, strong) SSRunBuilder *runBuilder;
+@property (strong) SSRun *referenceRun;
 
 -(SSMatchedSplit *)currentMatchedSplit;
 -(SSMatchedSplit *)previousMatchedSplit;

@@ -12,8 +12,6 @@
 
 @implementation SSRunDocument
 
-@synthesize run=_run;
-
 - (id)init
 {
     self = [super init];

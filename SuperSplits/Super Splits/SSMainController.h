@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "SSImageSource.h"
+
 @class SSMetroidFrame;
 @class SSRun;
 @class SSRunBuilder;
@@ -15,15 +17,15 @@
 @class SSWindowImageSource;
 @class SSSplit;
 
-@interface SSMainController : NSObject
+@interface SSMainController : NSObject <SSImageSourceDelegate>
 
-@property (retain) SSWindowImageSource *imageSource;
-@property (readonly) BOOL running;
-@property (retain) SSMetroidFrame *lastFrame;
+@property (strong) SSWindowImageSource *imageSource;
+@property (readonly, getter=isRunning, nonatomic) BOOL running;
+@property (strong) SSMetroidFrame *lastFrame;
 
-@property (readonly, retain) SSRunBuilder *runBuilder;
-@property (readonly, retain) SSRunComparison *runComparison;
-@property (retain) SSRun *referenceRun;
+@property (readonly, strong) SSRunBuilder *runBuilder;
+@property (readonly, strong) SSRunComparison *runComparison;
+@property (strong) SSRun *referenceRun;
 
 -(void)resetRun;
 -(void)startRun;

@@ -12,11 +12,10 @@
 
 @implementation SSMatchedSplit
 
-@synthesize split=_split, splitIndex=_splitIndex, referenceSplit=_referenceSplit, referenceSplitIndex=_referenceSplitIndex;
-
 - (id)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _splitIndex = kInvalidSplitIndex;
         _referenceSplitIndex = kInvalidSplitIndex;
     }
@@ -27,21 +26,21 @@
 {
     if (!_split || !_referenceSplit)
         return nil;
-    return [NSNumber numberWithDouble:[_split duration] - [_referenceSplit duration]];
+    return @([_split duration] - [_referenceSplit duration]);
 }
 
 - (NSNumber *)splitNumber
 {
     if (_splitIndex == kInvalidSplitIndex)
         return nil;
-    return [NSNumber numberWithUnsignedInteger:_splitIndex + 1];
+    return @(_splitIndex + 1);
 }
 
 - (NSNumber *)referenceSplitNumber
 {
     if (_referenceSplitIndex == kInvalidSplitIndex)
         return nil;
-    return [NSNumber numberWithUnsignedInteger:_referenceSplitIndex + 1];
+    return @(_referenceSplitIndex + 1);
 }
 
 @end

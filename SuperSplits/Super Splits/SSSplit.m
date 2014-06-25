@@ -10,10 +10,6 @@
 
 @implementation SSSplit
 
-@synthesize entryMapState=_entryMapState, exitMapState=_exitMapState,
-            entryFrame=_entryFrame, exitFrame=_exitFrame, offset=_offset,
-            duration=_duration, roomName=_roomName;
-
 static inline NSString *nilToEmptyString(NSString *string)
 {
     return string ? string : @"";
@@ -28,16 +24,17 @@ static inline NSString *nullOrEmptyToNil(NSString *string)
 
 -(id)initWithString:(NSString *)archiveString
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         // Currently this means that ':' is an invalid character for room names.
         NSArray *components = [archiveString componentsSeparatedByString:@":"];
-        _duration = [[components objectAtIndex:0] doubleValue];
+        _duration = [components[0] doubleValue];
         if ([components count] >= 3) {
-            _entryMapState = nullOrEmptyToNil([components objectAtIndex:1]);
-            _exitMapState = nullOrEmptyToNil([components objectAtIndex:2]);
+            _entryMapState = nullOrEmptyToNil(components[1]);
+            _exitMapState = nullOrEmptyToNil(components[2]);
         }
         if ([components count] >= 4)
-            _roomName = nullOrEmptyToNil([components objectAtIndex:3]);
+            _roomName = nullOrEmptyToNil(components[3]);
     }
     return self;
 }

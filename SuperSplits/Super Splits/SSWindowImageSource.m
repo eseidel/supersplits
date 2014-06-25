@@ -10,12 +10,17 @@
 #import "SSUserDefaults.h"
 
 @implementation SSWindowImageSource
+{
+    CGWindowID _windowID;
+	NSTimer *_timer;
 
-@synthesize start=_start, speedMultiplier=_speedMultiplier;
+    double _speedMultiplier;
+}
 
 -(id)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         [self bind:@"speedMultiplier"
           toObject:[NSUserDefaultsController sharedUserDefaultsController]
        withKeyPath:[@"values." stringByAppendingString:kSpeedMultiplierDefaultName]
@@ -52,7 +57,7 @@
     return YES;
 }
 
--(BOOL)polling
+-(BOOL)isPolling
 {
     return !!_timer;
 }
@@ -73,17 +78,17 @@ void WindowSearchFunction(const void *inputDictionary, void *context)
     //NSString *targetApplicationName = @"VLC";
 	NSDictionary *entry = (__bridge NSDictionary*)inputDictionary;
 	CGWindowID *foundWindowId = (CGWindowID*)context;
-    CGWindowID windowId = [[entry objectForKey:(id)kCGWindowNumber] unsignedIntValue];
+    CGWindowID windowId = [entry[(id)kCGWindowNumber] unsignedIntValue];
     
     // Grab the application name, but since it's optional we need to check before we can use it.
-    NSString *applicationName = [entry objectForKey:(id)kCGWindowOwnerName];
+    NSString *applicationName = entry[(id)kCGWindowOwnerName];
     if (![applicationName isEqualToString:targetApplicationName]) {
         //NSLog(@"Ignoring: %d, wrong app.", windowId);
         return;
     }
 
     CGRect bounds;
-    CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)[entry objectForKey:(id)kCGWindowBounds], &bounds);
+    CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)entry[(id)kCGWindowBounds], &bounds);
     if (bounds.size.width < 250 || bounds.size.height < 250) {
         //NSLog(@"Ignoring: %d, too small.", windowId);
         return;

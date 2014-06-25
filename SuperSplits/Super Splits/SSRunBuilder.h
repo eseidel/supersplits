@@ -21,25 +21,15 @@ typedef enum {
 } SSRunState;
 
 @interface SSRunBuilder : NSObject
-{
-    SSRun *_run;
-
-    NSTimeInterval _offset;
-    NSTimeInterval _startOffset;
-    NSTimeInterval _stateStart;
-
-    SSRunState _state;
-    NSString *_mapState;
-}
 
 @property (readonly) SSRun *run;
 
 @property NSTimeInterval offset;
 
 @property (nonatomic) SSRunState state;
-@property (readonly) NSString *stateAsString;
+@property (readonly, nonatomic) NSString *stateAsString;
 
-@property (retain) SSSplit *currentSplit;
+@property (strong) SSSplit *currentSplit;
 
 -(NSTimeInterval)roomTime;
 -(NSTimeInterval)totalTime;

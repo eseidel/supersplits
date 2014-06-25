@@ -11,15 +11,9 @@
 #import "SSImageSource.h"
 
 @interface SSWindowImageSource : SSImageSource
-{
-    CGWindowID _windowID;
-	NSTimer *_timer;
 
-    double _speedMultiplier;
-}
-
-@property (readonly) BOOL polling;
-@property (retain) NSDate *start;
+@property (readonly, getter=isPolling, nonatomic) BOOL polling;
+@property (strong) NSDate *start;
 @property double speedMultiplier;
 
 -(BOOL)startPolling;

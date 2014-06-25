@@ -11,17 +11,12 @@
 @class SSMainController;
 
 @interface SSTimerWindowController : NSWindowController
-{
-    SSMainController *_mainController;
 
-    NSTimer *_updateTimer;
-
-    IBOutlet NSTextField *totalTimeView;
-    IBOutlet NSTextField *totalTimeDeltaView;
-    IBOutlet NSTextField *timerState;
-    IBOutlet NSTextField *roomNameView;
-    IBOutlet NSTextField *speedMultiplierView;
-}
+@property(weak, nonatomic) IBOutlet NSTextField *totalTimeView;
+@property(weak, nonatomic) IBOutlet NSTextField *totalTimeDeltaView;
+@property(weak, nonatomic) IBOutlet NSTextField *timerState;
+@property(weak, nonatomic) IBOutlet NSTextField *roomNameView;
+@property(weak, nonatomic) IBOutlet NSTextField *speedMultiplierView;
 
 @property(retain) SSMainController *mainController;
 

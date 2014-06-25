@@ -13,8 +13,8 @@
 @interface SSHistoryWindowController : NSWindowController
 
 // FIXME: This should be the RunController once we move the referenceRun out of MainController.
-@property (retain) SSMainController *mainController;
+@property (strong) SSMainController *mainController;
 
-@property (readonly) NSArray *runs;
+@property (readonly, nonatomic) NSArray *runs;
 
 @end

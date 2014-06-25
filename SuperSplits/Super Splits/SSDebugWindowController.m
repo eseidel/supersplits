@@ -10,6 +10,4 @@
 
 @implementation SSDebugWindowController
 
-@synthesize mainController=_mainController;
-
 @end

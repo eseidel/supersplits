@@ -14,12 +14,14 @@
 #import "SSSplit.h"
 
 @implementation SSRunComparison
-
-@synthesize runBuilder=_runBuilder, referenceRun=_referenceRun, matchedSplits=_matchedSplits;
+{
+    SSSplitMatcher *_splitMatcher;
+}
 
 -(id)init
 {
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         _splitMatcher = [[SSSplitMatcher alloc] init];
     }
     return self;
@@ -52,7 +54,7 @@
 -(SSMatchedSplit *)previousMatchedSplit
 {
     if (_matchedSplits.count > 1)
-        return [_matchedSplits objectAtIndex:(_matchedSplits.count - 2)];
+        return _matchedSplits[(_matchedSplits.count - 2)];
     return nil;
 }
 
@@ -72,7 +74,7 @@
 
     NSNumber *timeAfterLastRoom = [[_runBuilder run] timeAfterSplitAtIndex:self.previousMatchedSplit.splitIndex];
     NSTimeInterval deltaAfterLastRoom = [timeAfterLastRoom doubleValue] - [referenceTimeAfterLastRoom doubleValue];
-    return [NSNumber numberWithDouble:deltaAfterLastRoom];
+    return @(deltaAfterLastRoom);
 }
 
 @end

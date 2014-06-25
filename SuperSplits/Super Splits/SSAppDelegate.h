@@ -15,20 +15,8 @@
 @class SSMainController;
 
 @interface SSAppDelegate : NSObject <NSApplicationDelegate>
-{
-    SSTimerWindowController *_timerWindowController;
-    SSDebugWindowController *_debugWindowController;
-    SSHistoryWindowController *_historyWindowController;
-    SSMainController *_mainController;
 
-    IBOutlet NSMenuItem *_startStopMenu;
-	
-	EventHandlerUPP _hotKeyEventHandler;
-	
-	EventHotKeyRef _startStopHotKeyRef;
-	EventHotKeyRef _startStopAlternateHotKeyRef;
-	EventHotKeyRef _resetHotKeyRef;
-}
+@property(weak, nonatomic) IBOutlet NSMenuItem * startStopMenuItem;
 
 - (IBAction)resetRun:(id)sender;
 - (IBAction)togglePause:(id)sender;

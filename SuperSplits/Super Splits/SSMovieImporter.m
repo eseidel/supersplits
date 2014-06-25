@@ -14,7 +14,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SSImportWindowController.h"
 
-@interface SSMovieImporter (PrivateMethods)
+@interface SSMovieImporter ()
+{
+    AVAssetImageGenerator *_imageGenerator;
+    SSImportWindowController *_importWindowController;
+    NSDate *_scanStart;
+}
 
 -(void)_importFinished:(SSRun *)run;
 
@@ -22,8 +27,6 @@
 
 
 @implementation SSMovieImporter
-
-@synthesize progress=_progress, lastFrame=_lastFrame;
 
 +(NSArray *)movieFileTypes
 {
@@ -50,7 +53,7 @@
     SSRunBuilder *runBuilder = [[SSRunBuilder alloc] init];
 
     const NSInteger updateProgessEveryNFrames = 10;
-    __block NSInteger framesRecieved = 0;
+    __block NSUInteger framesRecieved = 0;
     __block CMTime lastActualTime = kCMTimeInvalid;
 
     AVAssetImageGeneratorCompletionHandler completionHandler = ^(CMTime requestedTime,
@@ -59,14 +62,14 @@
                                                                  AVAssetImageGeneratorResult result,
                                                                  NSError *error) {
         if (result == AVAssetImageGeneratorFailed) {
-            NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
+            NSString *actualTimeString = (__bridge_transfer NSString *)CMTimeCopyDescription(NULL, actualTime);
             NSLog(@"Failed with error: %@ at: %@", [error localizedDescription], actualTimeString);
         }
 
         if (result == AVAssetImageGeneratorSucceeded) {
             framesRecieved++;
             if (CMTimeCompare(lastActualTime, actualTime) == 0) {
-                NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
+                NSString *actualTimeString = (__bridge_transfer NSString *)CMTimeCopyDescription(NULL, actualTime);
                 NSLog(@"Warning: Ignoring duplicate frame for time: %@", actualTimeString);
                 return;
             }
@@ -74,7 +77,7 @@
 
             SSMetroidFrame *frame = [[SSMetroidFrame alloc] initWithCGImage:image];
             if (!frame) {
-                NSString *actualTimeString = (__bridge NSString *)CMTimeCopyDescription(NULL, actualTime);
+                NSString *actualTimeString = (__bridge_transfer NSString *)CMTimeCopyDescription(NULL, actualTime);
                 NSLog(@"Error processing frame at %@", actualTimeString);
                 return;
             }
@@ -85,7 +88,7 @@
         if (framesRecieved % updateProgessEveryNFrames == 0) {
             Float64 currentSeconds = CMTimeGetSeconds(actualTime);
             Float64 percentComplete = currentSeconds / durationSeconds;
-            NSNumber *progress = [NSNumber numberWithDouble:percentComplete * 100];
+            NSNumber *progress = @(percentComplete * 100);
             [self performSelectorOnMainThread:@selector(setProgress:) withObject:progress waitUntilDone:NO];
         }
         if (framesRecieved == frameCount) {

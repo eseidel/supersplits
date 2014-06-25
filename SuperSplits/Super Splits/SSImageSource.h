@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (SSImageSourceDelegate)
+@protocol SSImageSourceDelegate
 -(void)nextFrame:(CGImageRef)frame atOffset:(NSTimeInterval)offset;
 @end
 
 
 @interface SSImageSource : NSObject
 
-@property (retain) NSObject *delegate;
+@property (weak) id<SSImageSourceDelegate> delegate;
 
 @end

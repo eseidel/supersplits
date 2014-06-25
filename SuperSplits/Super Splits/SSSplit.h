@@ -12,15 +12,15 @@
 
 @interface SSSplit : NSObject
 
-@property (retain) NSString *entryMapState;
-@property (retain) NSString *exitMapState;
+@property (copy) NSString *entryMapState;
+@property (copy) NSString *exitMapState;
 @property NSTimeInterval offset;
 @property NSTimeInterval duration;
 
-@property (retain) SSMetroidFrame *entryFrame;
-@property (retain) SSMetroidFrame *exitFrame;
+@property (strong) SSMetroidFrame *entryFrame;
+@property (strong) SSMetroidFrame *exitFrame;
 
-@property (retain) NSString *roomName;
+@property (copy) NSString *roomName;
 
 -(id)initWithString:(NSString *)archiveString;
 -(NSString *)stringForArchiving;

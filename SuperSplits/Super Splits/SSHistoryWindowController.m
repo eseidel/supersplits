@@ -13,11 +13,10 @@
 
 @implementation SSHistoryWindowController
 
-@synthesize mainController=_mainController;
-
 - (id)initWithWindow:(NSWindow *)window
 {
-    if (self = [super initWithWindow:window]) {
+    self = [super initWithWindow:window];
+    if (self) {
     }
     return self;
 }

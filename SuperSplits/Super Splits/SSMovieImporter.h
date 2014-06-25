@@ -13,15 +13,10 @@
 @class SSMetroidFrame;
 
 @interface SSMovieImporter : NSObject
-{
-    AVAssetImageGenerator *_imageGenerator;
-    SSImportWindowController *_importWindowController;
-    NSDate *_scanStart;
-}
 
 // FIXME: Unclear if we want to support importing more than one file at once.
-@property (retain) NSNumber *progress;
-@property (retain) SSMetroidFrame *lastFrame;
+@property (strong) NSNumber *progress;
+@property (strong) SSMetroidFrame *lastFrame;
 
 +(NSArray *)movieFileTypes;
 
