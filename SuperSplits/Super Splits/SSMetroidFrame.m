@@ -274,7 +274,8 @@ void fillPixel(const uint8* rgb, uint8 alpha, uint8* pixel, CGBitmapInfo bitmapI
 -(BOOL)isSupportedImage:(CGImageRef)frame
 {
     CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(frame);
-    if (alphaInfo != kCGImageAlphaNoneSkipFirst) {
+    // FIXME: Unclear if kCGImageAlphaPremultipliedFirst is OK.
+    if (alphaInfo != kCGImageAlphaNoneSkipFirst && alphaInfo != kCGImageAlphaPremultipliedFirst) {
         static BOOL haveLogged = NO;
         if (!haveLogged) {
             NSLog(@"Wrong alpha info?  Target window is likely off-screen? (got: %d, expected: %d)", alphaInfo, kCGImageAlphaNoneSkipFirst);
